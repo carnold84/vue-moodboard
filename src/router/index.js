@@ -53,15 +53,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const isLoggedIn = store.getters["auth/isLoggedIn"];
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
+    if (isLoggedIn) {
       next();
       return;
     }
     next("/login");
   } else {
     // logged in so redirect to authed app
-    if (to.path === "/login" && store.getters.isLoggedIn) {
+    if (to.path === "/login" && isLoggedIn) {
       next("/");
       return;
     } else {

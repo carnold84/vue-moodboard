@@ -3,9 +3,14 @@
     <div v-if="authStatus !== 'loading'" class="container">
       <form class="form" @submit.prevent="login">
         <app-logo style="margin: 0 0 40px;"></app-logo>
+        <p v-if="authStatus === 'error'" class="error">Email and password did not match.</p>
         <text-input v-model="email" label="Email" name="email" type="email"></text-input>
-        <text-input v-model="password" label="Password" name="email" type="password"></text-input>
-        <app-button :isPrimary="true" style="max-width: 200px; width: 100%;" type="submit">Login</app-button>
+        <text-input v-model="password" label="Password" name="password" type="password"></text-input>
+        <app-button
+          :isPrimary="true"
+          style="max-width: 200px; width: 100%;"
+          inputType="submit"
+        >Login</app-button>
       </form>
     </div>
     <app-loading v-if="authStatus === 'loading'" diameter="50px"></app-loading>
@@ -28,16 +33,16 @@ export default {
   },
   computed: {
     authStatus: function() {
-      return this.$store.getters.authStatus;
+      return this.$store.getters["auth/status"];
     },
     isLoggedIn: function() {
-      return this.$store.getters.isLoggedIn;
+      return this.$store.getters["auth/isLoggedIn"];
     }
   },
   data() {
     return {
-      email: "",
-      password: ""
+      email: "chrisarnold@gmail.com",
+      password: "123456"
     };
   },
   methods: {
@@ -45,9 +50,14 @@ export default {
       let email = this.email;
       let password = this.password;
       this.$store
-        .dispatch("login", { email, password })
-        .then(() => this.$router.push("/"))
-        .catch(err => console.error(err));
+        .dispatch("auth/login", { email, password })
+        .then(() => {
+          console.log('logged in')
+          this.$router.push("/");
+        })
+        .catch(() => {
+          console.error('Login failed');
+        });
     }
   }
 };
@@ -78,6 +88,15 @@ export default {
   display: flex;
   flex-direction: column;
   max-width: 400px;
+  width: 100%;
+}
+
+.error {
+  background-color: #ffe4e2;
+  border: 1px solid #ffc9c5;
+  border-radius: 3px;
+  margin: 0 0 10px;
+  padding: 5px 10px;
   width: 100%;
 }
 </style>

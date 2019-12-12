@@ -1,18 +1,19 @@
 <template>
-  <div>
+  <div class="wrapper">
     <component
       v-if="type === 'button' || type === 'a'"
-      class="wrapper"
+      class="button-wrapper"
       :class="{'is-primary': isPrimary}"
       :disabled="isDisabled"
       :href="href"
       :is="type"
+      :type="inputType"
     >
       <slot></slot>
     </component>
     <router-link
       v-if="type === 'router-link'"
-      class="wrapper"
+      class="button-wrapper"
       :class="{'is-primary': isPrimary}"
       :to="to"
     >
@@ -32,6 +33,10 @@ export default {
   props: {
     href: {
       default: null,
+      type: String
+    },
+    inputType: {
+      default: "button",
       type: String
     },
     isDisabled: {
@@ -59,6 +64,10 @@ export default {
 
 <style scoped lang="scss">
 .wrapper {
+  display: flex;
+}
+
+.button-wrapper {
   align-content: center;
   background-color: var(--button__bg-color);
   border: var(--button__border-color) solid 1px;
@@ -72,6 +81,7 @@ export default {
   outline: transparent solid 2px;
   padding: 0 15px;
   transition: all 150ms ease-in-out;
+  width: 100%;
 
   &:disabled {
     pointer-events: none;

@@ -13,6 +13,7 @@
       </div>
     </div>
     <div class="row">
+      {{projects}}
       <div class="col-3">
         <div class="project">
           <img height="200" width="100%" />
@@ -76,6 +77,14 @@ export default {
   components: {
     AppButton,
     PageHeader
+  },
+  computed: {
+    projects() {
+      return this.$store.getters["projects/projects"];
+    }
+  },
+  mounted() {
+    this.$store.dispatch("projects/getAllProjects");
   }
 };
 </script>
