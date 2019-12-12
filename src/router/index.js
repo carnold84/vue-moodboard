@@ -1,11 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import AuthenticatedApp from "../views/AuthenticatedApp.vue";
-import Home from "../views/Home.vue";
-import Login from "../views/Login.vue";
-import ProjectEdit from "../views/ProjectEdit.vue";
-import Projects from "../views/Projects.vue";
-import store from "../store";
+
+import AuthenticatedApp from "@/views/AuthenticatedApp.vue";
+import Home from "@/views/Home.vue";
+import store from "@/store";
+
+const Login = () => import("@/views/Login.vue");
+const ProjectEdit = () => import("@/views/projects/ProjectEdit.vue");
+const Projects = () => import("@/views/projects/Projects.vue");
+const ProjectsList = () => import("@/views/projects/ProjectsList.vue");
 
 Vue.use(VueRouter);
 
@@ -28,13 +31,17 @@ const routes = [
       {
         children: [
           {
+            component: ProjectsList,
+            name: "projects-list",
+            path: "/"
+          },
+          {
             component: ProjectEdit,
             name: "create-project",
             path: "create"
           }
         ],
         component: Projects,
-        name: "projects",
         path: "projects"
       }
     ],

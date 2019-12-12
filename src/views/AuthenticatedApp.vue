@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import AppHeader from "../components/AppHeader";
-import AppLogo from "../components/AppLogo";
+import AppHeader from "@/components/AppHeader";
+import AppLogo from "@/components/AppLogo";
 
 export default {
   name: "authenticatedApp",

@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import AppButton from "../components/AppButton";
-import AppLoading from "../components/AppLoading";
-import AppLogo from "../components/AppLogo";
-import TextInput from "../components/TextInput";
+import AppButton from "@/components/AppButton";
+import AppLoading from "@/components/AppLoading";
+import AppLogo from "@/components/AppLogo";
+import TextInput from "@/components/TextInput";
 
 export default {
   name: "login",
