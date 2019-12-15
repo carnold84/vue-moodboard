@@ -4,7 +4,7 @@
       <div class="col-12">
         <page-header>
           <template v-slot:content-left>
-            <h1 class="view-title">Create Project</h1>
+            <h1 class="view-title">Add Image to {{ project.name }}</h1>
           </template>
         </page-header>
       </div>
@@ -15,11 +15,12 @@
         <form class="form" @submit.prevent="create">
           <text-input v-model="name" label="Name" name="name"></text-input>
           <text-input v-model="description" label="Description" name="description"></text-input>
+          <text-input v-model="url" label="Url" name="url"></text-input>
           <app-button
             :isPrimary="true"
             style="max-width: 200px; width: 100%;"
             type="submit"
-          >Create Project</app-button>
+          >Add Image</app-button>
         </form>
       </div>
     </div>
@@ -33,18 +34,27 @@ import PageHeader from "@/components/PageHeader";
 import TextInput from "@/components/TextInput";
 
 export default {
-  name: "project-edit",
+  name: "project-add-image",
   components: {
     AppButton,
     AppLoading,
     PageHeader,
     TextInput
   },
+  computed: {
+    id() {
+      return this.$route.params.id;
+    },
+    project() {
+      return this.$store.getters["projects/project"](this.id);
+    }
+  },
   data() {
     return {
       description: "",
       isSaving: false,
-      name: ""
+      name: "",
+      url: ""
     };
   },
   methods: {
@@ -53,12 +63,14 @@ export default {
 
       const data = {
         description: this.description,
-        name: this.name
+        projectId: this.id,
+        name: this.name,
+        url: this.url
       };
-      const response = await this.$store.dispatch("projects/create", data);
+      const response = await this.$store.dispatch("images/create", data);
 
       if (response.success) {
-        this.$router.push("/projects");
+        this.$router.push(`/projects/${this.id}`);
       } else {
         console.error(response.message);
       }

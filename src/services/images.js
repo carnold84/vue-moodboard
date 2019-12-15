@@ -1,10 +1,10 @@
 import api from "@/services/api";
 
 export default {
-  create: async project => {
+  create: async image => {
     return new Promise((resolve, reject) => {
       api
-        .post("/projects", project)
+        .post("/images", image)
         .then(response => {
           resolve(response.data);
         })
@@ -16,7 +16,7 @@ export default {
   delete: async id => {
     return new Promise((resolve, reject) => {
       api
-        .delete(`/projects/${id}`)
+        .delete(`/images/${id}`)
         .then(response => {
           resolve(response.data);
         })
@@ -25,10 +25,10 @@ export default {
         });
     });
   },
-  getAllProjects: async () => {
+  getAllImages: async () => {
     return new Promise((resolve, reject) => {
       api
-        .get("/projects")
+        .get("/images")
         .then(response => {
           resolve(response.data);
         })
@@ -37,10 +37,22 @@ export default {
         });
     });
   },
-  getProject: async id => {
+  getImagesByProject: async projectId => {
     return new Promise((resolve, reject) => {
       api
-        .get(`/projects/${id}`)
+        .get(`/images/project/${projectId}`)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getImage: async id => {
+    return new Promise((resolve, reject) => {
+      api
+        .get(`/images/${id}`)
         .then(response => {
           resolve(response.data[0]);
         })
