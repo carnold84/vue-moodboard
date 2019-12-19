@@ -1,28 +1,15 @@
 <template>
-  <button
-    class="button-wrapper"
-    :class="{'is-primary': isPrimary}"
-    :disabled="isDisabled"
-    :type="type"
-    @click="onClick"
-  >
+  <router-link class="button-wrapper" :class="{'is-primary': isPrimary}" :to="to">
     <slot></slot>
-  </button>
+  </router-link>
 </template>
 
 <script>
 export default {
-  name: "app-button",
+  name: "app-link",
   computed: {
     primaryClass: function() {
       return this.isPrimary ? "is-primary" : null;
-    }
-  },
-  methods: {
-    onClick(evt) {
-      if (this.$listeners.click) {
-        this.$listeners.click(evt);
-      }
     }
   },
   props: {
@@ -34,12 +21,9 @@ export default {
       default: false,
       type: Boolean
     },
-    type: {
-      default: "button",
-      type: String,
-      validator: value => {
-        return value.match(/(button|submit)/);
-      }
+    to: {
+      default: null,
+      type: [String, Object]
     }
   }
 };

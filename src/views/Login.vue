@@ -1,19 +1,15 @@
 <template>
   <div class="view-wrapper">
-    <div v-if="authStatus !== 'loading'" class="container">
+    <app-loading v-if="isLoggingIn" diameter="50px"></app-loading>
+    <div v-if="!isLoggingIn" class="container">
       <form class="form" @submit.prevent="login">
         <app-logo style="margin: 0 0 40px;"></app-logo>
-        <p v-if="authStatus === 'error'" class="error">Email and password did not match.</p>
+        <p v-if="message" class="error">{{message}}</p>
         <text-input v-model="email" label="Email" name="email" type="email"></text-input>
         <text-input v-model="password" label="Password" name="password" type="password"></text-input>
-        <app-button
-          :isPrimary="true"
-          style="max-width: 200px; width: 100%;"
-          inputType="submit"
-        >Login</app-button>
+        <app-button :isPrimary="true" style="max-width: 200px; width: 100%;" type="submit">Login</app-button>
       </form>
     </div>
-    <app-loading v-if="authStatus === 'loading'" diameter="50px"></app-loading>
   </div>
 </template>
 
@@ -31,33 +27,32 @@ export default {
     AppLogo,
     TextInput
   },
-  computed: {
-    authStatus: function() {
-      return this.$store.getters["auth/status"];
-    },
-    isLoggedIn: function() {
-      return this.$store.getters["auth/isLoggedIn"];
-    }
-  },
   data() {
     return {
-      email: "chrisarnold@gmail.com",
+      email: "chrisarnold.nz@gmail.com",
+      isLoggingIn: false,
+      message: undefined,
       password: "123456"
     };
   },
   methods: {
-    login: function() {
-      let email = this.email;
-      let password = this.password;
-      this.$store
-        .dispatch("auth/login", { email, password })
-        .then(() => {
-          console.log('logged in')
-          this.$router.push("/");
-        })
-        .catch(() => {
-          console.error('Login failed');
-        });
+    async login() {
+      const data = {
+        email: this.email,
+        password: this.password
+      };
+
+      this.isLoggingIn = true;
+
+      const response = await this.$store.dispatch("auth/login", data);
+
+      if (response.success) {
+        this.$router.push("/");
+      } else {
+        this.isLoggingIn = false;
+        this.message = response.message;
+        console.error(response.message);
+      }
     }
   }
 };

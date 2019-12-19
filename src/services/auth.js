@@ -19,5 +19,17 @@ export default {
         });
     });
   },
+  getUser: () => {
+    return new Promise((resolve, reject) => {
+      api
+        .get(`/user`)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
   setToken: setAuthToken
 };
