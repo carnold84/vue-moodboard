@@ -78,13 +78,8 @@ export default {
     }
   },
   mounted() {
-    if (!this.project) {
-      this.$store.dispatch("projects/getAllProjects");
-    }
-
-    if (!this.images) {
-      this.$store.dispatch("images/getImagesByProject", this.id);
-    }
+    this.$store.dispatch("projects/getAllProjects");
+    this.$store.dispatch("images/getImagesByProject", this.id);
   }
 };
 </script>

@@ -45,9 +45,7 @@ export default {
     }
   },
   mounted() {
-    if (!this.projects) {
-      this.$store.dispatch("projects/getAllProjects");
-    }
+    this.$store.dispatch("projects/getAllProjects");
   }
 };
 </script>
