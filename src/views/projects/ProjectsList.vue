@@ -43,9 +43,6 @@ export default {
     projects() {
       return this.$store.getters["projects/projects"];
     }
-  },
-  mounted() {
-    this.$store.dispatch("projects/getAllProjects");
   }
 };
 </script>

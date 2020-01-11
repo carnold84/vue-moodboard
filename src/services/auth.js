@@ -4,11 +4,9 @@ export default {
   login: ({ email, password }) => {
     return new Promise((resolve, reject) => {
       api
-        .post(`/login`, { email, password })
+        .post(`/users/login`, { email, password })
         .then(response => {
-          const {
-            success: { token }
-          } = response.data;
+          const { token } = response.data;
 
           setAuthToken(token);
 
@@ -22,7 +20,7 @@ export default {
   getUser: () => {
     return new Promise((resolve, reject) => {
       api
-        .get(`/user`)
+        .get(`/users`)
         .then(response => {
           resolve(response.data);
         })

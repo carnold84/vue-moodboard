@@ -1,10 +1,7 @@
-import _unionBy from "lodash/unionBy";
-
 import imagesService from "@/services/images";
 
 const state = {
-  images: undefined,
-  imagesProjects: {}
+  images: undefined
 };
 
 const getters = {
@@ -20,8 +17,13 @@ const getters = {
   images: state => {
     return state.images;
   },
-  imagesByProject: state => id => {
-    return state.imagesProjects[id];
+  imagesById: state => ids => {
+    if (state.images) {
+      return state.images.filter(image => {
+        return ids.includes(image.id);
+      });
+    }
+    return state.images;
   }
 };
 
@@ -66,15 +68,7 @@ const actions = {
       commit("setImages", null);
     }
   },
-  async getImagesByProject({ commit }, projectId) {
-    try {
-      let images = await imagesService.getImagesByProject(projectId);
-      commit("setImagesByProject", { images, projectId });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  async getProject({ commit }, id) {
+  async getImage({ commit }, id) {
     try {
       let image = await imagesService.getImage(id);
       commit("setImage", image);
@@ -99,15 +93,6 @@ const mutations = {
   },
   setImages(state, payload) {
     state.images = payload;
-  },
-  setImagesByProject(state, { images, projectId }) {
-    console.log(state, images, projectId);
-    state.imagesProjects = {
-      ...state.imagesProjects,
-      [projectId]: images
-    };
-    const allImages = _unionBy(state.images, images, "id");
-    state.images = allImages;
   }
 };
 

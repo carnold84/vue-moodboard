@@ -9,6 +9,7 @@ const Login = () => import("@/views/Login.vue");
 const ProjectEdit = () => import("@/views/projects/ProjectEdit.vue");
 const Project = () => import("@/views/projects/Project.vue");
 const ProjectAddImage = () => import("@/views/projects/ProjectAddImage.vue");
+const ProjectImage = () => import("@/views/projects/ProjectImage.vue");
 const Projects = () => import("@/views/projects/Projects.vue");
 const ProjectsList = () => import("@/views/projects/ProjectsList.vue");
 
@@ -33,14 +34,9 @@ const routes = [
       {
         children: [
           {
-            component: Project,
-            name: "project",
-            path: ":id"
-          },
-          {
-            component: ProjectAddImage,
-            name: "project-add-image",
-            path: ":id/add-image"
+            component: ProjectsList,
+            name: "projects-list",
+            path: "/"
           },
           {
             component: ProjectEdit,
@@ -48,9 +44,19 @@ const routes = [
             path: "create"
           },
           {
-            component: ProjectsList,
-            name: "projects-list",
-            path: "/"
+            component: Project,
+            name: "project",
+            path: ":id"
+          },
+          {
+            component: ProjectImage,
+            name: "project-image",
+            path: ":id/image/:imageId"
+          },
+          {
+            component: ProjectAddImage,
+            name: "project-add-image",
+            path: ":id/add-image"
           }
         ],
         component: Projects,

@@ -24,7 +24,15 @@
       <div class="col-12">No images.</div>
     </div>
     <div v-if="project && !isDeleting && (images && images.length > 0)" class="row">
-      <div v-for="image in images" :key="image.id" class="col-3">{{image.name}}</div>
+      <div v-for="image in images" :key="image.id" class="col-3">
+        <router-link
+          :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
+          :is-primary="true"
+        >
+          <img :src="image.url" />
+          <span>{{image.name}}</span>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -48,8 +56,12 @@ export default {
       return this.$route.params.id;
     },
     images() {
-      console.log(this.$store.getters["images/imagesByProject"](this.id));
-      return this.$store.getters["images/imagesByProject"](this.id);
+      if (this.project) {
+        console.log(this.$store.getters["images/imagesById"](this.project.imageIds));
+        return this.$store.getters["images/imagesById"](this.project.imageIds);
+      } else {
+        return undefined;
+      }
     },
     project() {
       return this.$store.getters["projects/project"](this.id);
@@ -76,10 +88,6 @@ export default {
         console.error(response.message);
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("projects/getAllProjects");
-    this.$store.dispatch("images/getImagesByProject", this.id);
   }
 };
 </script>

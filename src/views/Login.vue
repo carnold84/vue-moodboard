@@ -32,7 +32,7 @@ export default {
       email: "chrisarnold.nz@gmail.com",
       isLoggingIn: false,
       message: undefined,
-      password: "123456"
+      password: "12345"
     };
   },
   methods: {
