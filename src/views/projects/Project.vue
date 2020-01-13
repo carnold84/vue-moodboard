@@ -3,16 +3,25 @@
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
+        <breadcrumb-nav>
+          <router-link to="/projects">Projects</router-link>
+          <span class="divider">/</span>
+          <h1 class="title">{{project.name}}</h1>
+        </breadcrumb-nav>
+      </div>
+      <div class="col-12">
         <page-header>
           <template v-slot:content-left>
             <h1 class="view-title">{{project.name}}</h1>
           </template>
           <template v-slot:content-right>
-            <app-button @click="onDelete" :is-primary="true">Delete</app-button>
-            <app-link
-              :to="{ name: 'project-add-image', params: { id: project.id }}"
-              :is-primary="true"
-            >Add Image</app-link>
+            <button-group>
+              <app-button @click="onDelete" :is-primary="true">Delete</app-button>
+              <app-link
+                :to="{ name: 'project-add-image', params: { id: project.id }}"
+                :is-primary="true"
+              >Add Image</app-link>
+            </button-group>
           </template>
         </page-header>
       </div>
@@ -26,11 +35,11 @@
     <div v-if="project && !isDeleting && (images && images.length > 0)" class="row">
       <div v-for="image in images" :key="image.id" class="col-3">
         <router-link
+          class="image-link"
           :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
-          :is-primary="true"
         >
-          <img :src="image.url" />
-          <span>{{image.name}}</span>
+          <img class="image" :src="thumbUrl(image)" />
+          <h3 class="title">{{image.name}}</h3>
         </router-link>
       </div>
     </div>
@@ -41,6 +50,8 @@
 import AppButton from "@/components/AppButton";
 import AppLink from "@/components/AppLink";
 import AppLoading from "@/components/AppLoading";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import ButtonGroup from "@/components/ButtonGroup";
 import PageHeader from "@/components/PageHeader";
 
 export default {
@@ -49,6 +60,8 @@ export default {
     AppButton,
     AppLink,
     AppLoading,
+    BreadcrumbNav,
+    ButtonGroup,
     PageHeader
   },
   computed: {
@@ -57,7 +70,6 @@ export default {
     },
     images() {
       if (this.project) {
-        console.log(this.$store.getters["images/imagesById"](this.project.imageIds));
         return this.$store.getters["images/imagesById"](this.project.imageIds);
       } else {
         return undefined;
@@ -74,7 +86,6 @@ export default {
   },
   methods: {
     async onDelete() {
-      console.log("deleteProject");
       this.isDeleting = true;
 
       const response = await this.$store.dispatch(
@@ -87,6 +98,9 @@ export default {
       } else {
         console.error(response.message);
       }
+    },
+    thumbUrl(image) {
+      return `https://res.cloudinary.com/carnold/image/upload/w_260/${image.fileName}.${image.format}`;
     }
   }
 };

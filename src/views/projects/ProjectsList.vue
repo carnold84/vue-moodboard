@@ -16,12 +16,10 @@
     <div v-if="projects && projects.length === 0">No Projects</div>
     <div v-if="projects && projects.length > 0" class="row">
       <div v-for="project in projects" :key="project.id" class="col-3">
-        <div class="project">
-          <img height="200" width="100%" />
-          <h3>
-            <router-link :to="{ name: 'project', params: { id: project.id }}">{{project.name}}</router-link>
-          </h3>
-        </div>
+        <router-link class="image-link" :to="{ name: 'project', params: { id: project.id }}">
+          <img class="image" style="height: 200px;" />
+          <h3 class="title">{{project.name}}</h3>
+        </router-link>
       </div>
     </div>
   </div>

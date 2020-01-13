@@ -20,9 +20,8 @@ export default {
   align-content: center;
   display: flex;
   flex-shrink: 0;
-  height: 50px;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 0 0 10px;
   width: 100%;
 }
 

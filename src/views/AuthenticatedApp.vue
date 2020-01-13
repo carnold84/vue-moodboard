@@ -1,22 +1,22 @@
 <template>
-  <div class="app-wrapper">
-    <app-loading v-if="!user"></app-loading>
-    <div v-else class="app-wrapper">
-      <app-header>
-        <template v-slot:content-left>
-          <router-link to="/">
-            <app-logo height="30px" style="align-self: center; margin: 0 20px 0 0;"></app-logo>
-          </router-link>
-          <router-link to="/">Home</router-link>
-          <router-link to="/projects">Projects</router-link>
-        </template>
-        <template v-if="isLoggedIn" v-slot:content-right>
-          <a @click="logout">Logout</a>
-        </template>
-      </app-header>
-      <div class="app-content">
-        <router-view />
-      </div>
+  <div v-if="!user" class="app-wrapper">
+    <app-loading></app-loading>
+  </div>
+  <div v-else class="app-wrapper">
+    <app-header>
+      <template v-slot:content-left>
+        <router-link to="/">
+          <app-logo height="30px" style="align-self: center; margin: 0 20px 0 0;"></app-logo>
+        </router-link>
+        <router-link to="/">Home</router-link>
+        <router-link to="/projects">Projects</router-link>
+      </template>
+      <template v-if="isLoggedIn" v-slot:content-right>
+        <a @click="logout">Logout</a>
+      </template>
+    </app-header>
+    <div class="app-content">
+      <router-view />
     </div>
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .app-wrapper {
   display: flex;
   flex-direction: column;
@@ -65,6 +65,7 @@ export default {
 .app-content {
   flex-grow: 1;
   overflow: auto;
+  padding: 20px 0 0;
 }
 
 a {

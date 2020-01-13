@@ -31,7 +31,7 @@ const actions = {
   async create({ commit }, image) {
     try {
       let response = await imagesService.create(image);
-      commit("setImages", response.image);
+      commit("setImage", response.image);
       return {
         message: `${image.name} was created.`,
         success: true
@@ -47,7 +47,7 @@ const actions = {
   async delete({ commit }, image) {
     try {
       let response = await imagesService.delete(image.id);
-      commit("deleteImage", response.id);
+      commit("deleteImage", response.imageId);
       return {
         message: `${image.name} was deleted.`,
         success: true
@@ -81,11 +81,11 @@ const actions = {
 const mutations = {
   deleteImage(state, payload) {
     state.images = state.images.filter(image => {
-      return image.id.toString() === payload;
+      return image.id.toString() !== payload;
     });
   },
   setImage(state, payload) {
-    if (state.images && state.images.length > 0) {
+    if (state.images) {
       state.images.push(payload);
     } else {
       state.images = [payload];
