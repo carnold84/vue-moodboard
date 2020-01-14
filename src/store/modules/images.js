@@ -32,6 +32,14 @@ const actions = {
     try {
       let response = await imagesService.create(image);
       commit("setImage", response.image);
+
+      if (image.projectId) {
+        commit("setImageProject", {
+          imageId: response.image.id,
+          projectId: image.projectId
+        });
+      }
+
       return {
         message: `${image.name} was created.`,
         success: true
@@ -84,12 +92,20 @@ const mutations = {
       return image.id.toString() !== payload;
     });
   },
-  setImage(state, payload) {
+  setImage(state, payload, rootState) {
+    console.log(rootState)
     if (state.images) {
       state.images.push(payload);
     } else {
       state.images = [payload];
     }
+  },
+  setImageProject(state, { imageId, projectId },) {
+    console.log(state)
+    const project = state.projects.filter(project => {
+      return project.id === projectId;
+    });
+    project.imageIds.push(imageId);
   },
   setImages(state, payload) {
     state.images = payload;

@@ -75,9 +75,6 @@ export default {
         console.error(response.message);
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("projects/getAllProjects");
   }
 };
 </script>
