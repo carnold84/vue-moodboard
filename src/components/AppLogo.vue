@@ -4,16 +4,16 @@
 
 <script>
 export default {
-  name: "app-logo",
+  name: 'app-logo',
   props: {
     height: {
       type: String,
-      default: "40px"
+      default: '40px',
     },
     width: {
-      type: String
-    }
-  }
+      type: String,
+    },
+  },
 };
 </script>
 

@@ -26,22 +26,22 @@
 </template>
 
 <script>
-import AppLink from "@/components/AppLink";
-import AppLoading from "@/components/AppLoading";
-import PageHeader from "@/components/PageHeader";
+import AppLink from '@/components/AppLink';
+import AppLoading from '@/components/AppLoading';
+import PageHeader from '@/components/PageHeader';
 
 export default {
-  name: "projects",
+  name: 'projects',
   components: {
     AppLink,
     AppLoading,
-    PageHeader
+    PageHeader,
   },
   computed: {
     projects() {
-      return this.$store.getters["projects/projects"];
-    }
-  }
+      return this.$store.getters['projects/projects'];
+    },
+  },
 };
 </script>
 

@@ -47,22 +47,22 @@
 </template>
 
 <script>
-import AppButton from "@/components/AppButton";
-import AppLink from "@/components/AppLink";
-import AppLoading from "@/components/AppLoading";
-import BreadcrumbNav from "@/components/BreadcrumbNav";
-import ButtonGroup from "@/components/ButtonGroup";
-import PageHeader from "@/components/PageHeader";
+import AppButton from '@/components/AppButton';
+import AppLink from '@/components/AppLink';
+import AppLoading from '@/components/AppLoading';
+import BreadcrumbNav from '@/components/BreadcrumbNav';
+import ButtonGroup from '@/components/ButtonGroup';
+import PageHeader from '@/components/PageHeader';
 
 export default {
-  name: "project",
+  name: 'project',
   components: {
     AppButton,
     AppLink,
     AppLoading,
     BreadcrumbNav,
     ButtonGroup,
-    PageHeader
+    PageHeader,
   },
   computed: {
     id() {
@@ -70,18 +70,18 @@ export default {
     },
     images() {
       if (this.project) {
-        return this.$store.getters["images/imagesById"](this.project.imageIds);
+        return this.$store.getters['images/imagesById'](this.project.imageIds);
       } else {
         return undefined;
       }
     },
     project() {
-      return this.$store.getters["projects/project"](this.id);
-    }
+      return this.$store.getters['projects/project'](this.id);
+    },
   },
   data() {
     return {
-      isDeleting: false
+      isDeleting: false,
     };
   },
   methods: {
@@ -89,20 +89,20 @@ export default {
       this.isDeleting = true;
 
       const response = await this.$store.dispatch(
-        "projects/delete",
+        'projects/delete',
         this.project
       );
 
       if (response.success) {
-        this.$router.push("/projects");
+        this.$router.push('/projects');
       } else {
         console.error(response.message);
       }
     },
     thumbUrl(image) {
       return `https://res.cloudinary.com/carnold/image/upload/w_260/${image.fileName}.${image.format}`;
-    }
-  }
+    },
+  },
 };
 </script>
 

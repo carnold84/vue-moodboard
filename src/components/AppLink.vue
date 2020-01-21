@@ -6,26 +6,26 @@
 
 <script>
 export default {
-  name: "app-link",
+  name: 'app-link',
   computed: {
     primaryClass: function() {
-      return this.isPrimary ? "is-primary" : null;
-    }
+      return this.isPrimary ? 'is-primary' : null;
+    },
   },
   props: {
     isDisabled: {
       default: false,
-      type: Boolean
+      type: Boolean,
     },
     isPrimary: {
       default: false,
-      type: Boolean
+      type: Boolean,
     },
     to: {
       default: null,
-      type: [String, Object]
-    }
-  }
+      type: [String, Object,],
+    },
+  },
 };
 </script>
 

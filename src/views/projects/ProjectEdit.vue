@@ -27,24 +27,24 @@
 </template>
 
 <script>
-import AppButton from "@/components/AppButton";
-import AppLoading from "@/components/AppLoading";
-import PageHeader from "@/components/PageHeader";
-import TextInput from "@/components/TextInput";
+import AppButton from '@/components/AppButton';
+import AppLoading from '@/components/AppLoading';
+import PageHeader from '@/components/PageHeader';
+import TextInput from '@/components/TextInput';
 
 export default {
-  name: "project-edit",
+  name: 'project-edit',
   components: {
     AppButton,
     AppLoading,
     PageHeader,
-    TextInput
+    TextInput,
   },
   data() {
     return {
-      description: "",
+      description: '',
       isSaving: false,
-      name: ""
+      name: '',
     };
   },
   methods: {
@@ -53,17 +53,17 @@ export default {
 
       const data = {
         description: this.description,
-        name: this.name
+        name: this.name,
       };
-      const response = await this.$store.dispatch("projects/create", data);
+      const response = await this.$store.dispatch('projects/create', data);
 
       if (response.success) {
-        this.$router.push("/projects");
+        this.$router.push('/projects');
       } else {
         console.error(response.message);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

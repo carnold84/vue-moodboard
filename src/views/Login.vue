@@ -14,47 +14,47 @@
 </template>
 
 <script>
-import AppButton from "@/components/AppButton";
-import AppLoading from "@/components/AppLoading";
-import AppLogo from "@/components/AppLogo";
-import TextInput from "@/components/TextInput";
+import AppButton from '@/components/AppButton';
+import AppLoading from '@/components/AppLoading';
+import AppLogo from '@/components/AppLogo';
+import TextInput from '@/components/TextInput';
 
 export default {
-  name: "login",
+  name: 'login',
   components: {
     AppButton,
     AppLoading,
     AppLogo,
-    TextInput
+    TextInput,
   },
   data() {
     return {
-      email: "chrisarnold.nz@gmail.com",
+      email: 'chrisarnold.nz@gmail.com',
       isLoggingIn: false,
       message: undefined,
-      password: "12345"
+      password: '12345',
     };
   },
   methods: {
     async login() {
       const data = {
         email: this.email,
-        password: this.password
+        password: this.password,
       };
 
       this.isLoggingIn = true;
 
-      const response = await this.$store.dispatch("auth/login", data);
+      const response = await this.$store.dispatch('auth/login', data);
 
       if (response.success) {
-        this.$router.push("/");
+        this.$router.push('/');
       } else {
         this.isLoggingIn = false;
         this.message = response.message;
         console.error(response.message);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

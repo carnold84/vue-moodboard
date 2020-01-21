@@ -22,34 +22,34 @@
 </template>
 
 <script>
-import AppHeader from "@/components/AppHeader";
-import AppLoading from "@/components/AppLoading";
-import AppLogo from "@/components/AppLogo";
+import AppHeader from '@/components/AppHeader';
+import AppLoading from '@/components/AppLoading';
+import AppLogo from '@/components/AppLogo';
 
 export default {
-  name: "authenticatedApp",
+  name: 'authenticatedApp',
   components: {
     AppHeader,
     AppLoading,
-    AppLogo
+    AppLogo,
   },
   computed: {
     isLoggedIn() {
-      return this.$store.getters["auth/isLoggedIn"];
+      return this.$store.getters['auth/isLoggedIn'];
     },
     user() {
-      return this.$store.getters["auth/user"];
-    }
+      return this.$store.getters['auth/user'];
+    },
   },
   methods: {
     async logout() {
-      await this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
-    }
+      await this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    },
   },
   mounted() {
-    this.$store.dispatch("init");
-  }
+    this.$store.dispatch('init');
+  },
 };
 </script>
 

@@ -1,12 +1,12 @@
-import api, { setAuthToken } from "@/services/api";
+import api, { setAuthToken, } from '@/services/api';
 
 export default {
-  login: ({ email, password }) => {
+  login: ({ email, password, }) => {
     return new Promise((resolve, reject) => {
       api
-        .post(`/users/login`, { email, password })
+        .post('/users/login', { email, password, })
         .then(response => {
-          const { token } = response.data;
+          const { token, } = response.data;
 
           setAuthToken(token);
 
@@ -20,7 +20,7 @@ export default {
   getUser: () => {
     return new Promise((resolve, reject) => {
       api
-        .get(`/users`)
+        .get('/users')
         .then(response => {
           resolve(response.data);
         })
@@ -29,5 +29,5 @@ export default {
         });
     });
   },
-  setToken: setAuthToken
+  setToken: setAuthToken,
 };

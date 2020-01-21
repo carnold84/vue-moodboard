@@ -16,49 +16,49 @@
 </template>
 
 <script>
-import _uniqueId from "lodash/uniqueId";
+import _uniqueId from 'lodash/uniqueId';
 
 export default {
-  name: "text-input",
+  name: 'text-input',
   computed: {
     primaryClass: function() {
-      return this.isPrimary ? "is-primary" : null;
-    }
+      return this.isPrimary ? 'is-primary' : null;
+    },
   },
   props: {
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     errors: {
       type: String,
-      default: ""
+      default: '',
     },
     id: {
       type: String,
-      default: _uniqueId()
+      default: _uniqueId(),
     },
     label: {
-      type: String
+      type: String,
     },
     name: {
-      type: String
+      type: String,
     },
     onBlur: {
-      type: Function
+      type: Function,
     },
     onFocus: {
-      type: Function
+      type: Function,
     },
     type: {
       type: String,
-      default: "text"
+      default: 'text',
     },
     value: {
       type: String,
-      default: ""
-    }
-  }
+      default: '',
+    },
+  },
 };
 </script>
 

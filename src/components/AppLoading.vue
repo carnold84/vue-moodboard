@@ -14,13 +14,13 @@
 
 <script>
 export default {
-  name: "app-loading",
+  name: 'app-loading',
   props: {
     diameter: {
       type: String,
-      default: "40px"
-    }
-  }
+      default: '40px',
+    },
+  },
 };
 </script>
 

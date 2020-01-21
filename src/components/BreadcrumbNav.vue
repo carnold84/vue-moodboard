@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "breadcrumb-nav"
+  name: 'breadcrumb-nav',
 };
 </script>
 

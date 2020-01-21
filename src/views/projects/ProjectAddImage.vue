@@ -14,13 +14,18 @@
       <div class="col-12">
         <form class="form" @submit.prevent="create">
           <text-input v-model="name" label="Name" name="name"></text-input>
-          <text-input v-model="description" label="Description" name="description"></text-input>
+          <text-input
+            v-model="description"
+            label="Description"
+            name="description"
+          ></text-input>
           <text-input v-model="url" label="Url" name="url"></text-input>
           <app-button
             :isPrimary="true"
             style="max-width: 200px; width: 100%;"
             type="submit"
-          >Add Image</app-button>
+            >Add Image</app-button
+          >
         </form>
       </div>
     </div>
@@ -28,33 +33,33 @@
 </template>
 
 <script>
-import AppButton from "@/components/AppButton";
-import AppLoading from "@/components/AppLoading";
-import PageHeader from "@/components/PageHeader";
-import TextInput from "@/components/TextInput";
+import AppButton from '@/components/AppButton';
+import AppLoading from '@/components/AppLoading';
+import PageHeader from '@/components/PageHeader';
+import TextInput from '@/components/TextInput';
 
 export default {
-  name: "project-add-image",
+  name: 'project-add-image',
   components: {
     AppButton,
     AppLoading,
     PageHeader,
-    TextInput
+    TextInput,
   },
   computed: {
     id() {
       return this.$route.params.id;
     },
     project() {
-      return this.$store.getters["projects/project"](this.id);
-    }
+      return this.$store.getters['projects/project'](this.id);
+    },
   },
   data() {
     return {
-      description: "",
+      description: '',
       isSaving: false,
-      name: "",
-      url: ""
+      name: '',
+      url: '',
     };
   },
   methods: {
@@ -65,19 +70,18 @@ export default {
         description: this.description,
         projectId: this.id,
         name: this.name,
-        url: this.url
+        url: this.url,
       };
-      const response = await this.$store.dispatch("images/create", data);
+      const response = await this.$store.dispatch('images/create', data);
 
       if (response.success) {
         this.$router.push(`/projects/${this.id}`);
       } else {
         console.error(response.message);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

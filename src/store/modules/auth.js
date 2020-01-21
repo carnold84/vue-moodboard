@@ -1,6 +1,6 @@
-import authService from "@/services/auth";
+import authService from '@/services/auth';
 
-const tokenName = "aura_token";
+const tokenName = 'aura_token';
 const authToken = localStorage.getItem(tokenName);
 
 if (authToken) {
@@ -9,7 +9,7 @@ if (authToken) {
 
 const state = {
   token: authToken || null,
-  user: undefined
+  user: undefined,
 };
 
 const getters = {
@@ -18,69 +18,69 @@ const getters = {
   },
   user: state => {
     return state.user;
-  }
+  },
 };
 
 const actions = {
-  async getUser({ commit }) {
+  async getUser({ commit, }) {
     try {
       let user = await authService.getUser();
 
-      commit("user_success", user);
+      commit('user_success', user);
 
       return {
-        message: "User details fetched.",
-        success: false
+        message: 'User details fetched.',
+        success: false,
       };
     } catch (error) {
-      commit("user_error");
+      commit('user_error');
 
       return {
         error,
-        message: "User details failed.",
-        success: false
+        message: 'User details failed.',
+        success: false,
       };
     }
   },
-  async login({ commit }, data) {
+  async login({ commit, }, data) {
     try {
-      const { email, password } = data;
-      let token = await authService.login({ email, password });
+      const { email, password, } = data;
+      let token = await authService.login({ email, password, });
       localStorage.setItem(tokenName, token);
 
-      commit("login_success", token);
+      commit('login_success', token);
 
       return {
-        message: "Login was successful.",
-        success: true
+        message: 'Login was successful.',
+        success: true,
       };
     } catch (error) {
       return {
         error,
-        message: "Email and password did not match.",
-        success: false
+        message: 'Email and password did not match.',
+        success: false,
       };
     }
   },
-  async logout({ commit }) {
+  async logout({ commit, }) {
     try {
       localStorage.removeItem(tokenName);
-      commit("logout_success");
+      commit('logout_success');
 
       return {
-        message: "Logout successful.",
-        success: false
+        message: 'Logout successful.',
+        success: false,
       };
     } catch (error) {
-      commit("logout_error");
+      commit('logout_error');
 
       return {
         error,
-        message: "Logout failed.",
-        success: false
+        message: 'Logout failed.',
+        success: false,
       };
     }
-  }
+  },
 };
 
 const mutations = {
@@ -88,17 +88,17 @@ const mutations = {
     state.token = token;
   },
   logout_error(state) {
-    state.token = "";
+    state.token = '';
   },
   logout_success(state) {
-    state.token = "";
+    state.token = '';
   },
   user_error(state) {
     state.user = null;
   },
   user_success(state, user) {
     state.user = user;
-  }
+  },
 };
 
 export default {
@@ -106,5 +106,5 @@ export default {
   getters,
   mutations,
   namespaced: true,
-  state
+  state,
 };

@@ -1,7 +1,7 @@
-import imagesService from "@/services/images";
+import imagesService from '@/services/images';
 
 const state = {
-  images: undefined
+  images: undefined,
 };
 
 const getters = {
@@ -24,66 +24,66 @@ const getters = {
       });
     }
     return state.images;
-  }
+  },
 };
 
 const actions = {
-  async create({ commit }, image) {
+  async create({ commit, }, image) {
     try {
       let response = await imagesService.create(image);
-      commit("setImage", response.image);
+      commit('setImage', response.image);
 
       if (image.projectId) {
-        commit("setImageProject", {
+        commit('setImageProject', {
           imageId: response.image.id,
-          projectId: image.projectId
+          projectId: image.projectId,
         });
       }
 
       return {
         message: `${image.name} was created.`,
-        success: true
+        success: true,
       };
     } catch (error) {
       return {
         error,
         message: `${image.name} couldn't be created.`,
-        success: false
+        success: false,
       };
     }
   },
-  async delete({ commit }, image) {
+  async delete({ commit, }, image) {
     try {
       let response = await imagesService.delete(image.id);
-      commit("deleteImage", response.imageId);
+      commit('deleteImage', response.imageId);
       return {
         message: `${image.name} was deleted.`,
-        success: true
+        success: true,
       };
     } catch (error) {
       return {
         error,
         message: `${image.name} couldn't be deleted.`,
-        success: false
+        success: false,
       };
     }
   },
-  async getAllImages({ commit }) {
+  async getAllImages({ commit, }) {
     try {
       let images = await imagesService.getAllImages();
-      commit("setImages", images);
+      commit('setImages', images);
     } catch (error) {
-      commit("setImages", null);
+      commit('setImages', null);
     }
   },
-  async getImage({ commit }, id) {
+  async getImage({ commit, }, id) {
     try {
       let image = await imagesService.getImage(id);
-      commit("setImage", image);
+      commit('setImage', image);
     } catch (error) {
-      commit("setImage", null);
+      commit('setImage', null);
     }
-  }
+  },
 };
 
 const mutations = {
@@ -97,10 +97,10 @@ const mutations = {
     if (state.images) {
       state.images.push(payload);
     } else {
-      state.images = [payload];
+      state.images = [payload,];
     }
   },
-  setImageProject(state, { imageId, projectId },) {
+  setImageProject(state, { imageId, projectId, },) {
     console.log(state)
     const project = state.projects.filter(project => {
       return project.id === projectId;
@@ -109,7 +109,7 @@ const mutations = {
   },
   setImages(state, payload) {
     state.images = payload;
-  }
+  },
 };
 
 export default {
@@ -117,5 +117,5 @@ export default {
   getters,
   mutations,
   namespaced: true,
-  state
+  state,
 };

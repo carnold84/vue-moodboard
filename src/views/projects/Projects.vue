@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: "projects",
-  components: {}
+  name: 'projects',
+  components: {},
 };
 </script>
 

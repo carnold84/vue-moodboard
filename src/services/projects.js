@@ -1,10 +1,10 @@
-import api from "@/services/api";
+import api from '@/services/api';
 
 export default {
   create: async project => {
     return new Promise((resolve, reject) => {
       api
-        .post("/projects", project)
+        .post('/projects', project)
         .then(response => {
           resolve(response.data);
         })
@@ -28,7 +28,7 @@ export default {
   getAllProjects: async () => {
     return new Promise((resolve, reject) => {
       api
-        .get("/projects")
+        .get('/projects')
         .then(response => {
           resolve(response.data);
         })
@@ -48,5 +48,5 @@ export default {
           reject(error);
         });
     });
-  }
+  },
 };

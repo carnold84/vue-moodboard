@@ -12,36 +12,36 @@
 
 <script>
 export default {
-  name: "app-button",
+  name: 'app-button',
   computed: {
     primaryClass: function() {
-      return this.isPrimary ? "is-primary" : null;
-    }
+      return this.isPrimary ? 'is-primary' : null;
+    },
   },
   methods: {
     onClick(evt) {
       if (this.$listeners.click) {
         this.$listeners.click(evt);
       }
-    }
+    },
   },
   props: {
     isDisabled: {
       default: false,
-      type: Boolean
+      type: Boolean,
     },
     isPrimary: {
       default: false,
-      type: Boolean
+      type: Boolean,
     },
     type: {
-      default: "button",
+      default: 'button',
       type: String,
       validator: value => {
         return value.match(/(button|submit)/);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

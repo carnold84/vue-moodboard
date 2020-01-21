@@ -30,18 +30,18 @@
 </template>
 
 <script>
-import AppButton from "@/components/AppButton";
-import AppLoading from "@/components/AppLoading";
-import BreadcrumbNav from "@/components/BreadcrumbNav";
-import PageHeader from "@/components/PageHeader";
+import AppButton from '@/components/AppButton';
+import AppLoading from '@/components/AppLoading';
+import BreadcrumbNav from '@/components/BreadcrumbNav';
+import PageHeader from '@/components/PageHeader';
 
 export default {
-  name: "project-image",
+  name: 'project-image',
   components: {
     AppButton,
     AppLoading,
     BreadcrumbNav,
-    PageHeader
+    PageHeader,
   },
   computed: {
     id() {
@@ -51,25 +51,25 @@ export default {
       return this.$route.params.imageId;
     },
     image() {
-      return this.$store.getters["images/image"](this.imageId);
+      return this.$store.getters['images/image'](this.imageId);
     },
     imageUrl() {
       return `https://res.cloudinary.com/carnold/image/upload/w_1200/${this.image.fileName}.${this.image.format}`;
     },
     project() {
-      return this.$store.getters["projects/project"](this.id);
-    }
+      return this.$store.getters['projects/project'](this.id);
+    },
   },
   data() {
     return {
-      isRemoving: false
+      isRemoving: false,
     };
   },
   methods: {
     async onDelete() {
       this.isRemoving = true;
 
-      const response = await this.$store.dispatch("images/delete", this.image);
+      const response = await this.$store.dispatch('images/delete', this.image);
 
       if (response.success) {
         this.$router.push(`/projects/${this.id}`);
@@ -80,15 +80,15 @@ export default {
     async onRemove() {
       this.isRemoving = true;
 
-      const response = await this.$store.dispatch("images/remove", this.image);
+      const response = await this.$store.dispatch('images/remove', this.image);
 
       if (response.success) {
         this.$router.push(`/projects/${this.id}`);
       } else {
         console.error(response.message);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

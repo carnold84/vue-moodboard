@@ -1,10 +1,10 @@
-import api from "@/services/api";
+import api from '@/services/api';
 
 export default {
   create: async image => {
     return new Promise((resolve, reject) => {
       api
-        .post("/images", image)
+        .post('/images', image)
         .then(response => {
           resolve(response.data);
         })
@@ -28,7 +28,7 @@ export default {
   getAllImages: async () => {
     return new Promise((resolve, reject) => {
       api
-        .get("/images")
+        .get('/images')
         .then(response => {
           resolve(response.data);
         })
@@ -60,5 +60,5 @@ export default {
           reject(error);
         });
     });
-  }
+  },
 };
