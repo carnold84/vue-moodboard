@@ -1,4 +1,4 @@
-# aura-vue
+# Moodboard App
 
 ## Project setup
 ```
