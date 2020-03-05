@@ -23,7 +23,7 @@ export default {
     },
     to: {
       default: null,
-      type: [String, Object,],
+      type: [String, Object],
     },
   },
 };

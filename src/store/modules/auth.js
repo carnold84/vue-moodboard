@@ -22,7 +22,7 @@ const getters = {
 };
 
 const actions = {
-  async getUser({ commit, }) {
+  async getUser({ commit }) {
     try {
       let user = await authService.getUser();
 
@@ -42,10 +42,10 @@ const actions = {
       };
     }
   },
-  async login({ commit, }, data) {
+  async login({ commit }, data) {
     try {
-      const { email, password, } = data;
-      let token = await authService.login({ email, password, });
+      const { email, password } = data;
+      let token = await authService.login({ email, password });
       localStorage.setItem(tokenName, token);
 
       commit('login_success', token);
@@ -62,7 +62,7 @@ const actions = {
       };
     }
   },
-  async logout({ commit, }) {
+  async logout({ commit }) {
     try {
       localStorage.removeItem(tokenName);
       commit('logout_success');

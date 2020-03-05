@@ -6,12 +6,13 @@
     <app-header>
       <template v-slot:content-left>
         <router-link to="/">
-          <app-logo height="30px" style="align-self: center; margin: 0 20px 0 0;"></app-logo>
+          <app-logo height="30px" style="align-self: center; margin: 0 15px 0 0;"></app-logo>
+          <h1 class="title">{{appName}}</h1>
         </router-link>
-        <router-link to="/">Home</router-link>
-        <router-link to="/projects">Projects</router-link>
       </template>
       <template v-if="isLoggedIn" v-slot:content-right>
+        <router-link to="/">Home</router-link>
+        <router-link to="/projects">Projects</router-link>
         <a @click="logout">Logout</a>
       </template>
     </app-header>
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+import appConfig from '@/app.config';
 import AppHeader from '@/components/AppHeader';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
@@ -34,6 +36,9 @@ export default {
     AppLogo,
   },
   computed: {
+    appName() {
+      return appConfig.appName;
+    },
     isLoggedIn() {
       return this.$store.getters['auth/isLoggedIn'];
     },
@@ -66,6 +71,11 @@ export default {
   flex-grow: 1;
   overflow: auto;
   padding: 20px 0 0;
+}
+
+.title {
+  font-size: 1.6em;
+  font-weight: 300;
 }
 
 a {

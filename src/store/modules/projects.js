@@ -20,7 +20,7 @@ const getters = {
 };
 
 const actions = {
-  async create({ commit, }, project) {
+  async create({ commit }, project) {
     try {
       let response = await projectsService.create(project);
       commit('setProject', response.project);
@@ -36,7 +36,7 @@ const actions = {
       };
     }
   },
-  async delete({ commit, }, project) {
+  async delete({ commit }, project) {
     try {
       let response = await projectsService.delete(project.id);
       commit('deleteProject', response.id);
@@ -52,7 +52,7 @@ const actions = {
       };
     }
   },
-  async getAllProjects({ commit, }) {
+  async getAllProjects({ commit }) {
     try {
       let projects = await projectsService.getAllProjects();
       commit('setProjects', projects);
@@ -60,7 +60,7 @@ const actions = {
       commit('setProjects', null);
     }
   },
-  async getProject({ commit, }, id) {
+  async getProject({ commit }, id) {
     try {
       let project = await projectsService.getProject(id);
       commit('setProject', project);
@@ -80,7 +80,7 @@ const mutations = {
     if (state.projects && state.projects.length > 0) {
       state.projects.push(payload);
     } else {
-      state.projects = [payload,];
+      state.projects = [payload];
     }
   },
   setProjects(state, payload) {

@@ -18,13 +18,10 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   align-content: center;
-  background-color: var(--button__bg-color);
-  border-bottom: var(--button__border-color) solid 1px;
   display: flex;
   flex-shrink: 0;
-  height: 60px;
   justify-content: space-between;
-  padding: 0 15px;
+  padding: 30px;
   width: 100%;
 }
 

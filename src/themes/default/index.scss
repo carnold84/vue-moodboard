@@ -1,6 +1,6 @@
 :root {
-  --fontFamily--primary: 'Open Sans', Helvetica, Arial, sans-serif;
-  --fontFamily--secondary: 'Open Sans', Helvetica, Arial, sans-serif;
+  --fontFamily--primary: "Open Sans", Helvetica, Arial, sans-serif;
+  --fontFamily--secondary: "Open Sans", Helvetica, Arial, sans-serif;
 
   --primary1: #7f226b;
   --primary2: #a73a8f;
@@ -21,24 +21,21 @@
 
   --loading_bg-color: var(--primary1);
 
-  --button__bg-color: var(--theme1);
   --button__border-color: var(--theme4);
-  --button__color: var(--text3);
-  --button__bg-color--focus: var(--theme1);
+  --button__color: var(--text1);
   --button__border-color--focus: var(--primary1);
   --button__color--focus: var(--text1);
   --button__outline-color--focus: var(--theme5);
   --button__bg-color--hover: var(--theme2);
   --button__border-color--hover: var(--theme5);
   --button__color--hover: var(--text1);
-  --button__bg-color--primary: var(--primary1);
   --button__border-color--primary: var(--primary1);
-  --button__color--primary: var(--textAlt1);
+  --button__color--primary: var(--primary1);
   --button__bg-color--primary-hover: var(--primary2);
   --button__border-color--primary-hover: var(--primary1);
   --button__color--primary-hover: var(--textAlt1);
+  --button__bg-color--primary-focus: var(--primary1);
 
-  
   --pageHeader__bg-color: var(--theme2);
   --pageHeader__border-color: var(--theme3);
 

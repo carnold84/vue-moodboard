@@ -1,9 +1,18 @@
 <template>
+  <a 
+    v-if="type === 'routerLink'"
+    class="wrapper"
+    :class="{'is-primary': isPrimary}"
+    :disabled="isDisabled"
+    :to="to">
+    <slot></slot>
+  </a>
   <button
-    class="button-wrapper"
+    class="wrapper"
     :class="{'is-primary': isPrimary}"
     :disabled="isDisabled"
     :type="type"
+    v-else
     @click="onClick"
   >
     <slot></slot>
@@ -13,11 +22,6 @@
 <script>
 export default {
   name: 'app-button',
-  computed: {
-    primaryClass: function() {
-      return this.isPrimary ? 'is-primary' : null;
-    },
-  },
   methods: {
     onClick(evt) {
       if (this.$listeners.click) {
@@ -34,11 +38,14 @@ export default {
       default: false,
       type: Boolean,
     },
+    to: {
+      type: String,
+    },
     type: {
       default: 'button',
       type: String,
       validator: value => {
-        return value.match(/(button|submit)/);
+        return value.match(/(button|routerLink|submit)/);
       },
     },
   },
@@ -47,14 +54,10 @@ export default {
 
 <style scoped lang="scss">
 .wrapper {
-  display: flex;
-}
-
-.button-wrapper {
   align-content: center;
-  background-color: var(--button__bg-color);
+  background-color: transparent;
   border: var(--button__border-color) solid 1px;
-  border-radius: 3px;
+  border-radius: 18px;
   color: var(--button__color);
   cursor: pointer;
   display: flex;
@@ -71,20 +74,17 @@ export default {
   }
 
   &:focus {
-    background-color: var(--button__bg-color--focus);
     border-color: var(--button__border-color--focus);
     color: var(--button__color--focus);
     box-shadow: 0 0 0 2px var(--button__outline-color--focus);
   }
 
   &:hover {
-    background-color: var(--button__bg-color--hover);
     border-color: var(--button__border-color--hover);
     color: var(--button__color--hover);
   }
 
   &.is-primary {
-    background-color: var(--button__bg-color--primary);
     border-color: var(--button__border-color--primary);
     color: var(--button__color--primary);
 
@@ -92,6 +92,12 @@ export default {
       background-color: var(--button__bg-color--primary-hover);
       border-color: var(--button__border-color--primary-hover);
       color: var(--button__color--primary-hover);
+    }
+
+    &:focus {
+      border-color: var(--button__border-color--focus);
+      color: var(--button__color--focus);
+      box-shadow: 0 0 0 2px var(--button__outline-color--primary-focus);
     }
   }
 }

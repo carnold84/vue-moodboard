@@ -20,6 +20,11 @@
             style="max-width: 200px; width: 100%;"
             type="submit"
           >Create Project</app-button>
+          <app-button
+            style="max-width: 200px; width: 100%;"
+            to="/projects"
+            type="routerLink"
+          >Cancel</app-button>
         </form>
       </div>
     </div>
