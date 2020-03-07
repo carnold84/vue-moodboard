@@ -10,10 +10,14 @@
           <h1 class="title">{{appName}}</h1>
         </router-link>
       </template>
-      <template v-if="isLoggedIn" v-slot:content-right>
-        <router-link to="/">Home</router-link>
-        <router-link to="/projects">Projects</router-link>
-        <a @click="logout">Logout</a>
+      <template v-slot:content-center>
+        <nav class="main-nav">
+          <router-link class="nav-item" to="/">Home</router-link>
+          <router-link class="nav-item" to="/projects">Projects</router-link>
+        </nav>
+      </template>
+      <template v-slot:content-right>
+        <a class="nav-item" @click="logout">Logout</a>
       </template>
     </app-header>
     <div class="app-content">
@@ -38,9 +42,6 @@ export default {
   computed: {
     appName() {
       return appConfig.appName;
-    },
-    isLoggedIn() {
-      return this.$store.getters['auth/isLoggedIn'];
     },
     user() {
       return this.$store.getters['auth/user'];
@@ -74,20 +75,40 @@ export default {
 }
 
 .title {
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-weight: 300;
 }
 
 a {
   align-items: center;
   color: #333333;
+  cursor: pointer;
   display: flex;
-  font-weight: bold;
-  margin: 0 15px 0 0;
   text-decoration: none;
+  text-transform: uppercase;
 
-  &.router-link-exact-active {
+  &:hover {
     color: var(--primary1);
+  }
+}
+
+.main-nav {
+  display: flex;
+
+  .nav-item {
+    border-bottom: transparent solid 1px;
+    color: #333333;
+    font-size: 1em;
+    margin: 0 20px 0 0;
+
+    &:last-child {
+      margin: 0;
+    }
+    
+    &.router-link-exact-active {
+      border-color: var(--primary1);
+      color: var(--primary1);
+    }
   }
 }
 </style>

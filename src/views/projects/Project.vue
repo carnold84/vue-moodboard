@@ -16,11 +16,11 @@
           </template>
           <template v-slot:content-right>
             <button-group>
-              <app-button @click="onDelete" :is-primary="true">Delete</app-button>
-              <app-link
+              <app-button @click="onDelete">Delete</app-button>
+              <app-button
                 :to="{ name: 'project-add-image', params: { id: project.id }}"
                 :is-primary="true"
-              >Add Image</app-link>
+              >Add Image</app-button>
             </button-group>
           </template>
         </page-header>
@@ -58,7 +58,6 @@ export default {
   name: 'project',
   components: {
     AppButton,
-    AppLink,
     AppLoading,
     BreadcrumbNav,
     ButtonGroup,

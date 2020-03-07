@@ -3,6 +3,9 @@
     <div class="content-left">
       <slot name="content-left"></slot>
     </div>
+    <div class="content-center">
+      <slot name="content-center"></slot>
+    </div>
     <div class="content-right">
       <slot name="content-right"></slot>
     </div>
@@ -25,13 +28,7 @@ export default {
   width: 100%;
 }
 
-.content-left {
-  align-content: center;
-  display: flex;
-  height: 100%;
-}
-
-.content-right {
+.content-left, .content-center, .content-right {
   align-content: center;
   display: flex;
   height: 100%;

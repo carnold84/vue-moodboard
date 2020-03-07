@@ -7,7 +7,7 @@
             <h1 class="view-title">Projects</h1>
           </template>
           <template v-slot:content-right>
-            <app-link :is-primary="true" to="/projects/create">New Project</app-link>
+            <app-button :is-primary="true" to="/projects/create"><span>New Project</span></app-button>
           </template>
         </page-header>
       </div>
@@ -26,14 +26,14 @@
 </template>
 
 <script>
-import AppLink from '@/components/AppLink';
+import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import PageHeader from '@/components/PageHeader';
 
 export default {
   name: 'projects',
   components: {
-    AppLink,
+    AppButton,
     AppLoading,
     PageHeader,
   },

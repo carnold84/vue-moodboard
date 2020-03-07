@@ -15,16 +15,18 @@
         <form class="form" @submit.prevent="create">
           <text-input v-model="name" label="Name" name="name"></text-input>
           <text-input v-model="description" label="Description" name="description"></text-input>
-          <app-button
-            :isPrimary="true"
-            style="max-width: 200px; width: 100%;"
-            type="submit"
-          >Create Project</app-button>
-          <app-button
-            style="max-width: 200px; width: 100%;"
-            to="/projects"
-            type="routerLink"
-          >Cancel</app-button>
+          <button-group align="right">
+            <app-button
+              style="width: 160px;"
+              to="/projects"
+              type="routerLink"
+            >Cancel</app-button>
+            <app-button
+              :isPrimary="true"
+              style="width: 160px;"
+              type="submit"
+            >Create Project</app-button>
+          </button-group>
         </form>
       </div>
     </div>
@@ -34,6 +36,7 @@
 <script>
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
+import ButtonGroup from '@/components/ButtonGroup';
 import PageHeader from '@/components/PageHeader';
 import TextInput from '@/components/TextInput';
 
@@ -42,6 +45,7 @@ export default {
   components: {
     AppButton,
     AppLoading,
+    ButtonGroup,
     PageHeader,
     TextInput,
   },

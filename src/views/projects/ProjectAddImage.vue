@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="row">
+    <app-loading v-if="!project || isSaving === true"></app-loading>
+    <div v-if="project" class="row">
       <div class="col-12">
         <page-header>
           <template v-slot:content-left>
@@ -9,8 +10,7 @@
         </page-header>
       </div>
     </div>
-    <app-loading v-if="isSaving === true"></app-loading>
-    <div v-if="isSaving === false" class="row">
+    <div v-if="project && isSaving === false" class="row">
       <div class="col-12">
         <form class="form" @submit.prevent="create">
           <text-input v-model="name" label="Name" name="name"></text-input>
@@ -20,12 +20,19 @@
             name="description"
           ></text-input>
           <text-input v-model="url" label="Url" name="url"></text-input>
-          <app-button
-            :isPrimary="true"
-            style="max-width: 200px; width: 100%;"
-            type="submit"
-            >Add Image</app-button
-          >
+          <button-group align="right">
+            <app-button
+              style="width: 160px;"
+              :to="{ name: 'project', params: { id: project.id }}"
+              >Cancel</app-button
+            >
+            <app-button
+              :isPrimary="true"
+              style="width: 160px;"
+              type="submit"
+              >Add Image</app-button
+            >
+          </button-group>
         </form>
       </div>
     </div>
@@ -35,6 +42,7 @@
 <script>
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
+import ButtonGroup from '@/components/ButtonGroup';
 import PageHeader from '@/components/PageHeader';
 import TextInput from '@/components/TextInput';
 
@@ -43,6 +51,7 @@ export default {
   components: {
     AppButton,
     AppLoading,
+    ButtonGroup,
     PageHeader,
     TextInput,
   },
