@@ -19,7 +19,6 @@
             <app-button
               style="width: 160px;"
               to="/projects"
-              type="routerLink"
             >Cancel</app-button>
             <app-button
               :isPrimary="true"

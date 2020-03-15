@@ -16,8 +16,8 @@
     <div v-if="projects && projects.length === 0">No Projects</div>
     <div v-if="projects && projects.length > 0" class="row">
       <div v-for="project in projects" :key="project.id" class="col-3">
-        <router-link class="image-link" :to="{ name: 'project', params: { id: project.id }}">
-          <img class="image" style="height: 200px;" />
+        <router-link class="image-link project" :to="{ name: 'project', params: { id: project.id }}">
+          <img class="image" />
           <h3 class="title">{{project.name}}</h3>
         </router-link>
       </div>
@@ -47,14 +47,13 @@ export default {
 
 <style lang="scss">
 .project {
-  margin: 0 0 20px;
+  margin: 0 0 40px;
 
   h3 {
     font-weight: 300;
   }
 
   img {
-    background-color: aquamarine;
     height: 200px;
     width: 100%;
   }

@@ -106,4 +106,8 @@ export default {
 </script>
 
 <style lang="scss">
+.image {
+  height: 200px;
+  width: 100%;
+}
 </style>

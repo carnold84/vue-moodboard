@@ -18,6 +18,10 @@ const getters = {
     return state.images;
   },
   imagesById: state => ids => {
+    if (!ids) {
+      return [];
+    }
+
     if (state.images) {
       return state.images.filter(image => {
         return ids.includes(image.id);
@@ -99,7 +103,7 @@ const mutations = {
       state.images = [payload];
     }
   },
-  setImageProject(state, { imageId, projectId },) {
+  setImageProject(state, { imageId, projectId }, ) {
     const project = state.projects.filter(project => {
       return project.id === projectId;
     });
