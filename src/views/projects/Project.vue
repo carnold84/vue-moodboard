@@ -33,12 +33,12 @@
       <div class="col-12">No images.</div>
     </div>
     <div v-if="project && !isDeleting && (images && images.length > 0)" class="row">
-      <div v-for="image in images" :key="image.id" class="col-3">
+      <div v-for="image in images" :key="image.id" class="col-lg-4 col-xl-3">
         <router-link
           class="image-link"
           :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
         >
-          <img class="image" :src="thumbUrl(image)" />
+          <app-picture class="picture" height="200px" :src="thumbUrl(image)" />
           <h3 class="title">{{image.name}}</h3>
         </router-link>
       </div>
@@ -50,6 +50,7 @@
 import AppButton from '@/components/AppButton';
 import AppLink from '@/components/AppLink';
 import AppLoading from '@/components/AppLoading';
+import AppPicture from '@/components/AppPicture';
 import BreadcrumbNav from '@/components/BreadcrumbNav';
 import ButtonGroup from '@/components/ButtonGroup';
 import PageHeader from '@/components/PageHeader';
@@ -59,6 +60,7 @@ export default {
   components: {
     AppButton,
     AppLoading,
+    AppPicture,
     BreadcrumbNav,
     ButtonGroup,
     PageHeader,
@@ -106,8 +108,10 @@ export default {
 </script>
 
 <style lang="scss">
-.image {
-  height: 200px;
-  width: 100%;
+.image-link {
+  margin: 0 0 40px;
+}
+.picture {
+  margin: 0 0 10px;
 }
 </style>
