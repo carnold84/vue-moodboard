@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="view-container">
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
@@ -32,23 +32,27 @@
     <div v-if="project && !isDeleting && (images && images.length === 0)" class="row">
       <div class="col-12">No images.</div>
     </div>
-    <div v-if="project && !isDeleting && (images && images.length > 0)" class="row">
-      <div v-for="image in images" :key="image.id" class="col-lg-4 col-xl-3">
-        <router-link
-          class="image-link"
+    <div
+      v-if="project && !isDeleting && (images && images.length > 0)"
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
+    >
+      <div v-for="image in images" :key="image.id" class="col">
+        <a-image-link
+          :imageUrl="thumbUrl(image)"
+          :title="image.name"
           :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
         >
           <app-picture class="picture" height="200px" :src="thumbUrl(image)" />
           <h3 class="title">{{image.name}}</h3>
-        </router-link>
+        </a-image-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AImageLink from '@/components/AImageLink';
 import AppButton from '@/components/AppButton';
-import AppLink from '@/components/AppLink';
 import AppLoading from '@/components/AppLoading';
 import AppPicture from '@/components/AppPicture';
 import BreadcrumbNav from '@/components/BreadcrumbNav';
@@ -58,6 +62,7 @@ import PageHeader from '@/components/PageHeader';
 export default {
   name: 'project',
   components: {
+    AImageLink,
     AppButton,
     AppLoading,
     AppPicture,
@@ -111,6 +116,7 @@ export default {
 .image-link {
   margin: 0 0 40px;
 }
+
 .picture {
   margin: 0 0 10px;
 }

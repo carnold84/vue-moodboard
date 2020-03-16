@@ -74,6 +74,10 @@ export default {
   padding: 20px 0 0;
 }
 
+.view-container {
+  padding: 0 30px;
+}
+
 .title {
   font-size: 1.4em;
   font-weight: 300;

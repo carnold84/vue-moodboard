@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="view-container">
     <div class="row">
       <div class="col-12">
         <page-header>
@@ -14,8 +14,11 @@
     </div>
     <app-loading v-if="projects === undefined"></app-loading>
     <div v-if="projects && projects.length === 0">No Projects</div>
-    <div v-if="projects && projects.length > 0" class="row">
-      <div v-for="project in projects" :key="project.id" class="col-3">
+    <div 
+      v-if="projects && projects.length > 0"
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
+    >
+      <div v-for="project in projects" :key="project.id" class="col">
         <router-link class="image-link project" :to="{ name: 'project', params: { id: project.id }}">
           <img class="image" />
           <h3 class="title">{{project.name}}</h3>
