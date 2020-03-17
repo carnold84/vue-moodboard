@@ -2,20 +2,16 @@
   <div class="view-container">
     <div class="row">
       <div class="col-12">
+        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
         <page-header>
           <template v-slot:content-left>
-            <breadcrumb-nav>
-              <router-link to="/projects">Projects</router-link>
-              <span class="divider">/</span>
-              <router-link :to="{ name: 'project', params: { id: project.id }}">{{project.name}}</router-link>
-              <span class="divider">/</span>
-              <h1 class="title">{{image.name}}</h1>
-            </breadcrumb-nav>
             <h1 class="view-title">{{image.name}}</h1>
           </template>
           <template v-slot:content-right>
-            <app-button @click="onRemove" :is-primary="true">Remove from {{ project.name }}</app-button>
-            <app-button @click="onDelete" :is-primary="true">Delete</app-button>
+            <button-group>
+              <app-button @click="onRemove" :is-primary="true">Remove from {{ project.name }}</app-button>
+              <app-button @click="onDelete" :is-primary="true">Delete</app-button>
+            </button-group>
           </template>
         </page-header>
       </div>
@@ -33,6 +29,7 @@
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import BreadcrumbNav from '@/components/BreadcrumbNav';
+import ButtonGroup from '@/components/ButtonGroup';
 import PageHeader from '@/components/PageHeader';
 
 export default {
@@ -41,9 +38,25 @@ export default {
     AppButton,
     AppLoading,
     BreadcrumbNav,
+    ButtonGroup,
     PageHeader,
   },
   computed: {
+    breadcrumb() { 
+      return [
+        {
+          title: 'Projects',
+          to: '/projects',
+        },
+        {
+          title: this.project.name,
+          to: `/projects/${this.id}`,
+        },
+        {
+          title: this.image.name,
+        },
+      ];
+    },
     id() {
       return this.$route.params.id;
     },

@@ -1,12 +1,21 @@
 <template>
   <div class="wrapper">
-    <slot></slot>
+    <div v-for="(item, index) in items" :key="item.id">
+      <router-link v-if="item.to" :to="item.to">{{item.title}}</router-link>
+      <span v-if="index < items.length - 1" class="divider">/</span>
+      <p v-if="!item.to" class="title">{{item.title}}</p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'breadcrumb-nav',
+  props: {
+    items: {
+      type: Array,
+    },
+  },
 };
 </script>
 

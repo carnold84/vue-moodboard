@@ -19,16 +19,17 @@
       class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
     >
       <div v-for="project in projects" :key="project.id" class="col">
-        <router-link class="image-link project" :to="{ name: 'project', params: { id: project.id }}">
-          <img class="image" />
-          <h3 class="title">{{project.name}}</h3>
-        </router-link>
+        <a-image-link
+          :title="project.name"
+          :to="{ name: 'project', params: { id: project.id }}"
+        ></a-image-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AImageLink from '@/components/AImageLink';
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import PageHeader from '@/components/PageHeader';
@@ -36,6 +37,7 @@ import PageHeader from '@/components/PageHeader';
 export default {
   name: 'projects',
   components: {
+    AImageLink,
     AppButton,
     AppLoading,
     PageHeader,
@@ -49,16 +51,7 @@ export default {
 </script>
 
 <style lang="scss">
-.project {
+.a-image-link {
   margin: 0 0 40px;
-
-  h3 {
-    font-weight: 300;
-  }
-
-  img {
-    height: 200px;
-    width: 100%;
-  }
 }
 </style>

@@ -3,11 +3,7 @@
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
-        <breadcrumb-nav>
-          <router-link to="/projects">Projects</router-link>
-          <span class="divider">/</span>
-          <h1 class="title">{{project.name}}</h1>
-        </breadcrumb-nav>
+        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
       </div>
       <div class="col-12">
         <page-header>
@@ -41,10 +37,7 @@
           :imageUrl="thumbUrl(image)"
           :title="image.name"
           :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
-        >
-          <app-picture class="picture" height="200px" :src="thumbUrl(image)" />
-          <h3 class="title">{{image.name}}</h3>
-        </a-image-link>
+        ></a-image-link>
       </div>
     </div>
   </div>
@@ -65,12 +58,22 @@ export default {
     AImageLink,
     AppButton,
     AppLoading,
-    AppPicture,
     BreadcrumbNav,
     ButtonGroup,
     PageHeader,
   },
   computed: {
+    breadcrumb() { 
+      return [
+        {
+          title: 'Projects',
+          to: '/projects',
+        },
+        {
+          title: this.project.name,
+        },
+      ];
+    },
     id() {
       return this.$route.params.id;
     },
@@ -113,11 +116,7 @@ export default {
 </script>
 
 <style lang="scss">
-.image-link {
+.a-image-link {
   margin: 0 0 40px;
-}
-
-.picture {
-  margin: 0 0 10px;
 }
 </style>

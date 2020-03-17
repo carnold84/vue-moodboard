@@ -1,10 +1,10 @@
 <template>
   <router-link
-    class="image-link"
+    class="a-image-link"
     :to="to"
   >
-    <app-picture class="image-link-picture" :height="imageHeight" :src="imageUrl" />
-    <h3 v-if="title" class="image-link-title">{{title}}</h3>
+    <app-picture class="a-image-link-picture" :height="imageHeight" :src="imageUrl" />
+    <h3 v-if="title" class="a-image-link-title">{{title}}</h3>
   </router-link>
 </template>
 
@@ -35,28 +35,28 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.image-link {
+.a-image-link {
   display: flex;
   flex-direction: column;
   text-decoration: none;
 
   &:hover {
-    .image-link-picture {
+    .a-image-link-picture {
       outline: 3px solid var(--button__bg-color--primary);
     }
 
-    .image-link-title {
+    .a-image-link-title {
       color: var(--button__bg-color--primary);
     }
   }
 }
 
-.image-link-picture {
+.a-image-link-picture {
   margin: 0 0 10px;
   outline: 1px solid #e3e3e3;
 }
 
-.image-link-title {
+.a-image-link-title {
   color: #444444;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1em;

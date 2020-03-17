@@ -1,8 +1,8 @@
 <template>
   <div class="picture-wrapper" :style="{height, width}">
-    <app-loading v-if="imageUrl === ''" />
+    <app-loading v-if="src && imageUrl === ''" />
     <img 
-      v-else 
+      v-else-if="imageUrl"
       class="picture-image"
       :class="fillType"
       :src="imageUrl"
@@ -31,7 +31,9 @@ export default {
     };
   },
   destroyed() {
-    this.image.removeEventListener('load', this.onImageLoaded, false);
+    if (this.image) {
+      this.image.removeEventListener('load', this.onImageLoaded, false);
+    }
   },
   methods: {
     onImageLoaded() {
@@ -40,9 +42,11 @@ export default {
     },
   },
   mounted() {
-    this.image = new Image(this.width, this.height);
-    this.image.addEventListener('load', this.onImageLoaded, false);
-    this.image.src = this.src;
+    if (this.src) {
+      this.image = new Image(this.width, this.height);
+      this.image.addEventListener('load', this.onImageLoaded, false);
+      this.image.src = this.src;
+    }
   },
   props: {
     fillType: {
@@ -70,7 +74,6 @@ export default {
 <style scoped lang="scss">
 .picture-wrapper {
   align-items: center;
-  border: #f2f2f2 solid 1px;
   display: flex;
   justify-content: center;
   position: relative;

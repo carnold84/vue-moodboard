@@ -1,8 +1,9 @@
 <template>
-  <div class="container">
+  <div class="view-container">
     <app-loading v-if="!project || isSaving === true"></app-loading>
     <div v-if="project" class="row">
       <div class="col-12">
+        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
         <page-header>
           <template v-slot:content-left>
             <h1 class="view-title">Add Image to {{ project.name }}</h1>
@@ -42,6 +43,7 @@
 <script>
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
+import BreadcrumbNav from '@/components/BreadcrumbNav';
 import ButtonGroup from '@/components/ButtonGroup';
 import PageHeader from '@/components/PageHeader';
 import TextInput from '@/components/TextInput';
@@ -51,11 +53,27 @@ export default {
   components: {
     AppButton,
     AppLoading,
+    BreadcrumbNav,
     ButtonGroup,
     PageHeader,
     TextInput,
   },
   computed: {
+    breadcrumb() { 
+      return [
+        {
+          title: 'Projects',
+          to: '/projects',
+        },
+        {
+          title: this.project.name,
+          to: `/projects/${this.id}`,
+        },
+        {
+          title: 'Add Image',
+        },
+      ];
+    },
     id() {
       return this.$route.params.id;
     },
