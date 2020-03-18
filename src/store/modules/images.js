@@ -18,6 +18,10 @@ const getters = {
     return state.images;
   },
   imagesById: state => ids => {
+    if (!ids) {
+      return [];
+    }
+
     if (state.images) {
       return state.images.filter(image => {
         return ids.includes(image.id);
@@ -28,7 +32,7 @@ const getters = {
 };
 
 const actions = {
-  async create({ commit, }, image) {
+  async create({ commit }, image) {
     try {
       let response = await imagesService.create(image);
       commit('setImage', response.image);
@@ -52,7 +56,7 @@ const actions = {
       };
     }
   },
-  async delete({ commit, }, image) {
+  async delete({ commit }, image) {
     try {
       let response = await imagesService.delete(image.id);
       commit('deleteImage', response.imageId);
@@ -68,7 +72,7 @@ const actions = {
       };
     }
   },
-  async getAllImages({ commit, }) {
+  async getAllImages({ commit }) {
     try {
       let images = await imagesService.getAllImages();
       commit('setImages', images);
@@ -76,7 +80,7 @@ const actions = {
       commit('setImages', null);
     }
   },
-  async getImage({ commit, }, id) {
+  async getImage({ commit }, id) {
     try {
       let image = await imagesService.getImage(id);
       commit('setImage', image);
@@ -93,15 +97,13 @@ const mutations = {
     });
   },
   setImage(state, payload, rootState) {
-    console.log(rootState)
     if (state.images) {
       state.images.push(payload);
     } else {
-      state.images = [payload,];
+      state.images = [payload];
     }
   },
-  setImageProject(state, { imageId, projectId, },) {
-    console.log(state)
+  setImageProject(state, { imageId, projectId }, ) {
     const project = state.projects.filter(project => {
       return project.id === projectId;
     });

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="view-container">
     <div class="row">
       <div class="col-12">
         <page-header>
@@ -7,33 +7,38 @@
             <h1 class="view-title">Projects</h1>
           </template>
           <template v-slot:content-right>
-            <app-link :is-primary="true" to="/projects/create">New Project</app-link>
+            <app-button :is-primary="true" to="/projects/create"><span>New Project</span></app-button>
           </template>
         </page-header>
       </div>
     </div>
     <app-loading v-if="projects === undefined"></app-loading>
     <div v-if="projects && projects.length === 0">No Projects</div>
-    <div v-if="projects && projects.length > 0" class="row">
-      <div v-for="project in projects" :key="project.id" class="col-3">
-        <router-link class="image-link" :to="{ name: 'project', params: { id: project.id }}">
-          <img class="image" style="height: 200px;" />
-          <h3 class="title">{{project.name}}</h3>
-        </router-link>
+    <div 
+      v-if="projects && projects.length > 0"
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
+    >
+      <div v-for="project in projects" :key="project.id" class="col">
+        <a-image-link
+          :title="project.name"
+          :to="{ name: 'project', params: { id: project.id }}"
+        ></a-image-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AppLink from '@/components/AppLink';
+import AImageLink from '@/components/AImageLink';
+import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import PageHeader from '@/components/PageHeader';
 
 export default {
   name: 'projects',
   components: {
-    AppLink,
+    AImageLink,
+    AppButton,
     AppLoading,
     PageHeader,
   },
@@ -46,17 +51,7 @@ export default {
 </script>
 
 <style lang="scss">
-.project {
-  margin: 0 0 20px;
-
-  h3 {
-    font-weight: 300;
-  }
-
-  img {
-    background-color: aquamarine;
-    height: 200px;
-    width: 100%;
-  }
+.a-image-link {
+  margin: 0 0 40px;
 }
 </style>

@@ -1,13 +1,9 @@
 <template>
-  <div class="container">
+  <div class="view-container">
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
-        <breadcrumb-nav>
-          <router-link to="/projects">Projects</router-link>
-          <span class="divider">/</span>
-          <h1 class="title">{{project.name}}</h1>
-        </breadcrumb-nav>
+        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
       </div>
       <div class="col-12">
         <page-header>
@@ -16,11 +12,11 @@
           </template>
           <template v-slot:content-right>
             <button-group>
-              <app-button @click="onDelete" :is-primary="true">Delete</app-button>
-              <app-link
+              <app-button @click="onDelete">Delete</app-button>
+              <app-button
                 :to="{ name: 'project-add-image', params: { id: project.id }}"
                 :is-primary="true"
-              >Add Image</app-link>
+              >Add Image</app-button>
             </button-group>
           </template>
         </page-header>
@@ -32,24 +28,26 @@
     <div v-if="project && !isDeleting && (images && images.length === 0)" class="row">
       <div class="col-12">No images.</div>
     </div>
-    <div v-if="project && !isDeleting && (images && images.length > 0)" class="row">
-      <div v-for="image in images" :key="image.id" class="col-3">
-        <router-link
-          class="image-link"
+    <div
+      v-if="project && !isDeleting && (images && images.length > 0)"
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
+    >
+      <div v-for="image in images" :key="image.id" class="col">
+        <a-image-link
+          :imageUrl="thumbUrl(image)"
+          :title="image.name"
           :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
-        >
-          <img class="image" :src="thumbUrl(image)" />
-          <h3 class="title">{{image.name}}</h3>
-        </router-link>
+        ></a-image-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AImageLink from '@/components/AImageLink';
 import AppButton from '@/components/AppButton';
-import AppLink from '@/components/AppLink';
 import AppLoading from '@/components/AppLoading';
+import AppPicture from '@/components/AppPicture';
 import BreadcrumbNav from '@/components/BreadcrumbNav';
 import ButtonGroup from '@/components/ButtonGroup';
 import PageHeader from '@/components/PageHeader';
@@ -57,14 +55,25 @@ import PageHeader from '@/components/PageHeader';
 export default {
   name: 'project',
   components: {
+    AImageLink,
     AppButton,
-    AppLink,
     AppLoading,
     BreadcrumbNav,
     ButtonGroup,
     PageHeader,
   },
   computed: {
+    breadcrumb() { 
+      return [
+        {
+          title: 'Projects',
+          to: '/projects',
+        },
+        {
+          title: this.project.name,
+        },
+      ];
+    },
     id() {
       return this.$route.params.id;
     },
@@ -107,4 +116,7 @@ export default {
 </script>
 
 <style lang="scss">
+.a-image-link {
+  margin: 0 0 40px;
+}
 </style>

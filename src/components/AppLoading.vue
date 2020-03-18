@@ -1,9 +1,9 @@
 <template>
-  <div class="wrapper" v-bind:style="{ height: diameter, width: diameter }">
-    <div class="loader" v-bind:style="{ width: diameter }">
+  <div class="wrapper">
+    <div class="loader" :style="{ width: diameter }">
       <svg
         class="circle"
-        v-bind:style="{ height: diameter, width: diameter }"
+        :style="{ height: diameter, width: diameter }"
         viewBox="25 25 50 50"
       >
         <circle class="path" cx="50" cy="50" r="15" fill="none" stroke-width="3" stroke-miterlimit="10" />
@@ -48,10 +48,12 @@ export default {
 }
 
 .wrapper {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
 }
 
 .loader {

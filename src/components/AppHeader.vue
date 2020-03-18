@@ -3,6 +3,9 @@
     <div class="content-left">
       <slot name="content-left"></slot>
     </div>
+    <div class="content-center">
+      <slot name="content-center"></slot>
+    </div>
     <div class="content-right">
       <slot name="content-right"></slot>
     </div>
@@ -18,23 +21,14 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   align-content: center;
-  background-color: var(--button__bg-color);
-  border-bottom: var(--button__border-color) solid 1px;
   display: flex;
   flex-shrink: 0;
-  height: 60px;
   justify-content: space-between;
-  padding: 0 15px;
+  padding: 30px;
   width: 100%;
 }
 
-.content-left {
-  align-content: center;
-  display: flex;
-  height: 100%;
-}
-
-.content-right {
+.content-left, .content-center, .content-right {
   align-content: center;
   display: flex;
   height: 100%;

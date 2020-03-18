@@ -1,12 +1,12 @@
-import api, { setAuthToken, } from '@/services/api';
+import api, { setAuthToken } from '@/services/api';
 
 export default {
-  login: ({ email, password, }) => {
+  login: ({ email, password }) => {
     return new Promise((resolve, reject) => {
       api
-        .post('/users/login', { email, password, })
+        .post('/users/login', { email, password })
         .then(response => {
-          const { token, } = response.data;
+          const { token } = response.data;
 
           setAuthToken(token);
 
