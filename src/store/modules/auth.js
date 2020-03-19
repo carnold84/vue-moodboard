@@ -1,14 +1,7 @@
 import api from '@/api';
 
-const tokenName = 'aura_token';
-const authToken = localStorage.getItem(tokenName);
-
-if (authToken) {
-  api.auth.setAuthToken(authToken);
-}
-
 const state = {
-  token: authToken || null,
+  token: api.auth.getToken() || null,
   user: undefined,
 };
 
@@ -46,7 +39,6 @@ const actions = {
     try {
       const { email, password } = data;
       let token = await api.auth.login({ email, password });
-      localStorage.setItem(tokenName, token);
 
       commit('login_success', token);
 

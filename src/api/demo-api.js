@@ -1,69 +1,49 @@
+import localforage from 'localforage';
+
 const STORE_NAME = 'vue-moodboard-demo';
 
-let data;
+const instance = localforage.createInstance({
+  name: STORE_NAME,
+});
 
-getData = async () => {
-  return await localStorage.getItem(STORE_NAME);
+const TOKEN_NAME = 'aura_demo_token';
+const authToken = localStorage.getItem(TOKEN_NAME);
+
+let currentUser = {
+  email: undefined,
+  name: 'Demo',
 };
-
-saveData = async data => {
-  return await localStorage.setItem(STORE_NAME, data);
-};
-
-init = async () => {
-  data = await getData();
-
-  if (data === null) {
-    const initialData = {
-      auth: {
-        token: undefined,
-        user: undefined,
-      },
-      images: {
-        images: undefined,
-      },
-      projects: {
-        projects: undefined,
-      },
-    };
-
-    data = await saveData(initialData);
-  }
-};
-
-init();
   
 export const auth = {
+  getToken: () => {
+    return authToken;
+  },
   getUser: () => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get('/users')
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise(async (resolve, reject) => {
+      let user = await instance.getItem('user');
+      
+      if (!user) {
+        user = await instance.setItem('user', currentUser);
+      }
+
+      setTimeout(() => {
+        resolve(user);
+      }, 2000);
     });
   },
   login: ({ email, password }) => {
     return new Promise((resolve, reject) => {
-      instance
-        .post('/users/login', { email, password })
-        .then(response => {
-          const { token } = response.data;
+      setTimeout(() => {
+        if (password === 'demo123') {
+          currentUser.email = email;
+          localStorage.setItem(TOKEN_NAME, 'token');
   
-          this.setAuthToken(token);
-  
-          resolve(token);
-        })
-        .catch(error => {
-          reject(error);
-        });
+            resolve({msg: 'ok', token: 'token'});
+        } else {
+          reject({msg: 'Email or password is incorrect'});
+        }
+      }, 2000);
     });
-  },
-  setAuthToken: token => {
-    instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },
 };
 

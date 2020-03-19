@@ -7,6 +7,17 @@ const instance = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+const TOKEN_NAME = 'aura_token';
+const authToken = localStorage.getItem(TOKEN_NAME);
+
+if (authToken) {
+  setToken(authToken);
+}
+
+const setToken = token => {
+  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+};
   
 export const auth = {
   getUser: () => {
@@ -28,7 +39,8 @@ export const auth = {
         .then(response => {
           const { token } = response.data;
   
-          this.setAuthToken(token);
+          localStorage.setItem(TOKEN_NAME, token);
+          setToken(token);
   
           resolve(token);
         })
@@ -36,9 +48,6 @@ export const auth = {
           reject(error);
         });
     });
-  },
-  setAuthToken: token => {
-    instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },
 };
 

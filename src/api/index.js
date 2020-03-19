@@ -1,6 +1,8 @@
 let api;
 
-if (process.env.DEMO === true) {
+console.log(process.env.VUE_APP_DEMO);
+
+if (process.env.VUE_APP_DEMO === 'true') {
   api = require('@/api/demo-api');
 } else {
   api = require('@/api/api');

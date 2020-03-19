@@ -8,19 +8,20 @@ module.exports = {
   ],
   "rules": {
     "comma-dangle": [
-      "error",
+      "warn",
       "always-multiline"
     ],
     "no-console": [
       "warn",
       {
         "allow": [
+          "info",
           "warn",
           "error"
         ]
       }
     ],
-    "semi": ["error", "always"]
+    "semi": ["warn", "always"]
   },
   "parserOptions": {
     "parser": "babel-eslint"
