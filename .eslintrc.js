@@ -19,7 +19,8 @@ module.exports = {
           "error"
         ]
       }
-    ]
+    ],
+    "semi": ["error", "always"]
   },
   "parserOptions": {
     "parser": "babel-eslint"

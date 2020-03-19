@@ -1,4 +1,4 @@
-import projectsService from '@/services/projects';
+import api from '@/api';
 
 const state = {
   projects: undefined,
@@ -22,7 +22,7 @@ const getters = {
 const actions = {
   async create({ commit }, project) {
     try {
-      let response = await projectsService.create(project);
+      let response = await api.projects.create(project);
       commit('setProject', response.project);
       return {
         message: `${project.name} was created.`,
@@ -38,7 +38,7 @@ const actions = {
   },
   async delete({ commit }, project) {
     try {
-      let response = await projectsService.delete(project.id);
+      let response = await api.projects.delete(project.id);
       commit('deleteProject', response.id);
       return {
         message: `${project.name} was deleted.`,
@@ -54,7 +54,7 @@ const actions = {
   },
   async getAllProjects({ commit }) {
     try {
-      let projects = await projectsService.getAllProjects();
+      let projects = await api.projects.getAllProjects();
       commit('setProjects', projects);
     } catch (error) {
       commit('setProjects', null);
@@ -62,7 +62,7 @@ const actions = {
   },
   async getProject({ commit }, id) {
     try {
-      let project = await projectsService.getProject(id);
+      let project = await api.projects.getProject(id);
       commit('setProject', project);
     } catch (error) {
       commit('setProject', null);

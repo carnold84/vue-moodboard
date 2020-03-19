@@ -1,4 +1,4 @@
-import imagesService from '@/services/images';
+import api from '@/api';
 
 const state = {
   images: undefined,
@@ -34,7 +34,7 @@ const getters = {
 const actions = {
   async create({ commit }, image) {
     try {
-      let response = await imagesService.create(image);
+      let response = await api.images.create(image);
       commit('setImage', response.image);
 
       if (image.projectId) {
@@ -58,7 +58,7 @@ const actions = {
   },
   async delete({ commit }, image) {
     try {
-      let response = await imagesService.delete(image.id);
+      let response = await api.images.delete(image.id);
       commit('deleteImage', response.imageId);
       return {
         message: `${image.name} was deleted.`,
@@ -74,7 +74,7 @@ const actions = {
   },
   async getAllImages({ commit }) {
     try {
-      let images = await imagesService.getAllImages();
+      let images = await api.images.getAllImages();
       commit('setImages', images);
     } catch (error) {
       commit('setImages', null);
@@ -82,7 +82,7 @@ const actions = {
   },
   async getImage({ commit }, id) {
     try {
-      let image = await imagesService.getImage(id);
+      let image = await api.images.getImage(id);
       commit('setImage', image);
     } catch (error) {
       commit('setImage', null);
