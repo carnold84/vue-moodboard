@@ -38,8 +38,8 @@ const actions = {
   },
   async delete({ commit }, project) {
     try {
-      let response = await api.projects.delete(project.id);
-      commit('deleteProject', response.id);
+      await api.projects.delete(project.id);
+      commit('deleteProject', project.id);
       return {
         message: `${project.name} was deleted.`,
         success: true,
@@ -73,7 +73,7 @@ const actions = {
 const mutations = {
   deleteProject(state, payload) {
     state.projects = state.projects.filter(project => {
-      return project.id.toString() === payload;
+      return project.id.toString() !== payload.toString();
     });
   },
   setProject(state, payload) {

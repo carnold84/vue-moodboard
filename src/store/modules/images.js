@@ -49,6 +49,7 @@ const actions = {
         success: true,
       };
     } catch (error) {
+      console.log(error);
       return {
         error,
         message: `${image.name} couldn't be created.`,

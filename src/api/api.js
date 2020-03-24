@@ -11,15 +11,18 @@ const instance = axios.create({
 const TOKEN_NAME = 'aura_token';
 const authToken = localStorage.getItem(TOKEN_NAME);
 
-if (authToken) {
-  setToken(authToken);
-}
-
 const setToken = token => {
   instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
+
+if (authToken) {
+  setToken(authToken);
+}
   
 export const auth = {
+  getToken: () => {
+    return authToken;
+  },
   getUser: () => {
     return new Promise((resolve, reject) => {
       instance

@@ -1,6 +1,8 @@
 import localforage from 'localforage';
+import { v4 as uuidv4 } from 'uuid';
 
 const STORE_NAME = 'vue-moodboard-demo';
+const DELAY = 500;
 
 const instance = localforage.createInstance({
   name: STORE_NAME,
@@ -9,10 +11,22 @@ const instance = localforage.createInstance({
 const TOKEN_NAME = 'aura_demo_token';
 const authToken = localStorage.getItem(TOKEN_NAME);
 
-let currentUser = {
-  email: undefined,
-  name: 'Demo',
+const init = async () => {
+  let images = await instance.getItem('images');
+  if (!images) {
+    await instance.setItem('images', []);
+  }
+  let projects = await instance.getItem('projects');
+  if (!projects) {
+    await instance.setItem('projects', []);
+  }
+  let user = await instance.getItem('user');
+  if (!user) {
+    await instance.setItem('user', currentUser);
+  }
 };
+
+init();
   
 export const auth = {
   getToken: () => {
@@ -21,14 +35,10 @@ export const auth = {
   getUser: () => {
     return new Promise(async (resolve, reject) => {
       let user = await instance.getItem('user');
-      
-      if (!user) {
-        user = await instance.setItem('user', currentUser);
-      }
 
       setTimeout(() => {
         resolve(user);
-      }, 2000);
+      }, DELAY);
     });
   },
   login: ({ email, password }) => {
@@ -38,26 +48,34 @@ export const auth = {
           currentUser.email = email;
           localStorage.setItem(TOKEN_NAME, 'token');
   
-            resolve({msg: 'ok', token: 'token'});
+          resolve({msg: 'ok', token: 'token'});
         } else {
           reject({msg: 'Email or password is incorrect'});
         }
-      }, 2000);
+      }, DELAY);
     });
   },
 };
 
 export const images = {
   create: async image => {
-    return new Promise((resolve, reject) => {
-      instance
-        .post('/images', image)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise(async (resolve, reject) => {
+      let images = await instance.getItem('images');
+
+      const id = uuidv4();
+      const newImage = {
+        ...image,
+        fileName: image.url,
+        id,
+      };
+
+      images.push(newImage);
+
+      await instance.setItem('images', images);
+
+      setTimeout(() => {
+        resolve({image: newImage, msg: 'Image created successfully'});
+      }, DELAY);
     });
   },
   delete: async id => {
@@ -112,51 +130,65 @@ export const images = {
   
 export const projects = {
   create: async project => {
-    return new Promise((resolve, reject) => {
-      instance
-        .post('/projects', project)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise(async (resolve, reject) => {
+      let projects = await instance.getItem('projects');
+
+      const id = uuidv4();
+      const newProject = {
+        ...project,
+        id,
+      };
+
+      projects.push(newProject);
+
+      await instance.setItem('projects', projects);
+
+      setTimeout(() => {
+        resolve({project: newProject, msg: 'Project created successfully'});
+      }, DELAY);
     });
   },
   delete: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .delete(`/projects/${id}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
+    return new Promise(async (resolve, reject) => {
+      let projects = await instance.getItem('projects');
+
+      const project = projects.filter(element => {
+        return element.id === id;
+      })[0];
+
+      if (project) {
+        const newProjects = projects.filter(element => {
+          return element.id !== project.id;
         });
+  
+        await instance.setItem('projects', newProjects);
+      }
+
+      setTimeout(() => {
+        resolve({project, msg: 'Project deleted successfully'});
+      }, DELAY);
     });
   },
   getAllProjects: async () => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get('/projects')
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise(async (resolve, reject) => {
+      let projects = await instance.getItem('projects');
+
+      setTimeout(() => {
+        resolve(projects);
+      }, DELAY);
     });
   },
   getProject: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/projects/${id}`)
-        .then(response => {
-          resolve(response.data[0]);
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise(async (resolve, reject) => {
+      let projects = await instance.getItem('projects');
+      
+      const project = projects.filter(element => {
+        return element.id === id;
+      })[0];
+
+      setTimeout(() => {
+        resolve(project);
+      }, DELAY);
     });
   },
 };
