@@ -1,14 +1,7 @@
-import authService from '@/services/auth';
-
-const tokenName = 'aura_token';
-const authToken = localStorage.getItem(tokenName);
-
-if (authToken) {
-  authService.setToken(authToken);
-}
+import api from '@/api';
 
 const state = {
-  token: authToken || null,
+  token: api.auth.getToken() || null,
   user: undefined,
 };
 
@@ -24,7 +17,7 @@ const getters = {
 const actions = {
   async getUser({ commit }) {
     try {
-      let user = await authService.getUser();
+      let user = await api.auth.getUser();
 
       commit('user_success', user);
 
@@ -45,8 +38,7 @@ const actions = {
   async login({ commit }, data) {
     try {
       const { email, password } = data;
-      let token = await authService.login({ email, password });
-      localStorage.setItem(tokenName, token);
+      let token = await api.auth.login({ email, password });
 
       commit('login_success', token);
 
@@ -64,6 +56,7 @@ const actions = {
   },
   async logout({ commit }) {
     try {
+      await api.auth.logout();
       localStorage.removeItem(tokenName);
       commit('logout_success');
 

@@ -17,7 +17,7 @@
       </div>
     </div>
     <app-loading v-if="isRemoving === true"></app-loading>
-    <div v-if="image" class="row">
+    <div v-if="image && isRemoving === false" class="row">
       <div class="col-12">
         <img :alt="image.name" :src="imageUrl" />
       </div>
@@ -67,7 +67,11 @@ export default {
       return this.$store.getters['images/image'](this.imageId);
     },
     imageUrl() {
-      return `https://res.cloudinary.com/carnold/image/upload/w_1200/${this.image.fileName}.${this.image.format}`;
+      if (this.image.format) {
+        return `https://res.cloudinary.com/carnold/image/upload/w_1200/${this.image.fileName}.${this.image.format}`;
+      } else {
+        return this.image.url;
+      }
     },
     project() {
       return this.$store.getters['projects/project'](this.id);
@@ -93,7 +97,12 @@ export default {
     async onRemove() {
       this.isRemoving = true;
 
-      const response = await this.$store.dispatch('images/remove', this.image);
+      console.log(this.image, this.project);
+
+      const response = await this.$store.dispatch('images/remove', {
+        image: this.image,
+        project: this.project,
+      });
 
       if (response.success) {
         this.$router.push(`/projects/${this.id}`);
