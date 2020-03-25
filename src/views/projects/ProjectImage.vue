@@ -67,7 +67,11 @@ export default {
       return this.$store.getters['images/image'](this.imageId);
     },
     imageUrl() {
-      return `https://res.cloudinary.com/carnold/image/upload/w_1200/${this.image.fileName}.${this.image.format}`;
+      if (this.image.format) {
+        return `https://res.cloudinary.com/carnold/image/upload/w_1200/${this.image.fileName}.${this.image.format}`;
+      } else {
+        return this.image.url;
+      }
     },
     project() {
       return this.$store.getters['projects/project'](this.id);
@@ -77,6 +81,9 @@ export default {
     return {
       isRemoving: false,
     };
+  },
+  mounted() {
+    console.log(this);
   },
   methods: {
     async onDelete() {

@@ -9,12 +9,20 @@ const instance = localforage.createInstance({
 });
 
 const TOKEN_NAME = 'aura_demo_token';
+const currentUser = {
+  email: undefined,
+  name: 'Demo',
+};
 const authToken = localStorage.getItem(TOKEN_NAME);
 
 const init = async () => {
   let images = await instance.getItem('images');
   if (!images) {
     await instance.setItem('images', []);
+  }
+  let imageProjects = await instance.getItem('imageProjects');
+  if (!imageProjects) {
+    await instance.setItem('imageProjects', []);
   }
   let projects = await instance.getItem('projects');
   if (!projects) {
@@ -35,6 +43,8 @@ export const auth = {
   getUser: () => {
     return new Promise(async (resolve, reject) => {
       let user = await instance.getItem('user');
+      const email = localStorage.getItem(TOKEN_NAME);
+      user.email = email;
 
       setTimeout(() => {
         resolve(user);
@@ -46,7 +56,7 @@ export const auth = {
       setTimeout(() => {
         if (password === 'demo123') {
           currentUser.email = email;
-          localStorage.setItem(TOKEN_NAME, 'token');
+          localStorage.setItem(TOKEN_NAME, email);
   
           resolve({msg: 'ok', token: 'token'});
         } else {
@@ -57,17 +67,71 @@ export const auth = {
   },
 };
 
+const addImageToProject = async (imageId, projectId) => {
+  let imageProjects = await instance.getItem('imageProjects');
+
+  imageProjects.push({
+    imageId,
+    projectId,
+  });
+
+  await instance.setItem('imageProjects', imageProjects);
+};
+
+const removeImageToProject = async (imageId, projectId) => {
+  let imageProjects = await instance.getItem('imageProjects');
+
+  imageProjects = imageProjects.filter(element => {
+    return element.imageId === imageId && element.projectId === projectId;
+  });
+
+  await instance.setItem('imageProjects', imageProjects);
+};
+
+const getImageIdsByProject = async (projectId) => {
+  let imageProjects = await instance.getItem('imageProjects');
+
+  const images = imageProjects.filter(element => {
+    return element.projectId === projectId;
+  });
+
+  const imageIds = images.map(element => {
+    return element.imageId;
+  });
+
+  return imageIds;
+};
+
+const getImage = async id => {
+  return new Promise(async (resolve, reject) => {
+    let images = await instance.getItem('images');
+    
+    const image = images.filter(element => {
+      return element.id === id;
+    })[0];
+
+    setTimeout(() => {
+      resolve(image);
+    }, DELAY);
+  });
+};
+
 export const images = {
-  create: async image => {
+  create: async data => {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
       const id = uuidv4();
+      const {projectId, url} = data;
       const newImage = {
-        ...image,
-        fileName: image.url,
+        ...data,
+        fileName: url,
         id,
       };
+
+      if (projectId) {
+        await addImageToProject(id, projectId);
+      }
 
       images.push(newImage);
 
@@ -79,53 +143,69 @@ export const images = {
     });
   },
   delete: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .delete(`/images/${id}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    let images = await instance.getItem('images');
+
+    const image = images.filter(element => {
+      return element.id === id;
+    })[0];
+
+    if (image) {
+      if (projectId) {
+        await removeImageFromProject(image.id, projectId);
+      }
+
+      const newImages = images.filter(element => {
+        return element.id !== image.id;
+      });
+
+      await instance.setItem('images', newImages);
+    }
+
+    setTimeout(() => {
+      resolve({image, msg: 'Image deleted successfully'});
+    }, DELAY);
   },
   getAllImages: async () => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get('/images')
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise(async (resolve, reject) => {
+      let images = await instance.getItem('images');
+
+      setTimeout(() => {
+        resolve(images);
+      }, DELAY);
     });
   },
   getImagesByProject: async projectId => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/images/project/${projectId}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise(async (resolve, reject) => {
+      const imageIds = await getImageIdsByProject(projectId);
+
+      const imagePromises = imageIds.map(element => {
+        return getImage(element);
+      });
+
+      const projectImages = await Promise.all(imagePromises);
+
+      setTimeout(() => {
+        resolve(projectImages);
+      }, DELAY);
     });
   },
-  getImage: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/images/${id}`)
-        .then(response => {
-          resolve(response.data[0]);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  },
+  getImage,
+};
+
+const getProject = async id => {
+  return new Promise(async (resolve, reject) => {
+    let projects = await instance.getItem('projects');
+    
+    let project = projects.filter(element => {
+      return element.id === id;
+    })[0];
+
+    project.imageIds = await getImageIdsByProject(project.id);
+
+    setTimeout(() => {
+      resolve(project);
+    }, DELAY);
+  });
 };
   
 export const projects = {
@@ -136,6 +216,7 @@ export const projects = {
       const id = uuidv4();
       const newProject = {
         ...project,
+        imageIds: [],
         id,
       };
 
@@ -173,22 +254,16 @@ export const projects = {
     return new Promise(async (resolve, reject) => {
       let projects = await instance.getItem('projects');
 
+      const projectPromises = projects.map(element => {
+        return getProject(element.id);
+      });
+
+      projects = await Promise.all(projectPromises);
+
       setTimeout(() => {
         resolve(projects);
       }, DELAY);
     });
   },
-  getProject: async id => {
-    return new Promise(async (resolve, reject) => {
-      let projects = await instance.getItem('projects');
-      
-      const project = projects.filter(element => {
-        return element.id === id;
-      })[0];
-
-      setTimeout(() => {
-        resolve(project);
-      }, DELAY);
-    });
-  },
+  getProject,
 };

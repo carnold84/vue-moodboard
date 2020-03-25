@@ -38,10 +38,10 @@ const actions = {
       commit('setImage', response.image);
 
       if (image.projectId) {
-        commit('setImageProject', {
+        commit('projects/linkImageToProject', {
           imageId: response.image.id,
           projectId: image.projectId,
-        });
+        }, { root: true });
       }
 
       return {
@@ -49,7 +49,7 @@ const actions = {
         success: true,
       };
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return {
         error,
         message: `${image.name} couldn't be created.`,
@@ -97,18 +97,12 @@ const mutations = {
       return image.id.toString() !== payload;
     });
   },
-  setImage(state, payload, rootState) {
+  setImage(state, payload) {
     if (state.images) {
       state.images.push(payload);
     } else {
       state.images = [payload];
     }
-  },
-  setImageProject(state, { imageId, projectId }, ) {
-    const project = state.projects.filter(project => {
-      return project.id === projectId;
-    });
-    project.imageIds.push(imageId);
   },
   setImages(state, payload) {
     state.images = payload;

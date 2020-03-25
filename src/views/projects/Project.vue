@@ -63,7 +63,7 @@ export default {
     PageHeader,
   },
   computed: {
-    breadcrumb() { 
+    breadcrumb() {
       return [
         {
           title: 'Projects',
@@ -109,7 +109,11 @@ export default {
       }
     },
     thumbUrl(image) {
-      return `https://res.cloudinary.com/carnold/image/upload/w_260/${image.fileName}.${image.format}`;
+      if (image.format) {
+        return `https://res.cloudinary.com/carnold/image/upload/w_260/${image.fileName}.${image.format}`;
+      } else {
+        return image.url;
+      }
     },
   },
 };

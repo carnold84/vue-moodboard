@@ -76,6 +76,14 @@ const mutations = {
       return project.id.toString() !== payload.toString();
     });
   },
+  linkImageToProject(state, { imageId, projectId }) {
+    const project = state.projects.filter(project => {
+      return project.id === projectId;
+    })[0];
+    if (project) {
+      project.imageIds.push(imageId);
+    }
+  },
   setProject(state, payload) {
     if (state.projects && state.projects.length > 0) {
       state.projects.push(payload);
