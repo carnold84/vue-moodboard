@@ -17,7 +17,7 @@
       </div>
     </div>
     <app-loading v-if="isRemoving === true"></app-loading>
-    <div v-if="image" class="row">
+    <div v-if="image && isRemoving === false" class="row">
       <div class="col-12">
         <img :alt="image.name" :src="imageUrl" />
       </div>
@@ -82,9 +82,6 @@ export default {
       isRemoving: false,
     };
   },
-  mounted() {
-    console.log(this);
-  },
   methods: {
     async onDelete() {
       this.isRemoving = true;
@@ -100,7 +97,12 @@ export default {
     async onRemove() {
       this.isRemoving = true;
 
-      const response = await this.$store.dispatch('images/remove', this.image);
+      console.log(this.image, this.project);
+
+      const response = await this.$store.dispatch('images/remove', {
+        image: this.image,
+        project: this.project,
+      });
 
       if (response.success) {
         this.$router.push(`/projects/${this.id}`);

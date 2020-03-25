@@ -60,6 +60,14 @@ const actions = {
   async delete({ commit }, image) {
     try {
       let response = await api.images.delete(image.id);
+
+      if (image.projectId) {
+        commit('projects/unlinkImageToProject', {
+          imageId: response.image.id,
+          projectId: image.projectId,
+        }, { root: true });
+      }
+
       commit('deleteImage', response.imageId);
       return {
         message: `${image.name} was deleted.`,
@@ -87,6 +95,24 @@ const actions = {
       commit('setImage', image);
     } catch (error) {
       commit('setImage', null);
+    }
+  },
+  async remove({ commit }, {image, project}) {
+    if (project) {
+      commit('projects/unlinkImageToProject', {
+        imageId: image.id,
+        projectId: project.id,
+      }, { root: true });
+
+      return {
+        message: `${image.name} was removed from ${project.name}.`,
+        success: true,
+      };
+    } else {
+      return {
+        message: `${image.name} was not found in ${project.name}.`,
+        success: false,
+      };
     }
   },
 };

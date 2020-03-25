@@ -9,10 +9,6 @@ const instance = localforage.createInstance({
 });
 
 const TOKEN_NAME = 'aura_demo_token';
-const currentUser = {
-  email: undefined,
-  name: 'Demo',
-};
 const authToken = localStorage.getItem(TOKEN_NAME);
 
 const init = async () => {
@@ -27,10 +23,6 @@ const init = async () => {
   let projects = await instance.getItem('projects');
   if (!projects) {
     await instance.setItem('projects', []);
-  }
-  let user = await instance.getItem('user');
-  if (!user) {
-    await instance.setItem('user', currentUser);
   }
 };
 
@@ -52,18 +44,31 @@ export const auth = {
     });
   },
   login: ({ email, password }) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+      let isSuccessful = false;
+
+      if (password === 'demo123') {
+        const currentUser = {
+          email,
+          name: 'Demo',
+        };
+        localStorage.setItem(TOKEN_NAME, email);
+        await instance.setItem('user', currentUser);
+
+        resolve({msg: 'ok', token: 'token'});
+      }
+
       setTimeout(() => {
-        if (password === 'demo123') {
-          currentUser.email = email;
-          localStorage.setItem(TOKEN_NAME, email);
-  
+        if (isSuccessful) {
           resolve({msg: 'ok', token: 'token'});
         } else {
           reject({msg: 'Email or password is incorrect'});
         }
       }, DELAY);
     });
+  },
+  logout: async () => {
+    await instance.setItem('user', null);
   },
 };
 
@@ -78,11 +83,11 @@ const addImageToProject = async (imageId, projectId) => {
   await instance.setItem('imageProjects', imageProjects);
 };
 
-const removeImageToProject = async (imageId, projectId) => {
+const removeImageFromProject = async (imageId, projectId) => {
   let imageProjects = await instance.getItem('imageProjects');
 
   imageProjects = imageProjects.filter(element => {
-    return element.imageId === imageId && element.projectId === projectId;
+    return element.imageId !== imageId && element.projectId !== projectId;
   });
 
   await instance.setItem('imageProjects', imageProjects);
@@ -110,9 +115,7 @@ const getImage = async id => {
       return element.id === id;
     })[0];
 
-    setTimeout(() => {
-      resolve(image);
-    }, DELAY);
+    resolve(image);
   });
 };
 
@@ -143,27 +146,29 @@ export const images = {
     });
   },
   delete: async id => {
-    let images = await instance.getItem('images');
+    return new Promise(async (resolve, reject) => {
+      const image = await getImage(id);
 
-    const image = images.filter(element => {
-      return element.id === id;
-    })[0];
+      if (image) {
+        const {id, projectId} = image;
 
-    if (image) {
-      if (projectId) {
-        await removeImageFromProject(image.id, projectId);
+        if (projectId) {
+          await removeImageFromProject(id, projectId);
+        }
+        
+        let images = await instance.getItem('images');
+
+        const newImages = images.filter(element => {
+          return element.id !== id;
+        });
+
+        await instance.setItem('images', newImages);
       }
 
-      const newImages = images.filter(element => {
-        return element.id !== image.id;
-      });
-
-      await instance.setItem('images', newImages);
-    }
-
-    setTimeout(() => {
-      resolve({image, msg: 'Image deleted successfully'});
-    }, DELAY);
+      setTimeout(() => {
+        resolve({image, msg: 'Image deleted successfully'});
+      }, DELAY);
+    });
   },
   getAllImages: async () => {
     return new Promise(async (resolve, reject) => {

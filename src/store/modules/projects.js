@@ -94,6 +94,16 @@ const mutations = {
   setProjects(state, payload) {
     state.projects = payload;
   },
+  unlinkImageToProject(state, { imageId, projectId }) {
+    const project = state.projects.filter(project => {
+      return project.id === projectId;
+    })[0];
+    if (project) {
+      project.imageIds = project.imageIds.filter(element => {
+        return element !== imageId;
+      });
+    }
+  },
 };
 
 export default {
