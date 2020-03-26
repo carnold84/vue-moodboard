@@ -61,47 +61,6 @@ export default {
   flex-grow: 1;
   overflow: auto;
   padding: 50px;
-}
-
-.view-container {
-  padding: 0;
-}
-
-.title {
-  font-size: 1.4em;
-  font-weight: 300;
-}
-
-a {
-  align-items: center;
-  color: #333333;
-  cursor: pointer;
-  display: flex;
-  text-decoration: none;
-  text-transform: uppercase;
-
-  &:hover {
-    color: var(--primary1);
-  }
-}
-
-.main-nav {
-  display: flex;
-
-  .nav-item {
-    border-bottom: transparent solid 1px;
-    color: #333333;
-    font-size: 1em;
-    margin: 0 20px 0 0;
-
-    &:last-child {
-      margin: 0;
-    }
-    
-    &.router-link-exact-active {
-      border-color: var(--primary1);
-      color: var(--primary1);
-    }
-  }
+  position: relative;
 }
 </style>

@@ -130,7 +130,7 @@ export default {
   border: none;
   border-bottom: 1px solid #eeeeee;
   color: var(--text1);
-  font-family: var(--fontFamily--primary);
+  font-family: var(--fontFamily--secondary);
   font-size: 1em;
   font-weight: 600;
   display: flex;
