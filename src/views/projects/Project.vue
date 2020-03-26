@@ -3,9 +3,6 @@
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
-        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
-      </div>
-      <div class="col-12">
         <page-header>
           <template v-slot:content-left>
             <h1 class="view-title">{{project.name}}</h1>
@@ -48,7 +45,6 @@ import AImageLink from '@/components/AImageLink';
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import AppPicture from '@/components/AppPicture';
-import BreadcrumbNav from '@/components/BreadcrumbNav';
 import ButtonGroup from '@/components/ButtonGroup';
 import PageHeader from '@/components/PageHeader';
 
@@ -58,22 +54,10 @@ export default {
     AImageLink,
     AppButton,
     AppLoading,
-    BreadcrumbNav,
     ButtonGroup,
     PageHeader,
   },
   computed: {
-    breadcrumb() {
-      return [
-        {
-          title: 'Projects',
-          to: '/projects',
-        },
-        {
-          title: this.project.name,
-        },
-      ];
-    },
     id() {
       return this.$route.params.id;
     },
@@ -103,7 +87,7 @@ export default {
       );
 
       if (response.success) {
-        this.$router.push('/projects');
+        this.$router.push('/');
       } else {
         console.error(response.message);
       }

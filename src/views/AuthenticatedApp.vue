@@ -3,23 +3,12 @@
     <app-loading></app-loading>
   </div>
   <div v-else class="app-wrapper">
-    <app-header>
-      <template v-slot:content-left>
-        <router-link to="/">
-          <app-logo height="30px" style="align-self: center; margin: 0 15px 0 0;"></app-logo>
-          <h1 class="title">{{appName}}</h1>
-        </router-link>
-      </template>
-      <template v-slot:content-center>
-        <nav class="main-nav">
-          <router-link class="nav-item" to="/">Home</router-link>
-          <router-link class="nav-item" to="/projects">Projects</router-link>
-        </nav>
-      </template>
-      <template v-slot:content-right>
-        <a class="nav-item" @click="logout">Logout</a>
-      </template>
-    </app-header>
+    <main-nav 
+      :onLogout="logout"
+      :projects="projects"
+      :title="appName"
+      :user="user"
+    ></main-nav>
     <div class="app-content">
       <router-view />
     </div>
@@ -28,20 +17,21 @@
 
 <script>
 import appConfig from '@/app.config';
-import AppHeader from '@/components/AppHeader';
 import AppLoading from '@/components/AppLoading';
-import AppLogo from '@/components/AppLogo';
+import MainNav from '@/components/MainNav';
 
 export default {
-  name: 'authenticatedApp',
+  name: 'authenticated-app',
   components: {
-    AppHeader,
     AppLoading,
-    AppLogo,
+    MainNav,
   },
   computed: {
     appName() {
       return appConfig.appName;
+    },
+    projects() {
+      return this.$store.getters['projects/projects'];
     },
     user() {
       return this.$store.getters['auth/user'];
@@ -62,7 +52,6 @@ export default {
 <style scoped lang="scss">
 .app-wrapper {
   display: flex;
-  flex-direction: column;
   height: 100%;
   position: absolute;
   width: 100%;
@@ -71,11 +60,11 @@ export default {
 .app-content {
   flex-grow: 1;
   overflow: auto;
-  padding: 20px 0 0;
+  padding: 50px;
 }
 
 .view-container {
-  padding: 0 30px;
+  padding: 0;
 }
 
 .title {

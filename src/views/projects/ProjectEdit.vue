@@ -65,8 +65,10 @@ export default {
       };
       const response = await this.$store.dispatch('projects/create', data);
 
+      console.log(response);
+
       if (response.success) {
-        this.$router.push('/projects');
+        this.$router.push(`/projects/${response.project.id}`);
       } else {
         console.error(response.message);
       }
