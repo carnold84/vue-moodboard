@@ -3,12 +3,7 @@
     <app-loading v-if="!project || isSaving === true"></app-loading>
     <div v-if="project" class="row">
       <div class="col-12">
-        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">Add Image to {{ project.name }}</h1>
-          </template>
-        </page-header>
+        <a-view-header sectionName="Project" :title="title"></a-view-header>
       </div>
     </div>
     <div v-if="project && isSaving === false" class="row">
@@ -41,21 +36,19 @@
 </template>
 
 <script>
+import AViewHeader from '@/components/AViewHeader';
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
-import BreadcrumbNav from '@/components/BreadcrumbNav';
 import ButtonGroup from '@/components/ButtonGroup';
-import PageHeader from '@/components/PageHeader';
 import TextInput from '@/components/TextInput';
 
 export default {
   name: 'project-add-image',
   components: {
+    AViewHeader,
     AppButton,
     AppLoading,
-    BreadcrumbNav,
     ButtonGroup,
-    PageHeader,
     TextInput,
   },
   computed: {
@@ -79,6 +72,9 @@ export default {
     },
     project() {
       return this.$store.getters['projects/project'](this.id);
+    },
+    title() {
+      return `Add Image to ${ project.name }`;
     },
   },
   data() {

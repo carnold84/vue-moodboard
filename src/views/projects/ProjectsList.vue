@@ -2,14 +2,11 @@
   <div class="view-container">
     <div class="row">
       <div class="col-12">
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">Projects</h1>
-          </template>
-          <template v-slot:content-right>
-            <app-button :is-primary="true" to="/projects/create"><span>New Project</span></app-button>
-          </template>
-        </page-header>
+        <a-view-header
+          :options="options"
+          title="Projects"
+        >
+        </a-view-header>
       </div>
     </div>
     <app-loading v-if="projects === undefined"></app-loading>
@@ -29,22 +26,36 @@
 </template>
 
 <script>
+import AViewHeader from '@/components/AViewHeader';
 import AImageLink from '@/components/AImageLink';
-import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
-import PageHeader from '@/components/PageHeader';
 
 export default {
   name: 'projects',
   components: {
     AImageLink,
-    AppButton,
+    AViewHeader,
     AppLoading,
-    PageHeader,
   },
   computed: {
     projects() {
       return this.$store.getters['projects/projects'];
+    },
+  },
+  data() {
+    return {
+      options: [
+        {
+          callback: this.onCreateProject,
+          id: 'create-project',
+          label: 'New',
+        },
+      ],
+    };
+  },
+  methods: {
+    onCreateProject() {
+      this.$router.push('/projects/create');
     },
   },
 };

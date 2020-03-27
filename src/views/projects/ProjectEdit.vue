@@ -2,11 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">Create Project</h1>
-          </template>
-        </page-header>
+        <a-view-header title="Create Project"></a-view-header>
       </div>
     </div>
     <app-loading v-if="isSaving === true"></app-loading>
@@ -33,19 +29,19 @@
 </template>
 
 <script>
+import AViewHeader from '@/components/AViewHeader';
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import ButtonGroup from '@/components/ButtonGroup';
-import PageHeader from '@/components/PageHeader';
 import TextInput from '@/components/TextInput';
 
 export default {
   name: 'project-edit',
   components: {
+    AViewHeader,
     AppButton,
     AppLoading,
     ButtonGroup,
-    PageHeader,
     TextInput,
   },
   data() {

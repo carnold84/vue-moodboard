@@ -3,20 +3,13 @@
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">{{project.name}}</h1>
-          </template>
-          <template v-slot:content-right>
-            <button-group>
-              <app-button @click="onDelete">Delete</app-button>
-              <app-button
-                :to="{ name: 'project-add-image', params: { id: project.id }}"
-                :is-primary="true"
-              >Add Image</app-button>
-            </button-group>
-          </template>
-        </page-header>
+        <a-view-header
+          :description="project.description"
+          :options="options"
+          sectionName="Project"
+          :title="project.name"
+        >
+        </a-view-header>
       </div>
     </div>
     <div v-if="project && !isDeleting && images === undefined" class="row">
@@ -42,20 +35,16 @@
 
 <script>
 import AImageLink from '@/components/AImageLink';
-import AppButton from '@/components/AppButton';
+import AViewHeader from '@/components/AViewHeader';
 import AppLoading from '@/components/AppLoading';
 import AppPicture from '@/components/AppPicture';
-import ButtonGroup from '@/components/ButtonGroup';
-import PageHeader from '@/components/PageHeader';
 
 export default {
   name: 'project',
   components: {
     AImageLink,
-    AppButton,
+    AViewHeader,
     AppLoading,
-    ButtonGroup,
-    PageHeader,
   },
   computed: {
     id() {
@@ -75,6 +64,18 @@ export default {
   data() {
     return {
       isDeleting: false,
+      options: [
+        {
+          callback: this.onDelete,
+          id: 'delete',
+          label: 'Delete',
+        },
+        {
+          callback: this.onAddImage,
+          id: 'add-image',
+          label: 'Add Image',
+        },
+      ],
     };
   },
   methods: {
@@ -91,6 +92,9 @@ export default {
       } else {
         console.error(response.message);
       }
+    },
+    onAddImage() {
+      this.$router.push({ name: 'project-add-image', params: { id: this.project.id }});
     },
     thumbUrl(image) {
       if (image.format) {

@@ -2,18 +2,11 @@
   <div class="view-container">
     <div class="row">
       <div class="col-12">
-        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">{{image.name}}</h1>
-          </template>
-          <template v-slot:content-right>
-            <button-group>
-              <app-button @click="onRemove" :is-primary="true">Remove from {{ project.name }}</app-button>
-              <app-button @click="onDelete" :is-primary="true">Delete</app-button>
-            </button-group>
-          </template>
-        </page-header>
+        <a-view-header :title="image.name"></a-view-header>
+        <button-group>
+          <app-button @click="onRemove" :is-primary="true">Remove from {{ project.name }}</app-button>
+          <app-button @click="onDelete" :is-primary="true">Delete</app-button>
+        </button-group>
       </div>
     </div>
     <app-loading v-if="isRemoving === true"></app-loading>
@@ -26,20 +19,18 @@
 </template>
 
 <script>
+import AViewHeader from '@/components/AViewHeader';
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
-import BreadcrumbNav from '@/components/BreadcrumbNav';
 import ButtonGroup from '@/components/ButtonGroup';
-import PageHeader from '@/components/PageHeader';
 
 export default {
   name: 'project-image',
   components: {
+    AViewHeader,
     AppButton,
     AppLoading,
-    BreadcrumbNav,
     ButtonGroup,
-    PageHeader,
   },
   computed: {
     breadcrumb() { 

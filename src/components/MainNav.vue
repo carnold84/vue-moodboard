@@ -178,8 +178,7 @@ export default {
     cursor: pointer;
     display: flex;
     fill: var(--text1);
-    margin: 0 10px 0 0;
-    padding: 0 10px;
+    padding: 0 20px;
 
     &:hover {
       fill: var(--primary1);
