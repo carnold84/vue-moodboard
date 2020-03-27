@@ -3,7 +3,7 @@
   --fontFamily--secondary: "Source Sans Pro", Helvetica, Arial, sans-serif;
 
   --primary1: #a72a8c;
-  --primary2: #c139a4;
+  --primary2: #c747ab;
   --theme1: #ffffff;
   --theme2: #f9f9f9;
   --theme3: #f2f2f2;
@@ -30,13 +30,13 @@
   --button__color--hover: var(--text1);
   --button__bg-color--primary: var(--primary1);
   --button__border-color--primary: var(--primary1);
-  --button__color--primary: var(--textAlt1);
+  --button__color--primary: var(--primary1);
   --button__bg-color--primary-hover: var(--primary2);
   --button__border-color--primary-hover: var(--primary1);
-  --button__color--primary-hover: var(--textAlt1);
+  --button__color--primary-hover: var(--text1);
   --button__bg-color--primary-focus: var(--primary2);
   --button__border-color--primary-focus: var(--primary2);
-  --button__color--primary-focus: var(--textAlt1);
+  --button__color--primary-focus: var(--primary1);
   --button__outline-color--primary-focus: #e5b1d9;
 
   --pageHeader__bg-color: var(--theme2);

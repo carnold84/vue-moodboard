@@ -1,5 +1,5 @@
 <template>
-  <div class="view-container">
+  <div class="view-wrapper">
     <app-loading v-if="!project || isSaving === true"></app-loading>
     <div v-if="project" class="row">
       <div class="col-12">
@@ -52,21 +52,6 @@ export default {
     TextInput,
   },
   computed: {
-    breadcrumb() { 
-      return [
-        {
-          title: 'Projects',
-          to: '/projects',
-        },
-        {
-          title: this.project.name,
-          to: `/projects/${this.id}`,
-        },
-        {
-          title: 'Add Image',
-        },
-      ];
-    },
     id() {
       return this.$route.params.id;
     },
@@ -74,7 +59,7 @@ export default {
       return this.$store.getters['projects/project'](this.id);
     },
     title() {
-      return `Add Image to ${ project.name }`;
+      return `Add Image to ${ this.project.name }`;
     },
   },
   data() {

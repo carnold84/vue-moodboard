@@ -1,5 +1,5 @@
 <template>
-  <div class="view-container">
+  <div class="view-wrapper">
     <div class="row">
       <div class="col-12">
         <a-view-header :title="image.name"></a-view-header>

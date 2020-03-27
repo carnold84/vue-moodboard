@@ -150,7 +150,7 @@ export default {
   font-family: var(--fontFamily--primary);
   font-size: 1em;
   font-weight: 600;
-  padding: 10px;
+  padding: 15px 17px;
 
   &:hover {
     color: var(--primary1);

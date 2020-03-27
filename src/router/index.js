@@ -44,11 +44,6 @@ const routes = [
             path: 'create',
           },
           {
-            component: Project,
-            name: 'project',
-            path: ':id',
-          },
-          {
             component: ProjectImage,
             name: 'project-image',
             path: ':id/image/:imageId',
@@ -57,6 +52,11 @@ const routes = [
             component: ProjectAddImage,
             name: 'project-add-image',
             path: ':id/add-image',
+          },
+          {
+            component: Project,
+            name: 'project',
+            path: ':id',
           },
         ],
         component: Projects,
