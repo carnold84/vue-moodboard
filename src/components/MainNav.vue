@@ -98,7 +98,7 @@ export default {
 
 .header {
   border-bottom: 1px solid #eeeeee;
-  padding: 25px 40px;
+  padding: 25px 30px;
 }
 
 .logo-link {
@@ -123,7 +123,7 @@ export default {
   font-size: 1em;
   font-weight: 600;
   display: flex;
-  padding: 16px 36px;
+  padding: 16px 26px;
   width: 100%;
 
   &.btn {
@@ -177,7 +177,7 @@ export default {
   .sub-nav-title {
     font-size: 1em;
     font-weight: 600;
-    padding: 16px 40px;
+    padding: 16px 30px;
   }
 
   .sub-nav-item {
@@ -193,7 +193,7 @@ export default {
     color: var(--text1);
     display: flex;
     justify-content: center;
-    padding: 16px 40px;
+    padding: 16px 30px;
     width: 100%;
   }
 

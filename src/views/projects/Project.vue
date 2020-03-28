@@ -3,38 +3,40 @@
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
-        <a-view-header
+        <view-header
           :description="project.description"
           :options="options"
           sectionName="Project"
           :title="project.name"
-        ></a-view-header>
+        ></view-header>
       </div>
     </div>
     <div v-if="project && !isDeleting" class="row">
       <div class="col-12">
-        <a-tab-bar :tabs="tabs">
-          <template v-slot:controls>
-            <a-button
-              :isPrimary="true"
-              :to="{ name: 'project-add-image', params: { id: project.id }}"
-            >
-              <svg
-                height="20"
-                style="margin: 0 5px 0 0;"
-                viewBox="0 0 24 24"
-                width="20"
-                xmlns="http://www.w3.org/2000/svg"
+        <div class="tabs">
+          <a-tab-bar :tabs="tabs">
+            <template v-slot:controls>
+              <a-button
+                :isPrimary="true"
+                :to="{ name: 'project-add-image', params: { id: project.id }}"
               >
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path
-                  d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                />
-              </svg>
-              <span>Add Image</span>
-            </a-button>
-          </template>
-        </a-tab-bar>
+                <svg
+                  height="20"
+                  style="margin: 0 5px 0 0;"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                  />
+                </svg>
+                <span>Add Image</span>
+              </a-button>
+            </template>
+          </a-tab-bar>
+        </div>
       </div>
     </div>
     <div v-if="project && !isDeleting && images === undefined" class="row">
@@ -86,7 +88,7 @@ import AMessagePanel from '@/components/AMessagePanel';
 import AppLoading from '@/components/AppLoading';
 import AppPicture from '@/components/AppPicture';
 import ATabBar from '@/components/ATabBar';
-import AViewHeader from '@/components/AViewHeader';
+import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'project',
@@ -96,7 +98,7 @@ export default {
     AMessagePanel,
     AppLoading,
     ATabBar,
-    AViewHeader,
+    ViewHeader,
   },
   computed: {
     id() {
@@ -173,5 +175,9 @@ export default {
 
 .panel {
   flex-grow: 1;
+}
+
+.tabs {
+  margin: 0 0 20px;
 }
 </style>

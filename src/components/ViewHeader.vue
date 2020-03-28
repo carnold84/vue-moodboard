@@ -1,5 +1,5 @@
 <template>
-  <header class="a-view-header">
+  <header class="view-header">
     <div class="meta-content">
       <a-tag v-if="sectionName" :text="sectionName"></a-tag>
     </div>
@@ -16,10 +16,9 @@
 <script>
 import ASelect from '@/components/ASelect';
 import ATag from '@/components/ATag';
-import ButtonGroup from '@/components/ButtonGroup';
 
 export default {
-  name: 'page-header',
+  name: 'view-header',
   components: {
     ASelect,
     ATag,
@@ -42,7 +41,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.a-view-header {
+.view-header {
   align-content: center;
   display: flex;
   flex-direction: column;
@@ -60,10 +59,7 @@ export default {
 
 .meta-content {
   display: flex;
-}
-
-.sectionName {
-  margin: 0 0 5px;
+  margin: 0 0 3px;
 }
 
 .title {
@@ -72,7 +68,7 @@ export default {
   font-size: 3.3em;
   font-weight: 400;
   line-height: 1em;
-  margin: 0 0 7px;
+  margin: 0 0 10px;
 }
 
 .description {

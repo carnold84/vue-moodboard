@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <a-view-header title="Create Project"></a-view-header>
+        <view-header title="Create Project"></view-header>
       </div>
     </div>
     <app-loading v-if="isSaving === true"></app-loading>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import AViewHeader from '@/components/AViewHeader';
+import ViewHeader from '@/components/ViewHeader';
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import ButtonGroup from '@/components/ButtonGroup';
@@ -31,7 +31,7 @@ import TextInput from '@/components/TextInput';
 export default {
   name: 'project-edit',
   components: {
-    AViewHeader,
+    ViewHeader,
     AppButton,
     AppLoading,
     ButtonGroup,

@@ -2,7 +2,7 @@
   <div class="view-wrapper">
     <div class="row">
       <div class="col-12">
-        <a-view-header :title="image.name"></a-view-header>
+        <view-header :title="image.name"></view-header>
         <button-group>
           <app-button @click="onRemove" :is-primary="true">Remove from {{ project.name }}</app-button>
           <app-button @click="onDelete" :is-primary="true">Delete</app-button>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import AViewHeader from '@/components/AViewHeader';
+import ViewHeader from '@/components/ViewHeader';
 import AppButton from '@/components/AppButton';
 import AppLoading from '@/components/AppLoading';
 import ButtonGroup from '@/components/ButtonGroup';
@@ -27,13 +27,13 @@ import ButtonGroup from '@/components/ButtonGroup';
 export default {
   name: 'project-image',
   components: {
-    AViewHeader,
+    ViewHeader,
     AppButton,
     AppLoading,
     ButtonGroup,
   },
   computed: {
-    breadcrumb() { 
+    breadcrumb() {
       return [
         {
           title: 'Projects',
