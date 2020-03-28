@@ -3,27 +3,48 @@
     <app-loading></app-loading>
   </div>
   <div v-else class="app-wrapper">
-    <main-nav 
-      :onLogout="logout"
-      :projects="projects"
-      :title="appName"
-      :user="user"
-    ></main-nav>
-    <div class="app-content">
-      <router-view />
+    <div v-if="canHideMenu" class="app-header">
+      <button class="app-menu-btn" @click="onToggleMenu">
+        <svg height="22" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+        </svg>
+      </button>
+      <router-link class="app-logo" to="/">
+        <app-logo></app-logo>
+      </router-link>
     </div>
+    <div class="app-container">
+      <div class="app-nav" :class="{show: isMenuOpen}">
+        <main-nav :onLogout="logout" :projects="projects" :title="appName" :user="user"></main-nav>
+      </div>
+      <div class="app-content">
+        <router-view />
+      </div>
+    </div>
+    <div
+      v-if="canHideMenu"
+      class="app-nav-overlay"
+      :class="{show: isMenuOpen}"
+      @click="onToggleMenu"
+    ></div>
   </div>
 </template>
 
 <script>
-import appConfig from '@/app.config';
-import AppLoading from '@/components/AppLoading';
-import MainNav from '@/components/MainNav';
+import appConfig from "@/app.config";
+import AppLoading from "@/components/AppLoading";
+import AppLogo from "@/components/AppLogo";
+import MainNav from "@/components/MainNav";
 
 export default {
-  name: 'authenticated-app',
+  name: "authenticated-app",
+  beforeDestroy() {
+    this.media.removeListener(this.onMatchMedia);
+  },
   components: {
     AppLoading,
+    AppLogo,
     MainNav,
   },
   computed: {
@@ -31,20 +52,41 @@ export default {
       return appConfig.appName;
     },
     projects() {
-      return this.$store.getters['projects/projects'];
+      return this.$store.getters["projects/projects"];
     },
     user() {
-      return this.$store.getters['auth/user'];
+      return this.$store.getters["auth/user"];
     },
+  },
+  data() {
+    return {
+      canHideMenu: false,
+      isMenuOpen: false,
+      media: undefined,
+    };
   },
   methods: {
     async logout() {
-      await this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
+      await this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
+    onMatchMedia(evt) {
+      // less than required width so can hide
+      this.canHideMenu = !evt.matches;
+
+      if (this.canHideMenu === false) {
+        this.isMenuOpen = false;
+      }
+    },
+    onToggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
     },
   },
   mounted() {
-    this.$store.dispatch('init');
+    this.media = window.matchMedia("(min-width: 992px)");
+    this.media.addListener(this.onMatchMedia);
+    this.canHideMenu = !this.media.matches;
+    this.$store.dispatch("init");
   },
 };
 </script>
@@ -52,9 +94,46 @@ export default {
 <style scoped lang="scss">
 .app-wrapper {
   display: flex;
+  flex-direction: column;
   height: 100%;
   position: absolute;
   width: 100%;
+}
+
+.app-header {
+  align-content: center;
+  border-bottom: 1px solid #eeeeee;
+  display: flex;
+  flex-shrink: 0;
+  height: 60px;
+  width: 100%;
+
+  .app-logo {
+    align-self: center;
+  }
+
+  .app-menu-btn {
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    fill: var(--text1);
+    cursor: pointer;
+    display: flex;
+    height: 60px;
+    justify-content: center;
+    margin: 0 5px 0 0;
+    padding: 5px;
+    width: 60px;
+
+    &:hover {
+      fill: var(--primary1);
+    }
+  }
+}
+
+.app-container {
+  display: flex;
+  height: 100%;
 }
 
 .app-content {
@@ -62,5 +141,44 @@ export default {
   overflow: auto;
   padding: 50px;
   position: relative;
+  z-index: 0;
+}
+
+.app-nav {
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 250ms ease-in-out;
+  width: 280px;
+  z-index: 2;
+
+  &.show {
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (min-width: 992px) {
+    height: 100%;
+    position: relative;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.app-nav-overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 250ms ease-in-out;
+  width: 100%;
+  z-index: 1;
+
+  &.show {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 </style>

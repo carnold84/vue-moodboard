@@ -10,9 +10,9 @@
       <li>
         <router-link class="nav-item btn" to="/">Home</router-link>
       </li>
-      <li class="nav-item accordion">
-        <div class="accordion-header">
-          <h2 class="accordion-title nav-item">Projects</h2>
+      <li class="nav-item sub-nav">
+        <div class="sub-nav-header">
+          <h2 class="sub-nav-title nav-item">Projects</h2>
           <router-link class="add-btn" to="/projects/create">
             <svg
               height="20"
@@ -25,22 +25,22 @@
             </svg>
           </router-link>
         </div>
-        <div v-if="!projects && showProjects" class="accordion-loading">
+        <div v-if="!projects && showProjects" class="sub-nav-loading">
           <app-loading diameter="30px"></app-loading>
         </div>
         <div
           v-if="projects && showProjects && projects.length === 0"
-          class="accordion-message"
+          class="sub-nav-message"
         >
           No Projects
         </div>
-        <ul v-if="projects && showProjects" class="accordion-content">
+        <ul v-if="projects && showProjects" class="sub-nav-content">
           <li
             v-for="project in projects"
             :key="project.id"
           >
             <router-link
-              class="accordion-item nav-item btn"
+              class="sub-nav-item nav-item btn"
               :to="{ name: 'project', params: { id: project.id }}"
             >
               {{project.name}}
@@ -99,6 +99,7 @@ export default {
 <style scoped lang="scss">
 .wrapper {
   align-content: center;
+  background-color: #ffffff;
   border-right: 1px solid #eeeeee;
   display: flex;
   flex-direction: column;
@@ -109,7 +110,7 @@ export default {
 
 .header {
   border-bottom: 1px solid #eeeeee;
-  padding: 30px 40px;
+  padding: 25px 40px;
 }
 
 .logo-link {
@@ -154,7 +155,7 @@ export default {
   }
 }
 
-.accordion {
+.sub-nav {
   align-items: flex-start;
   cursor: default;
   display: flex;
@@ -165,7 +166,7 @@ export default {
     border-bottom: none;
   }
 
-  .accordion-header {
+  .sub-nav-header {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -185,22 +186,22 @@ export default {
     }
   }
 
-  .accordion-title {
+  .sub-nav-title {
     font-size: 1em;
     font-weight: 600;
     padding: 16px 40px;
   }
 
-  .accordion-item {
+  .sub-nav-item {
     padding: 16px 46px;
   }
 
-  .accordion-content {
+  .sub-nav-content {
     padding: 0 0 10px;
     width: 100%;
   }
 
-  .accordion-message {
+  .sub-nav-message {
     color: var(--text1);
     display: flex;
     justify-content: center;
@@ -208,7 +209,7 @@ export default {
     width: 100%;
   }
 
-  .accordion-loading {
+  .sub-nav-loading {
     height: 30px;
     margin: 0 0 20px;
     position: relative;
