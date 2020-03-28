@@ -12,15 +12,8 @@
           <text-input v-model="name" label="Name" name="name"></text-input>
           <text-input v-model="description" label="Description" name="description"></text-input>
           <button-group align="right">
-            <app-button
-              style="width: 160px;"
-              to="/projects"
-            >Cancel</app-button>
-            <app-button
-              :isPrimary="true"
-              style="width: 160px;"
-              type="submit"
-            >Create Project</app-button>
+            <app-button style="width: 160px;" to="/">Cancel</app-button>
+            <app-button :isPrimary="true" style="width: 160px;" type="submit">Create Project</app-button>
           </button-group>
         </form>
       </div>
@@ -60,8 +53,6 @@ export default {
         name: this.name,
       };
       const response = await this.$store.dispatch('projects/create', data);
-
-      console.log(response);
 
       if (response.success) {
         this.$router.push(`/projects/${response.project.id}`);

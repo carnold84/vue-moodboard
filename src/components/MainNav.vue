@@ -14,14 +14,9 @@
         <div class="sub-nav-header">
           <h2 class="sub-nav-title nav-item">Projects</h2>
           <router-link class="add-btn" to="/projects/create">
-            <svg
-              height="20"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-            >
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-              <path d="M0 0h24v24H0z" fill="none"/>
+            <svg height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              <path d="M0 0h24v24H0z" fill="none" />
             </svg>
           </router-link>
         </div>
@@ -31,20 +26,13 @@
         <div
           v-if="projects && showProjects && projects.length === 0"
           class="sub-nav-message"
-        >
-          No Projects
-        </div>
+        >No Projects</div>
         <ul v-if="projects && showProjects" class="sub-nav-content">
-          <li
-            v-for="project in projects"
-            :key="project.id"
-          >
+          <li v-for="project in projects" :key="project.id">
             <router-link
               class="sub-nav-item nav-item btn"
               :to="{ name: 'project', params: { id: project.id }}"
-            >
-              {{project.name}}
-            </router-link>
+            >{{project.name}}</router-link>
           </li>
         </ul>
       </li>

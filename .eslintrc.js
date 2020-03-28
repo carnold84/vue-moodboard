@@ -21,7 +21,8 @@ module.exports = {
         ]
       }
     ],
-    "semi": ["warn", "always"]
+    "semi": ["warn", "always"],
+    "quotes": ["error", "single"]
   },
   "parserOptions": {
     "parser": "babel-eslint"

@@ -32,13 +32,13 @@
 </template>
 
 <script>
-import appConfig from "@/app.config";
-import AppLoading from "@/components/AppLoading";
-import AppLogo from "@/components/AppLogo";
-import MainNav from "@/components/MainNav";
+import appConfig from '@/app.config';
+import AppLoading from '@/components/AppLoading';
+import AppLogo from '@/components/AppLogo';
+import MainNav from '@/components/MainNav';
 
 export default {
-  name: "authenticated-app",
+  name: 'authenticated-app',
   beforeDestroy() {
     this.media.removeListener(this.onMatchMedia);
   },
@@ -52,10 +52,10 @@ export default {
       return appConfig.appName;
     },
     projects() {
-      return this.$store.getters["projects/projects"];
+      return this.$store.getters['projects/projects'];
     },
     user() {
-      return this.$store.getters["auth/user"];
+      return this.$store.getters['auth/user'];
     },
   },
   data() {
@@ -67,8 +67,8 @@ export default {
   },
   methods: {
     async logout() {
-      await this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
+      await this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
     },
     onMatchMedia(evt) {
       // less than required width so can hide
@@ -83,10 +83,17 @@ export default {
     },
   },
   mounted() {
-    this.media = window.matchMedia("(min-width: 992px)");
+    this.media = window.matchMedia('(min-width: 992px)');
     this.media.addListener(this.onMatchMedia);
     this.canHideMenu = !this.media.matches;
-    this.$store.dispatch("init");
+    this.$store.dispatch('init');
+
+    this.$router.beforeEach((to, from, next) => {
+      if (this.canHideMenu && this.isMenuOpen) {
+        this.onToggleMenu();
+      }
+      next();
+    });
   },
 };
 </script>
