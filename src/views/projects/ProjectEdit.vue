@@ -12,7 +12,7 @@
           <text-input v-model="name" label="Name" name="name"></text-input>
           <text-input v-model="description" label="Description" name="description"></text-input>
           <button-group align="right">
-            <app-button style="width: 160px;" to="/">Cancel</app-button>
+            <app-button style="width: 160px;" @click="onCancel">Cancel</app-button>
             <app-button :isPrimary="true" style="width: 160px;" type="submit">Create Project</app-button>
           </button-group>
         </form>
@@ -59,6 +59,9 @@ export default {
       } else {
         console.error(response.message);
       }
+    },
+    onCancel() {
+      this.$router.back();
     },
   },
 };

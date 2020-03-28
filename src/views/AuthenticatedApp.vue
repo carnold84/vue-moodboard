@@ -109,11 +109,14 @@ export default {
 
 .app-header {
   align-content: center;
+  background-color: var(--theme1);
   border-bottom: 1px solid #eeeeee;
   display: flex;
   flex-shrink: 0;
   height: 60px;
+  position: fixed;
   width: 100%;
+  z-index: 1;
 
   .app-logo {
     align-self: center;
@@ -145,10 +148,13 @@ export default {
 
 .app-content {
   flex-grow: 1;
-  overflow: auto;
-  padding: 50px;
+  padding: 110px 50px 50px;
   position: relative;
   z-index: 0;
+
+  @media (min-width: 992px) {
+    padding: 50px 50px 50px 330px;
+  }
 }
 
 .app-nav {
@@ -160,7 +166,7 @@ export default {
   transform: translate3d(-100%, 0, 0);
   transition: transform 250ms ease-in-out;
   width: 280px;
-  z-index: 2;
+  z-index: 3;
 
   &.show {
     transform: translate3d(0, 0, 0);
@@ -168,7 +174,7 @@ export default {
 
   @media (min-width: 992px) {
     height: 100%;
-    position: relative;
+    position: fixed;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -181,7 +187,7 @@ export default {
   position: absolute;
   transition: opacity 250ms ease-in-out;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 
   &.show {
     opacity: 1;
