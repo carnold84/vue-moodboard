@@ -5,7 +5,12 @@
   <div v-else class="app-wrapper">
     <div v-if="canHideMenu" class="app-header">
       <button class="app-menu-btn" @click="onToggleMenu">
-        <svg height="22" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          height="22"
+          viewBox="0 0 24 24"
+          width="22"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path d="M0 0h24v24H0z" fill="none" />
           <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
         </svg>
@@ -15,8 +20,13 @@
       </router-link>
     </div>
     <div class="app-container">
-      <div class="app-nav" :class="{show: isMenuOpen}">
-        <main-nav :onLogout="logout" :projects="projects" :title="appName" :user="user"></main-nav>
+      <div class="app-nav" :class="{ show: isMenuOpen }">
+        <main-nav
+          :onLogout="logout"
+          :projects="projects"
+          :title="appName"
+          :user="user"
+        ></main-nav>
       </div>
       <div class="app-content">
         <router-view />
@@ -25,7 +35,7 @@
     <div
       v-if="canHideMenu"
       class="app-nav-overlay"
-      :class="{show: isMenuOpen}"
+      :class="{ show: isMenuOpen }"
       @click="onToggleMenu"
     ></div>
   </div>
@@ -86,7 +96,6 @@ export default {
     this.media = window.matchMedia('(min-width: 992px)');
     this.media.addListener(this.onMatchMedia);
     this.canHideMenu = !this.media.matches;
-    this.$store.dispatch('init');
 
     this.$router.beforeEach((to, from, next) => {
       if (this.canHideMenu && this.isMenuOpen) {
@@ -94,6 +103,8 @@ export default {
       }
       next();
     });
+
+    this.$store.dispatch('init');
   },
 };
 </script>

@@ -48,7 +48,6 @@ export default {
   flex-shrink: 0;
   justify-content: space-between;
   margin: 0 0 20px;
-  min-height: 100px;
   width: 100%;
 }
 
@@ -61,6 +60,7 @@ export default {
 
 .meta-content {
   display: flex;
+  height: 20px;
   margin: 0 0 3px;
 }
 
@@ -70,6 +70,7 @@ export default {
   font-size: 3.3em;
   font-weight: 400;
   line-height: 1em;
+  min-height: 45px;
 }
 
 .description {
@@ -77,5 +78,6 @@ export default {
   font-family: var(--secondary-font-family);
   font-size: 1em;
   font-weight: 600;
+  min-height: 20px;
 }
 </style>
