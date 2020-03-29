@@ -148,7 +148,7 @@ export default {
 
 .app-content {
   flex-grow: 1;
-  padding: 110px 50px 50px;
+  padding: 90px 30px 30px;
   position: relative;
   z-index: 0;
 

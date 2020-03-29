@@ -66,7 +66,8 @@
         </a-message-panel>
       </div>
     </div>
-    <div
+    <a-image-grid v-if="project && !isDeleting && (images && images.length > 0)" :images="images"></a-image-grid>
+    <!-- <div
       v-if="project && !isDeleting && (images && images.length > 0)"
       class="row content-row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
     >
@@ -77,13 +78,13 @@
           :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
         ></a-image-link>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
-import AImageLink from '@/components/AImageLink';
 import AButton from '@/components/AButton';
+import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import AppLoading from '@/components/AppLoading';
 import AppPicture from '@/components/AppPicture';
@@ -93,7 +94,7 @@ import ViewHeader from '@/components/ViewHeader';
 export default {
   name: 'project',
   components: {
-    AImageLink,
+    AImageGrid,
     AButton,
     AMessagePanel,
     AppLoading,
@@ -106,7 +107,29 @@ export default {
     },
     images() {
       if (this.project) {
-        return this.$store.getters['images/imagesById'](this.project.imageIds);
+        let images = this.$store.getters['images/imagesById'](
+          this.project.imageIds
+        );
+
+        if (images === undefined) {
+          return images;
+        }
+
+        return images.map(element => {
+          const { id, name } = element;
+          return {
+            id,
+            imageUrl: this.thumbUrl(element),
+            title: name,
+            to: {
+              name: 'project-image',
+              params: {
+                id: this.project.id,
+                imageId: id,
+              },
+            },
+          };
+        });
       } else {
         return undefined;
       }
@@ -168,11 +191,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.a-image-link {
-  margin: 0 0 40px;
-}
-
+<style scoped lang="scss">
 .panel {
   flex-grow: 1;
 }
