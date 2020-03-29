@@ -16,10 +16,10 @@
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
     "register-service-worker": "^1.6.2",
+    "resize-observer-polyfill": "^1.5.1",
     "uuid": "^7.0.2",
     "v-click-outside": "^3.0.1",
     "vue": "^2.6.10",
-    "vue-responsive-components": "^0.2.3",
     "vue-router": "^3.1.3",
     "vuex": "^3.1.2"
   },

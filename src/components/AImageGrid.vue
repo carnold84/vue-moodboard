@@ -1,7 +1,8 @@
 <template>
   <div class="a-image-grid">
     <app-loading v-if="images === undefined"></app-loading>
-    <div v-else class="grid" v-responsive="breakpoints">
+    <div v-else class="grid" :class="breakpoints">
+      <resizable @resize="onResize" />
       <a-image-link
         v-for="image in images"
         :key="image.id"
@@ -15,21 +16,42 @@
 
 <script>
 import AImageLink from '@/components/AImageLink';
+import Resizable from '@/components/Resizable';
 
 export default {
   name: 'a-image-grid',
   components: {
     AImageLink,
+    Resizable,
   },
   data() {
     return {
-      breakpoints: {
-        sm: el => el.width > 400,
-        md: el => el.width > 670,
-        lg: el => el.width > 990,
-        xl: el => el.width > 1200,
-      },
+      breakpoints: [],
     };
+  },
+  methods: {
+    onResize({ width }) {
+      let classes = [];
+
+      if (width > 400) {
+        classes.push('sm');
+      }
+
+      if (width > 670) {
+        classes.push('md');
+      }
+
+      if (width > 990) {
+        classes.push('lg');
+      }
+
+      if (width > 990) {
+        classes.push('xl');
+      }
+      console.log(classes);
+
+      this.breakpoints = classes;
+    },
   },
   props: {
     images: {
