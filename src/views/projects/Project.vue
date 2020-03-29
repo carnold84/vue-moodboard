@@ -44,7 +44,7 @@
         text="You haven't got any images."
       >
         <a-button
-          :is-primary="true"
+          :isPrimary="true"
           :to="{ name: 'project-add-image', params: { id: project.id } }"
         >
           <svg

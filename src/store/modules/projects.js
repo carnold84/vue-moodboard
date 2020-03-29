@@ -26,6 +26,7 @@ const actions = {
       commit('setProject', response.project);
       return {
         message: `${project.name} was created.`,
+        project: response.project,
         success: true,
       };
     } catch (error) {

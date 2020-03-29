@@ -1,18 +1,14 @@
 <template>
   <div class="view-wrapper">
-    <div class="row">
-      <div class="col-12">
-        <view-header :options="options" title="Projects"></view-header>
-      </div>
-    </div>
+    <view-header :options="options" title="Projects"></view-header>
     <app-loading v-if="projects === undefined"></app-loading>
     <div v-if="projects && projects.length === 0">No Projects</div>
-    <div
-      v-if="projects && projects.length > 0"
-      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
-    >
-      <div v-for="project in projects" :key="project.id" class="col">
-        <a-image-link :title="project.name" :to="{ name: 'project', params: { id: project.id }}"></a-image-link>
+    <div v-if="projects && projects.length > 0">
+      <div v-for="project in projects" :key="project.id">
+        <a-image-link
+          :title="project.name"
+          :to="{ name: 'project', params: { id: project.id } }"
+        ></a-image-link>
       </div>
     </div>
   </div>

@@ -48,7 +48,6 @@ export default {
       if (width > 990) {
         classes.push('xl');
       }
-      console.log(classes);
 
       this.breakpoints = classes;
     },

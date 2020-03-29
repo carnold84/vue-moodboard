@@ -60,6 +60,10 @@ export default {
 
   .controls {
     display: flex;
+
+    & > * {
+      margin: 0 0 0 10px;
+    }
   }
 }
 </style>

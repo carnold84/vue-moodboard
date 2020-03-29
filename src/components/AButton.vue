@@ -2,14 +2,15 @@
   <router-link
     v-if="to"
     class="a-button"
-    :class="{'is-primary': isPrimary}"
+    :class="{ 'is-primary': isPrimary }"
     :disabled="isDisabled"
-    :to="to">
+    :to="to"
+  >
     <slot></slot>
   </router-link>
   <button
     class="a-button"
-    :class="{'is-primary': isPrimary}"
+    :class="{ 'is-primary': isPrimary }"
     :disabled="isDisabled"
     :type="type"
     v-else
@@ -58,6 +59,7 @@ export default {
   background-color: transparent;
   border: none;
   color: var(--button__color);
+  flex-shrink: 0;
   fill: var(--button__color);
   cursor: pointer;
   display: flex;
@@ -70,7 +72,6 @@ export default {
   outline: transparent solid 2px;
   text-decoration: none;
   transition: all 150ms ease-in-out;
-  width: 100%;
 
   &:disabled {
     pointer-events: none;
