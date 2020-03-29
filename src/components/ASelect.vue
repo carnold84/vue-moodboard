@@ -4,7 +4,7 @@
     :class="{
       'is-active': isActive,
       'is-left': alignMenu === 'left',
-      'is-right': alignMenu === 'right',
+      'is-right': alignMenu === 'right'
     }"
     v-click-outside="onClickOutside"
   >
@@ -19,26 +19,25 @@
         height="24"
         viewBox="0 0 24 24"
         width="24"
-        xmlns="http://www.w3.org/2000/svg" 
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path
+          d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+        />
       </svg>
-      <span class="trigger-btn-title">{{title}}</span>
+      <span class="trigger-btn-title">{{ title }}</span>
     </button>
-    <div
-      v-if="isActive"
-      class="select-menu"
-      id="select-menu"
-      role="menu"
-    >
-        <button
-          v-for="item in items" :key="item.id"
-          class="select-item"
-          @click="item.callback"
-        >
-          {{item.label}}
-        </button>
+    <div v-if="isActive" class="select-menu" id="select-menu" role="menu">
+      <button
+        v-for="item in items"
+        :key="item.id"
+        class="select-item"
+        :title="item.label"
+        @click="item.callback"
+      >
+        {{ item.label }}
+      </button>
     </div>
   </div>
 </template>
@@ -127,7 +126,8 @@ export default {
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  min-width: 180px;
+  min-width: 100px;
+  max-width: 240px;
   position: absolute;
 
   .is-left & {
@@ -140,17 +140,19 @@ export default {
 }
 
 .select-item {
-  align-items: center;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid var(--theme4);
   color: var(--text1);
   cursor: pointer;
-  display: flex;
   font-family: var(--fontFamily--primary);
   font-size: 1em;
   font-weight: 600;
+  overflow: hidden;
   padding: 15px 17px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &:hover {
     color: var(--primary1);

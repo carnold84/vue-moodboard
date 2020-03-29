@@ -1,6 +1,12 @@
 <template>
-  <div class="a-tab-bar">
-    <router-link v-for="tab in tabs" :key="tab.id" class="tab" :to="tab.to">{{tab.label}}</router-link>
+  <div class="a-action-bar">
+    <div class="tabs">
+      <div v-if="tabs">
+        <router-link v-for="tab in tabs" :key="tab.id" class="tab" :to="tab.to">
+          {{ tab.label }}
+        </router-link>
+      </div>
+    </div>
     <div class="controls">
       <slot name="controls"></slot>
     </div>
@@ -9,7 +15,7 @@
 
 <script>
 export default {
-  name: 'a-tab-bar',
+  name: 'a-action-bar',
   props: {
     tabs: {
       type: Array,
@@ -19,11 +25,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.a-tab-bar {
+.a-action-bar {
   align-items: center;
   border-bottom: 1px solid var(--theme3);
   display: flex;
+  height: 40px;
   justify-content: space-between;
+  margin: 0 0 20px;
 
   .tab {
     align-items: center;
@@ -48,6 +56,10 @@ export default {
     &:hover {
       color: var(--primary1);
     }
+  }
+
+  .controls {
+    display: flex;
   }
 }
 </style>

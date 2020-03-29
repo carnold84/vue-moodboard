@@ -1,6 +1,6 @@
 <template>
   <div class="a-message-panel">
-    <h3 class="text">{{text}}</h3>
+    <h3 class="text">{{ text }}</h3>
     <slot></slot>
   </div>
 </template>

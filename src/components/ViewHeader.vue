@@ -4,11 +4,11 @@
       <a-tag v-if="sectionName" :text="sectionName"></a-tag>
     </div>
     <div class="main-content">
-      <h2 v-if="title" class="title">{{title}}</h2>
+      <h2 v-if="title" class="title">{{ title }}</h2>
       <a-select v-if="options" alignMenu="right" :items="options"></a-select>
     </div>
     <div class="secondary-content">
-      <p v-if="description" class="description">{{description}}</p>
+      <p v-if="description" class="description">{{ description }}</p>
     </div>
   </header>
 </template>
@@ -48,6 +48,7 @@ export default {
   flex-shrink: 0;
   justify-content: space-between;
   margin: 0 0 20px;
+  min-height: 100px;
   width: 100%;
 }
 
@@ -55,6 +56,7 @@ export default {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  margin: 0 0 10px;
 }
 
 .meta-content {
@@ -68,7 +70,6 @@ export default {
   font-size: 3.3em;
   font-weight: 400;
   line-height: 1em;
-  margin: 0 0 10px;
 }
 
 .description {

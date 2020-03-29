@@ -1,20 +1,21 @@
 <template>
-  <router-link
-    class="a-image-link"
-    :to="to"
-  >
-    <app-picture class="a-image-link-picture" :height="imageHeight" :src="imageUrl" />
-    <h3 v-if="title" class="a-image-link-title">{{title}}</h3>
+  <router-link class="a-image-link" :to="to">
+    <a-picture
+      class="a-image-link-picture"
+      :height="imageHeight"
+      :src="imageUrl"
+    />
+    <h3 v-if="title" class="a-image-link-title">{{ title }}</h3>
   </router-link>
 </template>
 
 <script>
-import AppPicture from '@/components/AppPicture';
+import APicture from '@/components/APicture';
 
 export default {
   name: 'a-image-link',
   components: {
-    AppPicture,
+    APicture,
   },
   props: {
     imageHeight: {
@@ -38,9 +39,11 @@ export default {
 .a-image-link {
   display: flex;
   flex-direction: column;
+  outline: none;
   text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &:focus {
     .a-image-link-picture {
       outline: 3px solid var(--button__bg-color--primary);
     }

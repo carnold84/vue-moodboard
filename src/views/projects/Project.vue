@@ -1,84 +1,72 @@
 <template>
   <div class="view-wrapper">
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
-    <div v-if="project && !isDeleting" class="row">
-      <div class="col-12">
-        <view-header
-          :description="project.description"
-          :options="options"
-          sectionName="Project"
-          :title="project.name"
-        ></view-header>
-      </div>
+    <div v-if="project && !isDeleting">
+      <view-header
+        :description="project.description"
+        :options="options"
+        sectionName="Project"
+        :title="project.name"
+      ></view-header>
     </div>
-    <div v-if="project && !isDeleting" class="row">
-      <div class="col-12">
-        <div class="tabs">
-          <a-tab-bar :tabs="tabs">
-            <template v-slot:controls>
-              <a-button
-                :isPrimary="true"
-                :to="{ name: 'project-add-image', params: { id: project.id }}"
-              >
-                <svg
-                  height="20"
-                  style="margin: 0 5px 0 0;"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M0 0h24v24H0z" fill="none" />
-                  <path
-                    d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                  />
-                </svg>
-                <span>Add Image</span>
-              </a-button>
-            </template>
-          </a-tab-bar>
-        </div>
-      </div>
-    </div>
-    <div v-if="project && !isDeleting && images === undefined" class="row">
-      <app-loading></app-loading>
-    </div>
-    <div v-if="project && !isDeleting && (images && images.length === 0)" class="row content-row">
-      <div class="col-12">
-        <a-message-panel text="You haven't got any images.">
-          <a-button
-            :is-primary="true"
-            :to="{ name: 'project-add-image', params: { id: project.id }}"
-          >
-            <svg
-              height="20"
-              style="margin: 0 5px 0 0;"
-              viewBox="0 0 24 24"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
+    <div v-if="project && !isDeleting">
+      <div class="tabs">
+        <a-action-bar :tabs="tabs">
+          <template v-slot:controls>
+            <a-button
+              :isPrimary="true"
+              :to="{ name: 'project-add-image', params: { id: project.id } }"
             >
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path
-                d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-              />
-            </svg>
-            Add One!
-          </a-button>
-        </a-message-panel>
+              <svg
+                height="20"
+                style="margin: 0 5px 0 0;"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path
+                  d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                />
+              </svg>
+              <span>Add Image</span>
+            </a-button>
+          </template>
+        </a-action-bar>
       </div>
     </div>
-    <a-image-grid v-if="project && !isDeleting && (images && images.length > 0)" :images="images"></a-image-grid>
-    <!-- <div
-      v-if="project && !isDeleting && (images && images.length > 0)"
-      class="row content-row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
-    >
-      <div v-for="image in images" :key="image.id" class="col">
-        <a-image-link
-          :imageUrl="thumbUrl(image)"
-          :title="image.name"
-          :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
-        ></a-image-link>
+    <div class="view-content">
+      <div v-if="project && !isDeleting && images === undefined">
+        <app-loading></app-loading>
       </div>
-    </div>-->
+      <a-message-panel
+        v-if="project && !isDeleting && images && images.length === 0"
+        text="You haven't got any images."
+      >
+        <a-button
+          :is-primary="true"
+          :to="{ name: 'project-add-image', params: { id: project.id } }"
+        >
+          <svg
+            height="20"
+            style="margin: 0 5px 0 0;"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+            />
+          </svg>
+          Add One!
+        </a-button>
+      </a-message-panel>
+      <a-image-grid
+        v-if="project && !isDeleting && images && images.length > 0"
+        :images="images"
+      ></a-image-grid>
+    </div>
   </div>
 </template>
 
@@ -86,9 +74,9 @@
 import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
+import APicture from '@/components/APicture';
 import AppLoading from '@/components/AppLoading';
-import AppPicture from '@/components/AppPicture';
-import ATabBar from '@/components/ATabBar';
+import AActionBar from '@/components/AActionBar';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -98,7 +86,7 @@ export default {
     AButton,
     AMessagePanel,
     AppLoading,
-    ATabBar,
+    AActionBar,
     ViewHeader,
   },
   computed: {
@@ -134,6 +122,19 @@ export default {
         return undefined;
       }
     },
+    options() {
+      if (this.project) {
+        return [
+          {
+            callback: this.onDelete,
+            id: 'delete',
+            label: 'Delete',
+          },
+        ];
+      }
+
+      return undefined;
+    },
     project() {
       return this.$store.getters['projects/project'](this.id);
     },
@@ -156,13 +157,6 @@ export default {
   data() {
     return {
       isDeleting: false,
-      options: [
-        {
-          callback: this.onDelete,
-          id: 'delete',
-          label: 'Delete',
-        },
-      ],
     };
   },
   methods: {
@@ -182,7 +176,8 @@ export default {
     },
     thumbUrl(image) {
       if (image.format) {
-        return `https://res.cloudinary.com/carnold/image/upload/w_260/${image.fileName}.${image.format}`;
+        const rootUrl = 'https://res.cloudinary.com/carnold/image/upload';
+        return `${rootUrl}/w_260/${image.fileName}.${image.format}`;
       } else {
         return image.url;
       }

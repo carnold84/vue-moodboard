@@ -17,16 +17,16 @@
 import AImageLink from '@/components/AImageLink';
 
 export default {
-  name: 'a-tag',
+  name: 'a-image-grid',
   components: {
     AImageLink,
   },
   data() {
     return {
       breakpoints: {
-        sm: el => el.width > 400 && el.width <= 670,
-        md: el => el.width > 670 && el.width <= 990,
-        lg: el => el.width > 990 && el.width <= 1200,
+        sm: el => el.width > 400,
+        md: el => el.width > 670,
+        lg: el => el.width > 990,
         xl: el => el.width > 1200,
       },
     };
@@ -41,6 +41,8 @@ export default {
 
 <style scoped lang="scss">
 .a-image-grid {
+  height: 100%;
+
   .grid {
     display: grid;
     grid-template-columns: 1fr;
