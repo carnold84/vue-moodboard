@@ -5,15 +5,7 @@
   <div v-else class="app-wrapper">
     <div v-if="canHideMenu" class="app-header">
       <button class="app-menu-btn" @click="onToggleMenu">
-        <svg
-          height="22"
-          viewBox="0 0 24 24"
-          width="22"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-        </svg>
+        <a-menu-icon></a-menu-icon>
       </button>
       <router-link class="app-logo" to="/">
         <app-logo></app-logo>
@@ -43,6 +35,7 @@
 
 <script>
 import appConfig from '@/app.config';
+import AMenuIcon from '@/components/icons/AMenuIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
 import MainNav from '@/components/MainNav';
@@ -53,6 +46,7 @@ export default {
     this.media.removeListener(this.onMatchMedia);
   },
   components: {
+    AMenuIcon,
     AppLoading,
     AppLogo,
     MainNav,

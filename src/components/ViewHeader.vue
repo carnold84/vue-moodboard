@@ -6,7 +6,7 @@
         class="title-back-btn"
         @click="onBack"
       >
-        <a-back-arrow></a-back-arrow>
+        <a-arrow-back-icon></a-arrow-back-icon>
         <span>Back</span>
       </a-button>
       <a-button
@@ -14,7 +14,7 @@
         :to="onBack"
         class="title-back-btn"
       >
-        <a-back-arrow></a-back-arrow>
+        <a-arrow-back-icon></a-arrow-back-icon>
         <span>Back</span>
       </a-button>
       <div class="title">
@@ -31,14 +31,14 @@
 </template>
 
 <script>
-import ABackArrow from '@/components/icons/ABackArrow';
+import AArrowBackIcon from '@/components/icons/AArrowBackIcon';
 import AButton from '@/components/AButton';
 import ASelect from '@/components/ASelect';
 
 export default {
   name: 'view-header',
   components: {
-    ABackArrow,
+    AArrowBackIcon,
     AButton,
     ASelect,
   },

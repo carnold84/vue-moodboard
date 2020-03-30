@@ -68,7 +68,7 @@ export const auth = {
     });
   },
   logout: async () => {
-    await instance.setItem(TOKEN_NAME, null);
+    localStorage.removeItem(TOKEN_NAME);
     await instance.setItem('user', null);
   },
 };

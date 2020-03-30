@@ -2,8 +2,11 @@
   <nav class="wrapper">
     <div class="header">
       <router-link class="logo-link" to="/">
-        <app-logo height="30px" style="align-self: center; margin: 0 10px 0 0;"></app-logo>
-        <h1 class="title">{{title}}</h1>
+        <app-logo
+          height="30px"
+          style="align-self: center; margin: 0 10px 0 0;"
+        ></app-logo>
+        <h1 class="title">{{ title }}</h1>
       </router-link>
     </div>
     <ul>
@@ -14,10 +17,7 @@
         <div class="sub-nav-header">
           <h2 class="sub-nav-title nav-item">Projects</h2>
           <router-link class="add-btn" to="/projects/create">
-            <svg height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20">
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-              <path d="M0 0h24v24H0z" fill="none" />
-            </svg>
+            <a-add-icon></a-add-icon>
           </router-link>
         </div>
         <div v-if="!projects && showProjects" class="sub-nav-loading">
@@ -26,13 +26,17 @@
         <div
           v-if="projects && showProjects && projects.length === 0"
           class="sub-nav-message"
-        >No Projects</div>
+        >
+          No Projects
+        </div>
         <ul v-if="projects && showProjects" class="sub-nav-content">
           <li v-for="project in projects" :key="project.id">
             <router-link
               class="sub-nav-item nav-item btn"
-              :to="{ name: 'project', params: { id: project.id }}"
-            >{{project.name}}</router-link>
+              :to="{ name: 'project', params: { id: project.id } }"
+            >
+              {{ project.name }}
+            </router-link>
           </li>
         </ul>
       </li>
@@ -44,12 +48,14 @@
 </template>
 
 <script>
+import AAddIcon from '@/components/icons/AAddIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
 
 export default {
   name: 'main-nav',
   components: {
+    AAddIcon,
     AppLoading,
     AppLogo,
   },

@@ -17,18 +17,7 @@
               :isPrimary="true"
               :to="{ name: 'project-add-image', params: { id: project.id } }"
             >
-              <svg
-                height="20"
-                style="margin: 0 5px 0 0;"
-                viewBox="0 0 24 24"
-                width="20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path
-                  d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                />
-              </svg>
+              <a-add-icon></a-add-icon>
               <span>Add Image</span>
             </a-button>
           </template>
@@ -47,19 +36,8 @@
           :isPrimary="true"
           :to="{ name: 'project-add-image', params: { id: project.id } }"
         >
-          <svg
-            height="20"
-            style="margin: 0 5px 0 0;"
-            viewBox="0 0 24 24"
-            width="20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path
-              d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-            />
-          </svg>
-          Add One!
+          <a-add-icon></a-add-icon>
+          <span>Add One!</span>
         </a-button>
       </a-message-panel>
       <a-image-grid
@@ -71,6 +49,7 @@
 </template>
 
 <script>
+import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
@@ -82,6 +61,7 @@ import ViewHeader from '@/components/ViewHeader';
 export default {
   name: 'project',
   components: {
+    AAddIcon,
     AImageGrid,
     AButton,
     AMessagePanel,
