@@ -3,7 +3,8 @@
     <app-loading v-if="isSaving === true"></app-loading>
     <view-header
       description="Create a project to save images, links and notes."
-      sectionName="Project"
+      :on-back="onCancel"
+      section-name="Project"
       title="Create Project"
     ></view-header>
     <div v-if="isSaving === false">

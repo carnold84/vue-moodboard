@@ -6,8 +6,9 @@
     <div v-else-if="image && project && isRemoving === false">
       <view-header
         :description="image.description"
+        :on-back="backUrl"
         :options="options"
-        sectionName="Image"
+        section-name="Image"
         :title="image.name"
       ></view-header>
       <a
@@ -33,20 +34,8 @@ export default {
     ViewHeader,
   },
   computed: {
-    breadcrumb() {
-      return [
-        {
-          title: 'Projects',
-          to: '/projects',
-        },
-        {
-          title: this.project.name,
-          to: `/projects/${this.id}`,
-        },
-        {
-          title: this.image.name,
-        },
-      ];
+    backUrl() {
+      return `/projects/${this.id}`;
     },
     id() {
       return this.$route.params.id;
@@ -99,7 +88,7 @@ export default {
       const response = await this.$store.dispatch('images/delete', this.image);
 
       if (response.success) {
-        this.$router.push(`/projects/${this.id}`);
+        this.$router.push(backUrl);
       } else {
         console.error(response.message);
       }
@@ -113,7 +102,7 @@ export default {
       });
 
       if (response.success) {
-        this.$router.push(`/projects/${this.id}`);
+        this.$router.push(backUrl);
       } else {
         console.error(response.message);
       }

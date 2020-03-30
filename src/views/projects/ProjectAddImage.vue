@@ -4,7 +4,8 @@
     <view-header
       v-if="project"
       :description="projectDescription"
-      sectionName="Project"
+      :on-back="backUrl"
+      section-name="Project"
       :title="title"
     ></view-header>
     <div v-if="project && isSaving === false">
@@ -72,14 +73,17 @@ export default {
     ViewHeader,
   },
   computed: {
-    projectDescription() {
-      return `Create an image and add it to ${this.project.name}`;
+    backUrl() {
+      return `/projects/${this.id}`;
     },
     id() {
       return this.$route.params.id;
     },
     project() {
       return this.$store.getters['projects/project'](this.id);
+    },
+    projectDescription() {
+      return `Create an image and add it to ${this.project.name}`;
     },
     title() {
       return 'Add Image';
@@ -106,7 +110,7 @@ export default {
       const response = await this.$store.dispatch('images/create', data);
 
       if (response.success) {
-        this.$router.push(`/projects/${this.id}`);
+        this.$router.push(this.backUrl);
       } else {
         console.error(response.message);
       }
