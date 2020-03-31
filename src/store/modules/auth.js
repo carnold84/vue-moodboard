@@ -57,7 +57,6 @@ const actions = {
   async logout({ commit }) {
     try {
       await api.auth.logout();
-      localStorage.removeItem(tokenName);
       commit('logout_success');
 
       return {

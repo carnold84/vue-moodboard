@@ -81,6 +81,7 @@ const mutations = {
     const project = state.projects.filter(project => {
       return project.id === projectId;
     })[0];
+
     if (project) {
       project.imageIds.push(imageId);
     }

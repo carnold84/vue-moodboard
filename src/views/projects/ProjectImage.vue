@@ -97,7 +97,7 @@ export default {
       const response = await this.$store.dispatch('images/delete', this.image);
 
       if (response.success) {
-        this.$router.push(backUrl);
+        this.$router.push(this.backUrl);
       } else {
         console.error(response.message);
       }
@@ -111,7 +111,7 @@ export default {
       });
 
       if (response.success) {
-        this.$router.push(backUrl);
+        this.$router.push(this.backUrl);
       } else {
         console.error(response.message);
       }
@@ -138,6 +138,7 @@ export default {
 }
 
 .image {
+  border: 1px solid var(--theme4);
   position: absolute;
 }
 </style>
