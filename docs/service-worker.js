@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/vue-moodboard/precache-manifest.23ebe4e3899bbc0cb39617689fae9efa.js"
+  "https://github.com/carnold84/vue-moodboard/precache-manifest.234da790afd3f71d5eda2ba9e15d0140.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "vue-moodboard"});
