@@ -1,91 +1,137 @@
 <template>
-  <div class="view-container">
+  <div class="view-wrapper">
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
-    <div v-if="project && !isDeleting" class="row">
-      <div class="col-12">
-        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
-      </div>
-      <div class="col-12">
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">{{project.name}}</h1>
+    <div v-if="project && !isDeleting">
+      <view-header
+        :description="project.description"
+        :options="options"
+        sectionName="Project"
+        :title="project.name"
+      ></view-header>
+    </div>
+    <div v-if="project && !isDeleting">
+      <div class="tabs">
+        <a-action-bar :tabs="tabs">
+          <template v-slot:controls>
+            <a-button
+              :isPrimary="true"
+              :to="{ name: 'project-add-image', params: { id: project.id } }"
+            >
+              <a-add-icon></a-add-icon>
+              <span>Add Image</span>
+            </a-button>
           </template>
-          <template v-slot:content-right>
-            <button-group>
-              <app-button @click="onDelete">Delete</app-button>
-              <app-button
-                :to="{ name: 'project-add-image', params: { id: project.id }}"
-                :is-primary="true"
-              >Add Image</app-button>
-            </button-group>
-          </template>
-        </page-header>
+        </a-action-bar>
       </div>
     </div>
-    <div v-if="project && !isDeleting && images === undefined" class="row">
-      <app-loading></app-loading>
-    </div>
-    <div v-if="project && !isDeleting && (images && images.length === 0)" class="row">
-      <div class="col-12">No images.</div>
-    </div>
-    <div
-      v-if="project && !isDeleting && (images && images.length > 0)"
-      class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5"
-    >
-      <div v-for="image in images" :key="image.id" class="col">
-        <a-image-link
-          :imageUrl="thumbUrl(image)"
-          :title="image.name"
-          :to="{ name: 'project-image', params: { id: project.id, imageId: image.id }}"
-        ></a-image-link>
+    <div class="view-content">
+      <div v-if="project && !isDeleting && images === undefined">
+        <app-loading></app-loading>
       </div>
+      <a-message-panel
+        v-if="project && !isDeleting && images && images.length === 0"
+        text="You haven't got any images."
+      >
+        <a-button
+          :isPrimary="true"
+          :to="{ name: 'project-add-image', params: { id: project.id } }"
+        >
+          <a-add-icon></a-add-icon>
+          <span>Add One!</span>
+        </a-button>
+      </a-message-panel>
+      <a-image-grid
+        v-if="project && !isDeleting && images && images.length > 0"
+        :images="images"
+      ></a-image-grid>
     </div>
   </div>
 </template>
 
 <script>
-import AImageLink from '@/components/AImageLink';
-import AppButton from '@/components/AppButton';
+import AAddIcon from '@/components/icons/AAddIcon';
+import AButton from '@/components/AButton';
+import AImageGrid from '@/components/AImageGrid';
+import AMessagePanel from '@/components/AMessagePanel';
+import APicture from '@/components/APicture';
 import AppLoading from '@/components/AppLoading';
-import AppPicture from '@/components/AppPicture';
-import BreadcrumbNav from '@/components/BreadcrumbNav';
-import ButtonGroup from '@/components/ButtonGroup';
-import PageHeader from '@/components/PageHeader';
+import AActionBar from '@/components/AActionBar';
+import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'project',
   components: {
-    AImageLink,
-    AppButton,
+    AAddIcon,
+    AImageGrid,
+    AButton,
+    AMessagePanel,
     AppLoading,
-    BreadcrumbNav,
-    ButtonGroup,
-    PageHeader,
+    AActionBar,
+    ViewHeader,
   },
   computed: {
-    breadcrumb() { 
-      return [
-        {
-          title: 'Projects',
-          to: '/projects',
-        },
-        {
-          title: this.project.name,
-        },
-      ];
-    },
     id() {
       return this.$route.params.id;
     },
     images() {
       if (this.project) {
-        return this.$store.getters['images/imagesById'](this.project.imageIds);
+        let images = this.$store.getters['images/imagesById'](
+          this.project.imageIds
+        );
+
+        if (images === undefined) {
+          return images;
+        }
+
+        return images.map(element => {
+          const { id, name } = element;
+          return {
+            id,
+            imageUrl: this.thumbUrl(element),
+            title: name,
+            to: {
+              name: 'project-image',
+              params: {
+                id: this.project.id,
+                imageId: id,
+              },
+            },
+          };
+        });
       } else {
         return undefined;
       }
     },
+    options() {
+      if (this.project) {
+        return [
+          {
+            callback: this.onDelete,
+            id: 'delete',
+            label: 'Delete',
+          },
+        ];
+      }
+
+      return undefined;
+    },
     project() {
       return this.$store.getters['projects/project'](this.id);
+    },
+    tabs() {
+      return [
+        {
+          id: 'images-tab',
+          label: 'Images',
+          to: {
+            name: 'project',
+            params: {
+              id: this.project ? this.project.id : null,
+              tab: 'images',
+            },
+          },
+        },
+      ];
     },
   },
   data() {
@@ -103,20 +149,29 @@ export default {
       );
 
       if (response.success) {
-        this.$router.push('/projects');
+        this.$router.push('/');
       } else {
         console.error(response.message);
       }
     },
     thumbUrl(image) {
-      return `https://res.cloudinary.com/carnold/image/upload/w_260/${image.fileName}.${image.format}`;
+      if (image.format) {
+        const rootUrl = 'https://res.cloudinary.com/carnold/image/upload';
+        return `${rootUrl}/w_260/${image.fileName}.${image.format}`;
+      } else {
+        return image.url;
+      }
     },
   },
 };
 </script>
 
-<style lang="scss">
-.a-image-link {
-  margin: 0 0 40px;
+<style scoped lang="scss">
+.panel {
+  flex-grow: 1;
+}
+
+.tabs {
+  margin: 0 0 20px;
 }
 </style>

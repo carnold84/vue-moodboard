@@ -1,4 +1,4 @@
-import imagesService from '@/services/images';
+import api from '@/api';
 
 const state = {
   images: undefined,
@@ -34,14 +34,14 @@ const getters = {
 const actions = {
   async create({ commit }, image) {
     try {
-      let response = await imagesService.create(image);
+      let response = await api.images.create(image);
       commit('setImage', response.image);
 
       if (image.projectId) {
-        commit('setImageProject', {
+        commit('projects/linkImageToProject', {
           imageId: response.image.id,
           projectId: image.projectId,
-        });
+        }, { root: true });
       }
 
       return {
@@ -49,6 +49,7 @@ const actions = {
         success: true,
       };
     } catch (error) {
+      console.error(error);
       return {
         error,
         message: `${image.name} couldn't be created.`,
@@ -58,7 +59,15 @@ const actions = {
   },
   async delete({ commit }, image) {
     try {
-      let response = await imagesService.delete(image.id);
+      let response = await api.images.delete(image.id);
+
+      if (image.projectId) {
+        commit('projects/unlinkImageToProject', {
+          imageId: response.image.id,
+          projectId: image.projectId,
+        }, { root: true });
+      }
+
       commit('deleteImage', response.imageId);
       return {
         message: `${image.name} was deleted.`,
@@ -74,7 +83,7 @@ const actions = {
   },
   async getAllImages({ commit }) {
     try {
-      let images = await imagesService.getAllImages();
+      let images = await api.images.getAllImages();
       commit('setImages', images);
     } catch (error) {
       commit('setImages', null);
@@ -82,10 +91,28 @@ const actions = {
   },
   async getImage({ commit }, id) {
     try {
-      let image = await imagesService.getImage(id);
+      let image = await api.images.getImage(id);
       commit('setImage', image);
     } catch (error) {
       commit('setImage', null);
+    }
+  },
+  async remove({ commit }, {image, project}) {
+    if (project) {
+      commit('projects/unlinkImageToProject', {
+        imageId: image.id,
+        projectId: project.id,
+      }, { root: true });
+
+      return {
+        message: `${image.name} was removed from ${project.name}.`,
+        success: true,
+      };
+    } else {
+      return {
+        message: `${image.name} was not found in ${project.name}.`,
+        success: false,
+      };
     }
   },
 };
@@ -96,18 +123,12 @@ const mutations = {
       return image.id.toString() !== payload;
     });
   },
-  setImage(state, payload, rootState) {
+  setImage(state, payload) {
     if (state.images) {
       state.images.push(payload);
     } else {
       state.images = [payload];
     }
-  },
-  setImageProject(state, { imageId, projectId }, ) {
-    const project = state.projects.filter(project => {
-      return project.id === projectId;
-    });
-    project.imageIds.push(imageId);
   },
   setImages(state, payload) {
     state.images = payload;

@@ -1,84 +1,74 @@
 <template>
-  <div class="view-container">
+  <div class="view-wrapper">
     <app-loading v-if="!project || isSaving === true"></app-loading>
-    <div v-if="project" class="row">
-      <div class="col-12">
-        <breadcrumb-nav :items="breadcrumb"></breadcrumb-nav>
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">Add Image to {{ project.name }}</h1>
+    <view-header
+      v-if="project"
+      :description="projectDescription"
+      :on-back="backUrl"
+      section-name="Project"
+      :title="title"
+    ></view-header>
+    <div v-if="project && isSaving === false">
+      <form class="form" @submit.prevent="create">
+        <a-action-bar v-if="project">
+          <template v-slot:controls>
+            <a-button :to="{ name: 'project', params: { id: project.id } }">
+              <a-close-icon></a-close-icon>
+              Cancel
+            </a-button>
+            <a-button :isPrimary="true" type="submit">
+              <a-check-icon></a-check-icon>
+              Add Image
+            </a-button>
           </template>
-        </page-header>
-      </div>
-    </div>
-    <div v-if="project && isSaving === false" class="row">
-      <div class="col-12">
-        <form class="form" @submit.prevent="create">
-          <text-input v-model="name" label="Name" name="name"></text-input>
-          <text-input
-            v-model="description"
-            label="Description"
-            name="description"
-          ></text-input>
-          <text-input v-model="url" label="Url" name="url"></text-input>
-          <button-group align="right">
-            <app-button
-              style="width: 160px;"
-              :to="{ name: 'project', params: { id: project.id }}"
-              >Cancel</app-button
-            >
-            <app-button
-              :isPrimary="true"
-              style="width: 160px;"
-              type="submit"
-              >Add Image</app-button
-            >
-          </button-group>
-        </form>
-      </div>
+        </a-action-bar>
+        <text-input v-model="name" label="Name" name="name"></text-input>
+        <text-input
+          v-model="description"
+          label="Description"
+          name="description"
+        ></text-input>
+        <text-input v-model="url" label="Url" name="url"></text-input>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
-import AppButton from '@/components/AppButton';
+import AActionBar from '@/components/AActionBar';
+import AButton from '@/components/AButton';
+import ACheckIcon from '@/components/icons/ACheckIcon';
+import ACloseIcon from '@/components/icons/ACloseIcon';
 import AppLoading from '@/components/AppLoading';
-import BreadcrumbNav from '@/components/BreadcrumbNav';
-import ButtonGroup from '@/components/ButtonGroup';
-import PageHeader from '@/components/PageHeader';
 import TextInput from '@/components/TextInput';
+import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'project-add-image',
   components: {
-    AppButton,
+    AActionBar,
+    AButton,
+    ACheckIcon,
+    ACloseIcon,
     AppLoading,
-    BreadcrumbNav,
-    ButtonGroup,
-    PageHeader,
     TextInput,
+    ViewHeader,
   },
   computed: {
-    breadcrumb() { 
-      return [
-        {
-          title: 'Projects',
-          to: '/projects',
-        },
-        {
-          title: this.project.name,
-          to: `/projects/${this.id}`,
-        },
-        {
-          title: 'Add Image',
-        },
-      ];
+    backUrl() {
+      return `/projects/${this.id}`;
     },
     id() {
       return this.$route.params.id;
     },
     project() {
       return this.$store.getters['projects/project'](this.id);
+    },
+    projectDescription() {
+      return `Create an image and add it to ${this.project.name}`;
+    },
+    title() {
+      return 'Add Image';
     },
   },
   data() {
@@ -102,7 +92,7 @@ export default {
       const response = await this.$store.dispatch('images/create', data);
 
       if (response.success) {
-        this.$router.push(`/projects/${this.id}`);
+        this.$router.push(this.backUrl);
       } else {
         console.error(response.message);
       }

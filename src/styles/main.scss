@@ -1,9 +1,8 @@
-@import "./_bootstrap-grid";
 @import "./_typography";
 
 html {
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 *,
@@ -46,12 +45,10 @@ body {
 }
 
 .view-wrapper {
-  align-items: center;
   display: flex;
+  flex-direction: column;
   height: 100%;
-  justify-content: center;
-  position: absolute;
-  width: 100%;
+  position: relative;
 }
 
 .view-title {
@@ -60,4 +57,9 @@ body {
   font-family: var(--fontFamily--primary);
   font-size: 2.3em;
   font-weight: 300;
+}
+
+.view-content {
+  flex-grow: 1;
+  position: relative;
 }

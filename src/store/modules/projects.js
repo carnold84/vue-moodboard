@@ -1,4 +1,4 @@
-import projectsService from '@/services/projects';
+import api from '@/api';
 
 const state = {
   projects: undefined,
@@ -22,10 +22,11 @@ const getters = {
 const actions = {
   async create({ commit }, project) {
     try {
-      let response = await projectsService.create(project);
+      let response = await api.projects.create(project);
       commit('setProject', response.project);
       return {
         message: `${project.name} was created.`,
+        project: response.project,
         success: true,
       };
     } catch (error) {
@@ -38,8 +39,8 @@ const actions = {
   },
   async delete({ commit }, project) {
     try {
-      let response = await projectsService.delete(project.id);
-      commit('deleteProject', response.id);
+      await api.projects.delete(project.id);
+      commit('deleteProject', project.id);
       return {
         message: `${project.name} was deleted.`,
         success: true,
@@ -54,7 +55,7 @@ const actions = {
   },
   async getAllProjects({ commit }) {
     try {
-      let projects = await projectsService.getAllProjects();
+      let projects = await api.projects.getAllProjects();
       commit('setProjects', projects);
     } catch (error) {
       commit('setProjects', null);
@@ -62,7 +63,7 @@ const actions = {
   },
   async getProject({ commit }, id) {
     try {
-      let project = await projectsService.getProject(id);
+      let project = await api.projects.getProject(id);
       commit('setProject', project);
     } catch (error) {
       commit('setProject', null);
@@ -73,8 +74,17 @@ const actions = {
 const mutations = {
   deleteProject(state, payload) {
     state.projects = state.projects.filter(project => {
-      return project.id.toString() === payload;
+      return project.id.toString() !== payload.toString();
     });
+  },
+  linkImageToProject(state, { imageId, projectId }) {
+    const project = state.projects.filter(project => {
+      return project.id === projectId;
+    })[0];
+
+    if (project) {
+      project.imageIds.push(imageId);
+    }
   },
   setProject(state, payload) {
     if (state.projects && state.projects.length > 0) {
@@ -85,6 +95,16 @@ const mutations = {
   },
   setProjects(state, payload) {
     state.projects = payload;
+  },
+  unlinkImageToProject(state, { imageId, projectId }) {
+    const project = state.projects.filter(project => {
+      return project.id === projectId;
+    })[0];
+    if (project) {
+      project.imageIds = project.imageIds.filter(element => {
+        return element !== imageId;
+      });
+    }
   },
 };
 
