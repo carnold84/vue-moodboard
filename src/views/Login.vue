@@ -57,10 +57,10 @@ export default {
   },
   data() {
     return {
-      email: 'chrisarnold.nz@gmail.com',
+      email: process.env.VUE_APP_DEMO_EMAIL || '',
       isLoggingIn: false,
       message: undefined,
-      password: '12345',
+      password: process.env.VUE_APP_DEMO_PASSWORD || '',
     };
   },
   methods: {

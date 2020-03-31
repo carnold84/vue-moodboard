@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c3cde76416a77a288562",
+    "revision": "abfb28e982c2789855ee",
     "url": "/vue-moodboard/css/app.e09f5081.css"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vue-moodboard/css/chunk-0049fb92.ba1b46fd.css"
   },
   {
-    "revision": "f6061ff8febed861617b",
-    "url": "/vue-moodboard/css/chunk-0314744d.d44c142f.css"
+    "revision": "d8dfc38e93224abcdfdc",
+    "url": "/vue-moodboard/css/chunk-01c00872.396dd812.css"
   },
   {
     "revision": "bcf1dc86397bb7c98b80",
@@ -40,20 +40,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vue-moodboard/img/logo_old.png"
   },
   {
-    "revision": "d5f97ebb2e8fde6db1995752952273f0",
+    "revision": "12cd9fea38cbcb1ebe8430bf9b403664",
     "url": "/vue-moodboard/index.html"
   },
   {
-    "revision": "c3cde76416a77a288562",
-    "url": "/vue-moodboard/js/app.b650a289.js"
+    "revision": "abfb28e982c2789855ee",
+    "url": "/vue-moodboard/js/app.7ae1ed1d.js"
   },
   {
     "revision": "1a9272674f87c7e00e86",
     "url": "/vue-moodboard/js/chunk-0049fb92.5ca411cb.js"
   },
   {
-    "revision": "f6061ff8febed861617b",
-    "url": "/vue-moodboard/js/chunk-0314744d.e0a057f7.js"
+    "revision": "d8dfc38e93224abcdfdc",
+    "url": "/vue-moodboard/js/chunk-01c00872.bc3b96be.js"
   },
   {
     "revision": "d1fada1eafcd9e0267cd",
