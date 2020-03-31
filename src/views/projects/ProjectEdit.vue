@@ -1,52 +1,56 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <page-header>
-          <template v-slot:content-left>
-            <h1 class="view-title">Create Project</h1>
-          </template>
-        </page-header>
-      </div>
-    </div>
+  <div class="view-wrapper">
     <app-loading v-if="isSaving === true"></app-loading>
-    <div v-if="isSaving === false" class="row">
-      <div class="col-12">
-        <form class="form" @submit.prevent="create">
-          <text-input v-model="name" label="Name" name="name"></text-input>
-          <text-input v-model="description" label="Description" name="description"></text-input>
-          <button-group align="right">
-            <app-button
-              style="width: 160px;"
-              to="/projects"
-            >Cancel</app-button>
-            <app-button
-              :isPrimary="true"
-              style="width: 160px;"
-              type="submit"
-            >Create Project</app-button>
-          </button-group>
-        </form>
-      </div>
+    <view-header
+      description="Create a project to save images, links and notes."
+      :on-back="onCancel"
+      section-name="Project"
+      title="Create Project"
+    ></view-header>
+    <div v-if="isSaving === false">
+      <form class="form" @submit.prevent="create">
+        <a-action-bar>
+          <template v-slot:controls>
+            <a-button @click="onCancel">
+              <a-close-icon></a-close-icon>
+              Cancel
+            </a-button>
+            <a-button :isPrimary="true" type="submit">
+              <a-check-icon></a-check-icon>
+              Create
+            </a-button>
+          </template>
+        </a-action-bar>
+        <text-input v-model="name" label="Name" name="name"></text-input>
+        <text-input
+          v-model="description"
+          label="Description"
+          name="description"
+        ></text-input>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
-import AppButton from '@/components/AppButton';
+import AButton from '@/components/AButton';
+import AActionBar from '@/components/AActionBar';
+import ACheckIcon from '@/components/icons/ACheckIcon';
+import ACloseIcon from '@/components/icons/ACloseIcon';
 import AppLoading from '@/components/AppLoading';
-import ButtonGroup from '@/components/ButtonGroup';
-import PageHeader from '@/components/PageHeader';
 import TextInput from '@/components/TextInput';
+import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'project-edit',
   components: {
-    AppButton,
+    AActionBar,
+    ACheckIcon,
+    ACloseIcon,
+    AButton,
     AppLoading,
-    ButtonGroup,
-    PageHeader,
     TextInput,
+    ViewHeader,
   },
   data() {
     return {
@@ -66,10 +70,13 @@ export default {
       const response = await this.$store.dispatch('projects/create', data);
 
       if (response.success) {
-        this.$router.push('/projects');
+        this.$router.push(`/projects/${response.project.id}`);
       } else {
         console.error(response.message);
       }
+    },
+    onCancel() {
+      this.$router.back();
     },
   },
 };

@@ -8,7 +8,7 @@ export default {
   props: {
     height: {
       type: String,
-      default: '40px',
+      default: '30px',
     },
     width: {
       type: String,

@@ -1,3 +1,3 @@
 export default {
-  appName: 'Vue Moodboard',
+  appName: 'Moodboard',
 };

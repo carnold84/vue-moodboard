@@ -1,23 +1,23 @@
 :root {
-  --fontFamily--primary: "Open Sans", Helvetica, Arial, sans-serif;
-  --fontFamily--secondary: "Open Sans", Helvetica, Arial, sans-serif;
+  --fontFamily--primary: "Source Sans Pro", Helvetica, Arial, sans-serif;
+  --fontFamily--secondary: "Source Sans Pro", Helvetica, Arial, sans-serif;
 
-  --primary1: #7f226b;
-  --primary2: #a73a8f;
+  --primary1: #a72a8c;
+  --primary2: #c747ab;
   --theme1: #ffffff;
   --theme2: #f9f9f9;
   --theme3: #f2f2f2;
   --theme4: #dddddd;
   --theme5: #cccccc;
-  --text1: #222222;
-  --text2: #555555;
-  --text3: #777777;
+  --text1: #444444;
+  --text2: #666666;
+  --text3: #888888;
   --textAlt1: #ffffff;
   --textAlt2: #cccccc;
   --textAlt3: #999999;
   --errorText: #821717;
 
-  --app__bg-color: var(--theme2);
+  --app__bg-color: var(--theme1);
 
   --loading_bg-color: var(--primary1);
 
@@ -30,13 +30,13 @@
   --button__color--hover: var(--text1);
   --button__bg-color--primary: var(--primary1);
   --button__border-color--primary: var(--primary1);
-  --button__color--primary: var(--textAlt1);
+  --button__color--primary: var(--primary1);
   --button__bg-color--primary-hover: var(--primary2);
   --button__border-color--primary-hover: var(--primary1);
-  --button__color--primary-hover: var(--textAlt1);
+  --button__color--primary-hover: var(--text1);
   --button__bg-color--primary-focus: var(--primary2);
   --button__border-color--primary-focus: var(--primary2);
-  --button__color--primary-focus: var(--textAlt1);
+  --button__color--primary-focus: var(--primary1);
   --button__outline-color--primary-focus: #e5b1d9;
 
   --pageHeader__bg-color: var(--theme2);

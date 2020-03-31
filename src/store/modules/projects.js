@@ -26,6 +26,7 @@ const actions = {
       commit('setProject', response.project);
       return {
         message: `${project.name} was created.`,
+        project: response.project,
         success: true,
       };
     } catch (error) {
@@ -80,6 +81,7 @@ const mutations = {
     const project = state.projects.filter(project => {
       return project.id === projectId;
     })[0];
+
     if (project) {
       project.imageIds.push(imageId);
     }

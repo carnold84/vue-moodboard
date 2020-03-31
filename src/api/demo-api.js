@@ -2,6 +2,7 @@ import localforage from 'localforage';
 import { v4 as uuidv4 } from 'uuid';
 
 const STORE_NAME = 'vue-moodboard-demo';
+const USER_ID = 'vue-moodboard_user_id';
 const DELAY = 500;
 
 const instance = localforage.createInstance({
@@ -10,6 +11,7 @@ const instance = localforage.createInstance({
 
 const TOKEN_NAME = 'aura_demo_token';
 const authToken = localStorage.getItem(TOKEN_NAME);
+let userId = localStorage.getItem(USER_ID);
 
 const init = async () => {
   let images = await instance.getItem('images');
@@ -24,6 +26,15 @@ const init = async () => {
   if (!projects) {
     await instance.setItem('projects', []);
   }
+  let users = await instance.getItem('users');
+  if (!users) {
+    await instance.setItem('users', [
+      {
+        email: undefined,
+        name: 'Demo',
+      },
+    ]);
+  }
 };
 
 init();
@@ -34,8 +45,9 @@ export const auth = {
   },
   getUser: () => {
     return new Promise(async (resolve, reject) => {
-      let user = await instance.getItem('user');
+      let users = await instance.getItem('users');
       const email = localStorage.getItem(TOKEN_NAME);
+      let user = users[userId];
       user.email = email;
 
       setTimeout(() => {
@@ -48,14 +60,11 @@ export const auth = {
       let isSuccessful = false;
 
       if (password === 'demo123') {
-        const currentUser = {
-          email,
-          name: 'Demo',
-        };
         localStorage.setItem(TOKEN_NAME, email);
-        await instance.setItem('user', currentUser);
+        userId = 0;
+        localStorage.setItem(USER_ID, userId);
 
-        resolve({msg: 'ok', token: 'token'});
+        resolve({id: userId, msg: 'ok', token: 'token'});
       }
 
       setTimeout(() => {
@@ -68,7 +77,9 @@ export const auth = {
     });
   },
   logout: async () => {
-    await instance.setItem('user', null);
+    localStorage.removeItem(TOKEN_NAME);
+    userId = undefined;
+    localStorage.removeItem(USER_ID);
   },
 };
 

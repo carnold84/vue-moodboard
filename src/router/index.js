@@ -5,6 +5,7 @@ import AuthenticatedApp from '@/views/AuthenticatedApp.vue';
 import Home from '@/views/Home.vue';
 import store from '@/store';
 
+const NotFound = () => import('@/views/NotFound.vue');
 const Login = () => import('@/views/Login.vue');
 const ProjectEdit = () => import('@/views/projects/ProjectEdit.vue');
 const Project = () => import('@/views/projects/Project.vue');
@@ -44,11 +45,6 @@ const routes = [
             path: 'create',
           },
           {
-            component: Project,
-            name: 'project',
-            path: ':id',
-          },
-          {
             component: ProjectImage,
             name: 'project-image',
             path: ':id/image/:imageId',
@@ -58,9 +54,18 @@ const routes = [
             name: 'project-add-image',
             path: ':id/add-image',
           },
+          {
+            component: Project,
+            name: 'project',
+            path: ':id',
+          },
         ],
         component: Projects,
         path: 'projects',
+      },
+      {
+        component: NotFound,
+        path: '*',
       },
     ],
     component: AuthenticatedApp,

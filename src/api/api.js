@@ -9,10 +9,16 @@ const instance = axios.create({
 });
 
 const TOKEN_NAME = 'aura_token';
+const USER_ID = 'aura_user_id';
 const authToken = localStorage.getItem(TOKEN_NAME);
+let userId = localStorage.getItem(USER_ID);
 
 const setToken = token => {
   instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+};
+
+const clearToken = () => {
+  instance.defaults.headers.common['Authorization'] = undefined;
 };
 
 if (authToken) {
@@ -26,7 +32,7 @@ export const auth = {
   getUser: () => {
     return new Promise((resolve, reject) => {
       instance
-        .get('/users')
+        .get(`/users/${userId}`)
         .then(response => {
           resolve(response.data);
         })
@@ -40,9 +46,11 @@ export const auth = {
       instance
         .post('/users/login', { email, password })
         .then(response => {
-          const { token } = response.data;
+          const { id, token } = response.data;
   
           localStorage.setItem(TOKEN_NAME, token);
+          userId = id;
+          localStorage.setItem(USER_ID, userId);
           setToken(token);
   
           resolve(token);
@@ -50,6 +58,16 @@ export const auth = {
         .catch(error => {
           reject(error);
         });
+    });
+  },
+  logout: async () => {
+    return new Promise((resolve, reject) => {
+      localStorage.removeItem(TOKEN_NAME);
+      userId = undefined;
+      localStorage.removeItem(USER_ID);
+      clearToken();
+
+      resolve();
     });
   },
 };
