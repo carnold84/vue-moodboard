@@ -59,7 +59,10 @@ export const auth = {
     return new Promise(async (resolve, reject) => {
       let isSuccessful = false;
 
-      if (password === 'demo123') {
+      if (
+        email === process.env.VUE_APP_DEMO_EMAIL &&
+        password === process.env.VUE_APP_DEMO_PASSWORD
+      ) {
         localStorage.setItem(TOKEN_NAME, email);
         userId = 0;
         localStorage.setItem(USER_ID, userId);
