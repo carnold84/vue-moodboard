@@ -1,12 +1,12 @@
 <template>
-  <div class="picture-wrapper" :style="{height, width}">
+  <div class="picture-wrapper" :style="{ height, width }">
     <app-loading v-if="src && imageUrl === ''" />
-    <img 
+    <img
       v-else-if="imageUrl"
       class="picture-image"
       :class="fillType"
       :src="imageUrl"
-      :style="{height, width}"
+      :style="{ height, width }"
     />
   </div>
 </template>
