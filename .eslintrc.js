@@ -1,41 +1,41 @@
 module.exports = {
-  "root": true,
-  "env": {
-    "node": true
+  'root': true,
+  'env': {
+    'node': true,
   },
-  "extends": [
-    "plugin:vue/essential"
+  'extends': [
+    'plugin:vue/essential',
   ],
-  "rules": {
-    "comma-dangle": [
-      "warn",
-      "always-multiline"
+  'rules': {
+    'comma-dangle': [
+      'warn',
+      'always-multiline',
     ],
-    "no-console": [
-      "warn",
+    'no-console': [
+      'warn',
       {
-        "allow": [
-          "info",
-          "warn",
-          "error"
-        ]
-      }
+        'allow': [
+          'info',
+          'warn',
+          'error',
+        ],
+      },
     ],
-    "semi": ["warn", "always"],
-    "quotes": ["error", "single"]
+    'semi': ['warn', 'always'],
+    'quotes': ['error', 'single'],
   },
-  "parserOptions": {
-    "parser": "babel-eslint"
+  'parserOptions': {
+    'parser': 'babel-eslint',
   },
-  "overrides": [
+  'overrides': [
     {
-      "files": [
-        "**/__tests__/*.{j,t}s?(x)",
-        "**/tests/unit/**/*.spec.{j,t}s?(x)"
+      'files': [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)',
       ],
-      "env": {
-        "jest": true
-      }
-    }
-  ]
+      'env': {
+        'jest': true,
+      },
+    },
+  ],
 };
