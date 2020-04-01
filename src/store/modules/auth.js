@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 import api from '@/api';
 
 const state = {
@@ -19,14 +21,14 @@ const actions = {
     try {
       let user = await api.auth.getUser();
 
-      commit('user_success', user);
+      commit('userSuccess', user);
 
       return {
         message: 'User details fetched.',
         success: false,
       };
     } catch (error) {
-      commit('user_error');
+      commit('userError');
 
       return {
         error,
@@ -40,7 +42,7 @@ const actions = {
       const { email, password } = data;
       let token = await api.auth.login({ email, password });
 
-      commit('login_success', token);
+      commit('loginSuccess', token);
 
       return {
         message: 'Login was successful.',
@@ -57,14 +59,14 @@ const actions = {
   async logout({ commit }) {
     try {
       await api.auth.logout();
-      commit('logout_success');
+      commit('logoutSuccess');
 
       return {
         message: 'Logout successful.',
         success: false,
       };
     } catch (error) {
-      commit('logout_error');
+      commit('loginError');
 
       return {
         error,
@@ -76,20 +78,20 @@ const actions = {
 };
 
 const mutations = {
-  login_success(state, token) {
-    state.token = token;
+  loginSuccess(state, token) {
+    Vue.set(state, 'token', token);
   },
-  logout_error(state) {
-    state.token = '';
+  loginError(state) {
+    Vue.set(state, 'token', null);
   },
-  logout_success(state) {
-    state.token = '';
+  logoutSuccess(state) {
+    Vue.set(state, 'token', null);
   },
-  user_error(state) {
-    state.user = null;
+  userError(state) {
+    Vue.set(state, 'user', null);
   },
-  user_success(state, user) {
-    state.user = user;
+  userSuccess(state, user) {
+    Vue.set(state, 'user', user);
   },
 };
 

@@ -36,13 +36,21 @@ const actions = {
     }
   },
   async delete({ commit }, project) {
-    const response = await api.projects.delete(project.id);
-    commit('remove', project);
-
-    return {
-      message: `${project.name} was deleted.`,
-      success: true,
-    };
+    try {
+      await api.projects.delete(project.id);
+      commit('remove', project);
+  
+      return {
+        message: `${project.name} was deleted.`,
+        success: true,
+      };
+    } catch (error) {
+      return {
+        error,
+        message: `${project.name} couldn't be deleted.`,
+        success: false,
+      };
+    }
   },
   load: async ({ commit }) => {
     try {
