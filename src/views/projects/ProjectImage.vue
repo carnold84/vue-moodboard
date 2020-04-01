@@ -16,7 +16,12 @@
         class="image-view-header"
       ></view-header>
       <div class="image-content">
-        <a :href="imageUrl" target="_blank" title="Click to view full image">
+        <a
+          :href="imageUrl"
+          rel="noreferrer"
+          target="_blank"
+          title="Click to view full image"
+        >
           <a-picture
             :alt="image.name"
             :fill-type="TYPES.FIT"

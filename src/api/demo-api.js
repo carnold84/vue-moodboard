@@ -18,9 +18,17 @@ const init = async () => {
   if (!images) {
     await instance.setItem('images', []);
   }
-  let imageProjects = await instance.getItem('imageProjects');
-  if (!imageProjects) {
-    await instance.setItem('imageProjects', []);
+  let imagesProjects = await instance.getItem('imagesProjects');
+  if (!imagesProjects) {
+    await instance.setItem('imagesProjects', []);
+  }
+  let links = await instance.getItem('links');
+  if (!links) {
+    await instance.setItem('links', []);
+  }
+  let linksProjects = await instance.getItem('linksProjects');
+  if (!linksProjects) {
+    await instance.setItem('linksProjects', []);
   }
   let projects = await instance.getItem('projects');
   if (!projects) {
@@ -87,30 +95,30 @@ export const auth = {
 };
 
 const addImageToProject = async (imageId, projectId) => {
-  let imageProjects = await instance.getItem('imageProjects');
+  let imagesProjects = await instance.getItem('imagesProjects');
 
-  imageProjects.push({
+  imagesProjects.push({
     imageId,
     projectId,
   });
 
-  await instance.setItem('imageProjects', imageProjects);
+  await instance.setItem('imagesProjects', imagesProjects);
 };
 
 const removeImageFromProject = async (imageId, projectId) => {
-  let imageProjects = await instance.getItem('imageProjects');
+  let imagesProjects = await instance.getItem('imagesProjects');
 
-  imageProjects = imageProjects.filter(element => {
+  imagesProjects = imagesProjects.filter(element => {
     return element.imageId !== imageId && element.projectId !== projectId;
   });
 
-  await instance.setItem('imageProjects', imageProjects);
+  await instance.setItem('imagesProjects', imagesProjects);
 };
 
 const getImageIdsByProject = async (projectId) => {
-  let imageProjects = await instance.getItem('imageProjects');
+  let imagesProjects = await instance.getItem('imagesProjects');
 
-  const images = imageProjects.filter(element => {
+  const images = imagesProjects.filter(element => {
     return element.projectId === projectId;
   });
 
@@ -211,6 +219,130 @@ export const images = {
   getImage,
 };
 
+const addLinkToProject = async (linkId, projectId) => {
+  let linksProjects = await instance.getItem('linksProjects');
+
+  linksProjects.push({
+    linkId,
+    projectId,
+  });
+
+  await instance.setItem('linksProjects', linksProjects);
+};
+
+const removeLinkFromProject = async (linkId, projectId) => {
+  let linksProjects = await instance.getItem('linksProjects');
+
+  linksProjects = linksProjects.filter(element => {
+    return element.linkId !== linkId && element.projectId !== projectId;
+  });
+
+  await instance.setItem('linksProjects', linksProjects);
+};
+
+const getLinkIdsByProject = async (projectId) => {
+  let linksProjects = await instance.getItem('linksProjects');
+
+  const links = linksProjects.filter(element => {
+    return element.projectId === projectId;
+  });
+
+  const linkIds = links.map(element => {
+    return element.linkId;
+  });
+
+  return linkIds;
+};
+
+const getLink = async id => {
+  return new Promise(async (resolve, reject) => {
+    let links = await instance.getItem('links');
+    
+    const link = links.filter(element => {
+      return element.id === id;
+    })[0];
+
+    resolve(link);
+  });
+};
+
+export const links = {
+  create: async data => {
+    return new Promise(async (resolve, reject) => {
+      let links = await instance.getItem('links');
+
+      const id = uuidv4();
+      const {projectId} = data;
+      const newLink = {
+        ...data,
+        id,
+      };
+
+      if (projectId) {
+        await addLinkToProject(id, projectId);
+      }
+
+      links.push(newLink);
+
+      await instance.setItem('links', links);
+
+      setTimeout(() => {
+        resolve({link: newLink, msg: 'Link created successfully'});
+      }, DELAY);
+    });
+  },
+  delete: async id => {
+    return new Promise(async (resolve, reject) => {
+      const link = await getLink(id);
+
+      if (link) {
+        const {id, projectId} = link;
+
+        if (projectId) {
+          await removeLinkFromProject(id, projectId);
+        }
+        
+        let links = await instance.getItem('links');
+
+        const newLinks = links.filter(element => {
+          return element.id !== id;
+        });
+
+        await instance.setItem('links', newLinks);
+      }
+
+      setTimeout(() => {
+        resolve({link, msg: 'Link deleted successfully'});
+      }, DELAY);
+    });
+  },
+  getAllLinks: async () => {
+    return new Promise(async (resolve, reject) => {
+      let links = await instance.getItem('links');
+
+      setTimeout(() => {
+        resolve(links);
+      }, DELAY);
+    });
+  },
+  getLinksByProject: async projectId => {
+    return new Promise(async (resolve, reject) => {
+      const linkIds = await getLinkIdsByProject(projectId);
+
+      const linkPromises = linkIds.map(element => {
+        return getImage(element);
+      });
+
+      const projectLinks = await Promise.all(linkPromises);
+
+      setTimeout(() => {
+        resolve(projectLinks);
+      }, DELAY);
+    });
+  },
+  getLink,
+};
+
 const getProject = async id => {
   return new Promise(async (resolve, reject) => {
     let projects = await instance.getItem('projects');
@@ -220,6 +352,7 @@ const getProject = async id => {
     })[0];
 
     project.imageIds = await getImageIdsByProject(project.id);
+    project.linkIds = await getLinkIdsByProject(project.id);
 
     setTimeout(() => {
       resolve(project);
@@ -236,6 +369,7 @@ export const projects = {
       const newProject = {
         ...project,
         imageIds: [],
+        linkIds: [],
         id,
       };
 

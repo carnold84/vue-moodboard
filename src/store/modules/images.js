@@ -62,7 +62,7 @@ const actions = {
       let response = await api.images.delete(image.id);
 
       if (image.projectId) {
-        commit('projects/unlinkImageToProject', {
+        commit('projects/unlinkImageFromProject', {
           imageId: response.image.id,
           projectId: image.projectId,
         }, { root: true });
@@ -99,7 +99,7 @@ const actions = {
   },
   async remove({ commit }, {image, project}) {
     if (project) {
-      commit('projects/unlinkImageToProject', {
+      commit('projects/unlinkImageFromProject', {
         imageId: image.id,
         projectId: project.id,
       }, { root: true });
