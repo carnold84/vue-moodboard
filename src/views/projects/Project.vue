@@ -166,7 +166,7 @@ export default {
       return undefined;
     },
     project() {
-      return this.$store.getters['projects/project'](this.id);
+      return this.$store.getters['projects/find'](this.id);
     },
     tabs() {
       return [

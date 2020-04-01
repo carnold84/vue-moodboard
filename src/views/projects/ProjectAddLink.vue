@@ -66,7 +66,7 @@ export default {
       return this.$route.params.id;
     },
     project() {
-      return this.$store.getters['projects/project'](this.id);
+      return this.$store.getters['projects/find'](this.id);
     },
     projectDescription() {
       return `Create a link and add it to ${this.project.name}`;

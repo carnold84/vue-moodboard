@@ -403,7 +403,8 @@ export const projects = {
       }, DELAY);
     });
   },
-  getAllProjects: async () => {
+  getProject,
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let projects = await instance.getItem('projects');
 
@@ -418,5 +419,4 @@ export const projects = {
       }, DELAY);
     });
   },
-  getProject,
 };
