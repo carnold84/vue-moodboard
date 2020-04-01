@@ -9,7 +9,13 @@ module.exports = {
   'rules': {
     'comma-dangle': [
       'warn',
-      'always-multiline',
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "never"
+      }
     ],
     'no-console': [
       'warn',
