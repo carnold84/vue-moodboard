@@ -134,6 +134,69 @@ export const images = {
     });
   },
 };
+
+export const links = {
+  create: async link => {
+    return new Promise((resolve, reject) => {
+      instance
+        .post('/links', link)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  delete: async id => {
+    return new Promise((resolve, reject) => {
+      instance
+        .delete(`/links/${id}`)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getAllLinks: async () => {
+    return new Promise((resolve, reject) => {
+      instance
+        .get('/links')
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getLinksByProject: async projectId => {
+    return new Promise((resolve, reject) => {
+      instance
+        .get(`/links/project/${projectId}`)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+  getLink: async id => {
+    return new Promise((resolve, reject) => {
+      instance
+        .get(`/links/${id}`)
+        .then(response => {
+          resolve(response.data[0]);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+};
   
 export const projects = {
   create: async project => {

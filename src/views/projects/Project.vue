@@ -11,65 +11,104 @@
     </div>
     <div v-if="project && !isDeleting">
       <div class="tabs">
-        <a-action-bar :tabs="tabs">
+        <a-action-bar :currentTabId="currentTabId" :tabs="tabs">
           <template v-slot:controls>
             <a-button
+              v-if="currentTabId === 'images'"
               :isPrimary="true"
               :to="{ name: 'project-add-image', params: { id: project.id } }"
             >
               <a-add-icon></a-add-icon>
               <span>Add Image</span>
             </a-button>
+            <a-button
+              v-if="currentTabId === 'links'"
+              :isPrimary="true"
+              :to="{ name: 'project-add-link', params: { id: project.id } }"
+            >
+              <a-add-icon></a-add-icon>
+              <span>Add Link</span>
+            </a-button>
           </template>
         </a-action-bar>
       </div>
     </div>
     <div class="view-content">
-      <div v-if="project && !isDeleting && images === undefined">
-        <app-loading></app-loading>
-      </div>
-      <a-message-panel
-        v-if="project && !isDeleting && images && images.length === 0"
-        text="You haven't got any images."
-      >
-        <a-button
-          :isPrimary="true"
-          :to="{ name: 'project-add-image', params: { id: project.id } }"
+      <div v-if="currentTabId === 'images'">
+        <div v-if="project && !isDeleting && images === undefined">
+          <app-loading></app-loading>
+        </div>
+        <a-message-panel
+          v-if="project && !isDeleting && images && images.length === 0"
+          text="You haven't got any images."
         >
-          <a-add-icon></a-add-icon>
-          <span>Add One!</span>
-        </a-button>
-      </a-message-panel>
-      <a-image-grid
-        v-if="project && !isDeleting && images && images.length > 0"
-        :images="images"
-      ></a-image-grid>
+          <a-button
+            :isPrimary="true"
+            :to="{ name: 'project-add-image', params: { id: project.id } }"
+          >
+            <a-add-icon></a-add-icon>
+            <span>Add One!</span>
+          </a-button>
+        </a-message-panel>
+        <a-image-grid
+          v-if="project && !isDeleting && images && images.length > 0"
+          :images="images"
+        ></a-image-grid>
+      </div>
+      <div v-if="currentTabId === 'links'">
+        <div v-if="project && !isDeleting && links === undefined">
+          <app-loading></app-loading>
+        </div>
+        <a-message-panel
+          v-if="project && !isDeleting && links && links.length === 0"
+          text="You haven't got any links."
+        >
+          <a-button
+            :isPrimary="true"
+            :to="{ name: 'project-add-link', params: { id: project.id } }"
+          >
+            <a-add-icon></a-add-icon>
+            <span>Add One!</span>
+          </a-button>
+        </a-message-panel>
+        <links-list
+          v-if="project && !isDeleting && links && links.length > 0"
+          :columns="linkTableColumns"
+          :links="links"
+          @delete="onDeleteLink"
+        ></links-list>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
 import AppLoading from '@/components/AppLoading';
-import AActionBar from '@/components/AActionBar';
+import LinksList from '@/components/LinksList';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'project',
   components: {
+    AActionBar,
     AAddIcon,
     AImageGrid,
     AButton,
     AMessagePanel,
     AppLoading,
-    AActionBar,
+    LinksList,
     ViewHeader,
   },
   computed: {
+    currentTabId() {
+      return this.$route.query.tab || 'images';
+    },
     id() {
       return this.$route.params.id;
     },
@@ -102,11 +141,22 @@ export default {
         return undefined;
       }
     },
+    links() {
+      if (this.project) {
+        let links = this.$store.getters['links/linksById'](
+          this.project.linkIds
+        );
+
+        return links;
+      } else {
+        return undefined;
+      }
+    },
     options() {
       if (this.project) {
         return [
           {
-            callback: this.onDelete,
+            callback: this.onDeleteProject,
             id: 'delete',
             label: 'Delete',
           },
@@ -121,14 +171,25 @@ export default {
     tabs() {
       return [
         {
-          id: 'images-tab',
+          id: 'images',
           label: 'Images',
           to: {
             name: 'project',
             params: {
               id: this.project ? this.project.id : null,
-              tab: 'images',
             },
+            query: { tab: 'images' },
+          },
+        },
+        {
+          id: 'links',
+          label: 'Links',
+          to: {
+            name: 'project',
+            params: {
+              id: this.project ? this.project.id : null,
+            },
+            query: { tab: 'links' },
           },
         },
       ];
@@ -137,10 +198,28 @@ export default {
   data() {
     return {
       isDeleting: false,
+      linkTableColumns: [
+        {
+          hasEmphasis: true,
+          key: 'name',
+          label: 'Name',
+        },
+        {
+          key: 'description',
+          label: 'Description',
+        },
+        {
+          key: 'url',
+          label: 'Link',
+          isLink: true,
+          shouldWrap: false,
+          width: '340px',
+        },
+      ],
     };
   },
   methods: {
-    async onDelete() {
+    async onDeleteProject() {
       this.isDeleting = true;
 
       const response = await this.$store.dispatch(
@@ -150,6 +229,21 @@ export default {
 
       if (response.success) {
         this.$router.push('/');
+      } else {
+        console.error(response.message);
+      }
+    },
+    async onDeleteLink(id) {
+      this.isDeleting = true;
+
+      const link = this.links.filter(element => {
+        return element.id === id;
+      })[0];
+
+      const response = await this.$store.dispatch('links/delete', link);
+
+      if (response.success) {
+        this.isDeleting = false;
       } else {
         console.error(response.message);
       }

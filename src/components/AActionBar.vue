@@ -1,8 +1,14 @@
 <template>
   <div class="a-action-bar">
-    <div class="tabs">
-      <div v-if="tabs">
-        <router-link v-for="tab in tabs" :key="tab.id" class="tab" :to="tab.to">
+    <div class="tabs-container">
+      <div class="tabs" v-if="tabs">
+        <router-link
+          v-for="tab in tabs"
+          :key="tab.id"
+          class="tab"
+          :class="{ 'is-active': currentTabId === tab.id }"
+          :to="tab.to"
+        >
           {{ tab.label }}
         </router-link>
       </div>
@@ -17,6 +23,9 @@
 export default {
   name: 'a-action-bar',
   props: {
+    currentTabId: {
+      type: String,
+    },
     tabs: {
       type: Array,
     },
@@ -33,6 +42,10 @@ export default {
   justify-content: space-between;
   margin: 0 0 20px;
 
+  .tabs {
+    display: flex;
+  }
+
   .tab {
     align-items: center;
     background-color: transparent;
@@ -44,11 +57,11 @@ export default {
     font-family: var(--fontFamily--primary);
     font-size: 1em;
     font-weight: 600;
-    margin: 0 20px 0 0;
+    margin: 0 20px 3px 0;
     padding: 12px 0;
     text-decoration: none;
 
-    &.router-link-exact-active {
+    &.is-active {
       border-bottom-color: var(--primary1);
       color: var(--primary1);
     }

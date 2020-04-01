@@ -86,6 +86,15 @@ const mutations = {
       project.imageIds.push(imageId);
     }
   },
+  linkLinkToProject(state, { linkId, projectId }) {
+    const project = state.projects.filter(project => {
+      return project.id === projectId;
+    })[0];
+
+    if (project) {
+      project.linkIds.push(linkId);
+    }
+  },
   setProject(state, payload) {
     if (state.projects && state.projects.length > 0) {
       state.projects.push(payload);
@@ -96,13 +105,25 @@ const mutations = {
   setProjects(state, payload) {
     state.projects = payload;
   },
-  unlinkImageToProject(state, { imageId, projectId }) {
+  unlinkImageFromProject(state, { imageId, projectId }) {
     const project = state.projects.filter(project => {
       return project.id === projectId;
     })[0];
+    
     if (project) {
       project.imageIds = project.imageIds.filter(element => {
         return element !== imageId;
+      });
+    }
+  },
+  unlinkLinkFromProject(state, { linkId, projectId }) {
+    const project = state.projects.filter(project => {
+      return project.id === projectId;
+    })[0];
+
+    if (project) {
+      project.linkIds = project.linkIds.filter(element => {
+        return element !== linkId;
       });
     }
   },
