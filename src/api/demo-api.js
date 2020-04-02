@@ -1,15 +1,15 @@
 import localforage from 'localforage';
 import { v4 as uuidv4 } from 'uuid';
 
-const STORE_NAME = 'vue-moodboard-demo';
-const USER_ID = 'vue-moodboard_user_id';
 const DELAY = 500;
+const STORE_NAME = 'vue-moodboard-demo';
+const TOKEN_NAME = 'vue-moodboard-demo-token';
+const USER_ID = 'vue-moodboard-demo-user-id';
 
 const instance = localforage.createInstance({
   name: STORE_NAME,
 });
 
-const TOKEN_NAME = 'aura_demo_token';
 const authToken = localStorage.getItem(TOKEN_NAME);
 let userId = localStorage.getItem(USER_ID);
 
