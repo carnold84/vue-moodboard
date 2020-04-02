@@ -192,7 +192,7 @@ export const images = {
       }, DELAY);
     });
   },
-  getAllImages: async () => {
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
@@ -201,22 +201,6 @@ export const images = {
       }, DELAY);
     });
   },
-  getImagesByProject: async projectId => {
-    return new Promise(async (resolve, reject) => {
-      const imageIds = await getImageIdsByProject(projectId);
-
-      const imagePromises = imageIds.map(element => {
-        return getImage(element);
-      });
-
-      const projectImages = await Promise.all(imagePromises);
-
-      setTimeout(() => {
-        resolve(projectImages);
-      }, DELAY);
-    });
-  },
-  getImage,
 };
 
 const addLinkToProject = async (linkId, projectId) => {

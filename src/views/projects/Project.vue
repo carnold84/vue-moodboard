@@ -114,29 +114,31 @@ export default {
     },
     images() {
       if (this.project) {
-        let images = this.$store.getters['images/imagesById'](
+        let initialImages = this.$store.getters['images/findAll'](
           this.project.imageIds
         );
 
-        if (images === undefined) {
-          return images;
-        }
+        let images = [];
 
-        return images.map(element => {
-          const { id, name } = element;
-          return {
-            id,
-            imageUrl: this.thumbUrl(element),
-            title: name,
-            to: {
-              name: 'project-image',
-              params: {
-                id: this.project.id,
-                imageId: id,
+        initialImages.map(element => {
+          if (element) {
+            const { id, name } = element;
+            images.push({
+              id,
+              imageUrl: this.thumbUrl(element),
+              title: name,
+              to: {
+                name: 'project-image',
+                params: {
+                  id: this.project.id,
+                  imageId: id,
+                },
               },
-            },
-          };
+            });
+          }
         });
+
+        return images;
       } else {
         return undefined;
       }

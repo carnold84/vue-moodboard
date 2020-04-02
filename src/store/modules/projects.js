@@ -12,7 +12,9 @@ const getters = {
     return state.byId[id];
   },
   list: (state, getters) => {
-    return state.allIds.map(id => getters.find(id));
+    return state.allIds.map(id => {
+      return getters.find(id);
+    });
   },
 };
 

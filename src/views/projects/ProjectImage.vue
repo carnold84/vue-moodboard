@@ -57,7 +57,7 @@ export default {
       return this.$route.params.imageId;
     },
     image() {
-      return this.$store.getters['images/image'](this.imageId);
+      return this.$store.getters['images/find'](this.imageId);
     },
     imageUrl() {
       if (this.image.format) {

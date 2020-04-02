@@ -89,20 +89,10 @@ export const images = {
     
     return response.data;
   },
-  getAllImages: async () => {
+  list: async () => {
     const response = await request('/images');
 
     return response.data;
-  },
-  getImagesByProject: async projectId => {
-    const response = await request(`/images/project/${projectId}`);
-
-    return response.data;
-  },
-  getImage: async id => {
-    const response = await request(`/images/${id}`);
-
-    return response.data[0];
   },
 };
 
