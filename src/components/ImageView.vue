@@ -16,6 +16,7 @@
       >
         <a-picture
           :alt="image.name"
+          border="1px solid var(--theme4)"
           :fill-type="TYPES.FIT"
           :src="imageUrl"
           class="image"
@@ -134,7 +135,6 @@ export default {
 }
 
 .image {
-  border: 1px solid var(--theme4);
   position: absolute;
 }
 </style>

@@ -6,7 +6,7 @@
       class="picture-image"
       :class="fillType"
       :src="imageUrl"
-      :style="{ height, width }"
+      :style="{ border }"
     />
   </div>
 </template>
@@ -49,6 +49,9 @@ export default {
     }
   },
   props: {
+    border: {
+      type: String,
+    },
     fillType: {
       default: TYPES.FILL,
       type: String,
@@ -76,6 +79,7 @@ export default {
   align-items: center;
   display: flex;
   justify-content: center;
+  overflow: hidden;
   position: relative;
 }
 
@@ -88,7 +92,8 @@ export default {
   }
 
   &.fit {
-    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
   }
 }
 </style>

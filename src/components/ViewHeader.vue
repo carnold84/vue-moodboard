@@ -73,7 +73,7 @@ export default {
   display: flex;
   flex-shrink: 0;
   justify-content: space-between;
-  margin: 0 0 20px;
+  margin: 0 0 10px;
   width: 100%;
 }
 
