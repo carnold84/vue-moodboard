@@ -24,44 +24,50 @@ const clearToken = () => {
 if (authToken) {
   setToken(authToken);
 }
+
+const request = async (path, type = 'get', params) => {
+  return new Promise((resolve, reject) => {
+    let request = undefined;
+
+    if (type === 'get') {
+      request = instance.get(path, params);
+    } else if (type === 'post') {
+      request = instance.post(path, params);
+    } else if (type === 'delete') {
+      request = instance.delete(path, params);
+    }
+
+    request
+      .then(response => {
+        resolve(response);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
   
 export const auth = {
   getToken: () => {
     return authToken;
   },
-  getUser: () => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/users/${userId}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+  getUser: async () => {
+    const response = await request(`/users/${userId}`);
+    return response.data;
   },
-  login: ({ email, password }) => {
-    return new Promise((resolve, reject) => {
-      instance
-        .post('/users/login', { email, password })
-        .then(response => {
-          const { id, token } = response.data;
-  
-          localStorage.setItem(TOKEN_NAME, token);
-          userId = id;
-          localStorage.setItem(USER_ID, userId);
-          setToken(token);
-  
-          resolve(token);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+  login: async ({ email, password }) => {
+    const response = await request('/users/login', 'post', { email, password });
+    const { id, token } = response.data;
+
+    localStorage.setItem(TOKEN_NAME, token);
+    userId = id;
+    localStorage.setItem(USER_ID, userId);
+    setToken(token);
+
+    return token;
   },
   logout: async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       localStorage.removeItem(TOKEN_NAME);
       userId = undefined;
       localStorage.removeItem(USER_ID);
@@ -74,177 +80,54 @@ export const auth = {
 
 export const images = {
   create: async image => {
-    return new Promise((resolve, reject) => {
-      instance
-        .post('/images', image)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    const response = await request('/images', 'post', image);
+    
+    return response.data;
   },
   delete: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .delete(`/images/${id}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    const response = await request(`/images/${id}`, 'delete');
+    
+    return response.data;
   },
-  getAllImages: async () => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get('/images')
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  },
-  getImagesByProject: async projectId => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/images/project/${projectId}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  },
-  getImage: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/images/${id}`)
-        .then(response => {
-          resolve(response.data[0]);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+  list: async () => {
+    const response = await request('/images');
+
+    return response.data;
   },
 };
 
 export const links = {
   create: async link => {
-    return new Promise((resolve, reject) => {
-      instance
-        .post('/links', link)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    const response = await request('/links', 'post', link);
+    
+    return response.data;
   },
   delete: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .delete(`/links/${id}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    const response = await request(`/links/${id}`, 'delete');
+    
+    return response.data;
   },
-  getAllLinks: async () => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get('/links')
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  },
-  getLinksByProject: async projectId => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/links/project/${projectId}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  },
-  getLink: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/links/${id}`)
-        .then(response => {
-          resolve(response.data[0]);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+  list: async () => {
+    const response = await request('/links');
+
+    return response.data;
   },
 };
   
 export const projects = {
   create: async project => {
-    return new Promise((resolve, reject) => {
-      instance
-        .post('/projects', project)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    const response = await request('/projects', 'post', project);
+    
+    return response.data;
   },
   delete: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .delete(`/projects/${id}`)
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+    const response = await request(`/projects/${id}`, 'delete');
+    
+    return response.data;
   },
-  getAllProjects: async () => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get('/projects')
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  },
-  getProject: async id => {
-    return new Promise((resolve, reject) => {
-      instance
-        .get(`/projects/${id}`)
-        .then(response => {
-          resolve(response.data[0]);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+  list: async () => {
+    const response = await request('/projects');
+    
+    return response.data;
   },
 };

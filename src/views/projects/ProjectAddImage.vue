@@ -62,7 +62,7 @@ export default {
       return this.$route.params.id;
     },
     project() {
-      return this.$store.getters['projects/project'](this.id);
+      return this.$store.getters['projects/find'](this.id);
     },
     projectDescription() {
       return `Create an image and add it to ${this.project.name}`;

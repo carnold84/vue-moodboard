@@ -1,15 +1,15 @@
 import localforage from 'localforage';
 import { v4 as uuidv4 } from 'uuid';
 
-const STORE_NAME = 'vue-moodboard-demo';
-const USER_ID = 'vue-moodboard_user_id';
 const DELAY = 500;
+const STORE_NAME = 'vue-moodboard-demo';
+const TOKEN_NAME = 'vue-moodboard-demo-token';
+const USER_ID = 'vue-moodboard-demo-user-id';
 
 const instance = localforage.createInstance({
   name: STORE_NAME,
 });
 
-const TOKEN_NAME = 'aura_demo_token';
 const authToken = localStorage.getItem(TOKEN_NAME);
 let userId = localStorage.getItem(USER_ID);
 
@@ -192,7 +192,7 @@ export const images = {
       }, DELAY);
     });
   },
-  getAllImages: async () => {
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
@@ -201,22 +201,6 @@ export const images = {
       }, DELAY);
     });
   },
-  getImagesByProject: async projectId => {
-    return new Promise(async (resolve, reject) => {
-      const imageIds = await getImageIdsByProject(projectId);
-
-      const imagePromises = imageIds.map(element => {
-        return getImage(element);
-      });
-
-      const projectImages = await Promise.all(imagePromises);
-
-      setTimeout(() => {
-        resolve(projectImages);
-      }, DELAY);
-    });
-  },
-  getImage,
 };
 
 const addLinkToProject = async (linkId, projectId) => {
@@ -316,7 +300,7 @@ export const links = {
       }, DELAY);
     });
   },
-  getAllLinks: async () => {
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let links = await instance.getItem('links');
 
@@ -325,22 +309,6 @@ export const links = {
       }, DELAY);
     });
   },
-  getLinksByProject: async projectId => {
-    return new Promise(async (resolve, reject) => {
-      const linkIds = await getLinkIdsByProject(projectId);
-
-      const linkPromises = linkIds.map(element => {
-        return getImage(element);
-      });
-
-      const projectLinks = await Promise.all(linkPromises);
-
-      setTimeout(() => {
-        resolve(projectLinks);
-      }, DELAY);
-    });
-  },
-  getLink,
 };
 
 const getProject = async id => {
@@ -403,7 +371,7 @@ export const projects = {
       }, DELAY);
     });
   },
-  getAllProjects: async () => {
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let projects = await instance.getItem('projects');
 
@@ -418,5 +386,4 @@ export const projects = {
       }, DELAY);
     });
   },
-  getProject,
 };

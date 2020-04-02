@@ -114,40 +114,42 @@ export default {
     },
     images() {
       if (this.project) {
-        let images = this.$store.getters['images/imagesById'](
+        let initialImages = this.$store.getters['images/findAll'](
           this.project.imageIds
         );
 
-        if (images === undefined) {
-          return images;
-        }
+        let images = [];
 
-        return images.map(element => {
-          const { id, name } = element;
-          return {
-            id,
-            imageUrl: this.thumbUrl(element),
-            title: name,
-            to: {
-              name: 'project-image',
-              params: {
-                id: this.project.id,
-                imageId: id,
+        initialImages.map(element => {
+          if (element) {
+            const { id, name } = element;
+            images.push({
+              id,
+              imageUrl: this.thumbUrl(element),
+              title: name,
+              to: {
+                name: 'project-image',
+                params: {
+                  id: this.project.id,
+                  imageId: id,
+                },
               },
-            },
-          };
+            });
+          }
         });
+
+        return images;
       } else {
         return undefined;
       }
     },
     links() {
       if (this.project) {
-        let links = this.$store.getters['links/linksById'](
-          this.project.linkIds
-        );
+        let links = this.$store.getters['links/findAll'](this.project.linkIds);
 
-        return links;
+        return links.filter(element => {
+          return element !== undefined;
+        });
       } else {
         return undefined;
       }
@@ -166,7 +168,7 @@ export default {
       return undefined;
     },
     project() {
-      return this.$store.getters['projects/project'](this.id);
+      return this.$store.getters['projects/find'](this.id);
     },
     tabs() {
       return [

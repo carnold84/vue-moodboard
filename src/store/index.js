@@ -13,9 +13,9 @@ const debug = process.env.NODE_ENV !== 'production';
 const actions = {
   async init() {
     await this.dispatch('auth/getUser');
-    await this.dispatch('projects/getAllProjects');
-    await this.dispatch('images/getAllImages');
-    await this.dispatch('links/getAllLinks');
+    //await this.dispatch('projects/load');
+    await this.dispatch('images/load');
+    await this.dispatch('links/load');
   },
 };
 
