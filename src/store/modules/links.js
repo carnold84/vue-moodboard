@@ -1,33 +1,25 @@
+import Vue from 'vue';
+
 import api from '@/api';
 
 const state = {
-  links: undefined,
+  allIds: [],
+  byId: {},
 };
 
 const getters = {
-  link: state => id => {
-    if (!state.links) {
-      return undefined;
-    }
-
-    return state.links.filter(link => {
-      return link.id.toString() === id.toString();
-    })[0];
+  find: state => id => {
+    return state.byId[id];
   },
-  links: state => {
-    return state.links;
+  findAll: (state, getters) => ids => {
+    return ids.map(id => {
+      return getters.find(id);
+    });
   },
-  linksById: state => ids => {
-    if (!ids) {
-      return [];
-    }
-
-    if (state.links) {
-      return state.links.filter(link => {
-        return ids.includes(link.id);
-      });
-    }
-    return state.links;
+  list: (state, getters) => {
+    return state.allIds.map(id => {
+      return getters.find(id);
+    });
   },
 };
 
@@ -35,13 +27,14 @@ const actions = {
   async create({ commit }, link) {
     try {
       let response = await api.links.create(link);
-      commit('setLink', response.link);
+      commit('add', response.link);
 
       if (link.projectId) {
-        commit('projects/linkLinkToProject', {
+        const payload = {
           linkId: response.link.id,
           projectId: link.projectId,
-        }, { root: true });
+        };
+        commit('projects/linkLinkToProject', payload, { root: true });
       }
 
       return {
@@ -60,15 +53,16 @@ const actions = {
   async delete({ commit }, link) {
     try {
       let response = await api.links.delete(link.id);
+      commit('remove', link);
 
       if (link.projectId) {
-        commit('projects/unlinkLinkFromProject', {
-          linkId: response.link.id,
+        const payload = {
+          linkId: link.id,
           projectId: link.projectId,
-        }, { root: true });
+        };
+        commit('projects/unlinkLinkFromProject', payload, { root: true });
       }
 
-      commit('deleteLink', response.linkId);
       return {
         message: `${link.name} was deleted.`,
         success: true,
@@ -79,22 +73,6 @@ const actions = {
         message: `${link.name} couldn't be deleted.`,
         success: false,
       };
-    }
-  },
-  async getAllLinks({ commit }) {
-    try {
-      let links = await api.links.getAllLinks();
-      commit('setLinks', links);
-    } catch (error) {
-      commit('setLinks', null);
-    }
-  },
-  async getLink({ commit }, id) {
-    try {
-      let link = await api.links.getLink(id);
-      commit('setLink', link);
-    } catch (error) {
-      commit('setLink', null);
     }
   },
   async remove({ commit }, {link, project}) {
@@ -115,23 +93,38 @@ const actions = {
       };
     }
   },
+  async load({ commit }) {
+    try {
+      let links = await api.links.list();
+      
+      links.forEach(element => {
+        commit('add', element);
+      });
+      
+      return links;
+    } catch (error) {
+      return {
+        error,
+        message: 'Could not load links.',
+        success: false,
+      };
+    }
+  },
 };
 
 const mutations = {
-  deleteLink(state, payload) {
-    state.links = state.links.filter(link => {
-      return link.id.toString() !== payload;
-    });
-  },
-  setLink(state, payload) {
-    if (state.links) {
-      state.links.push(payload);
-    } else {
-      state.links = [payload];
+  add(state, item) {
+    Vue.set(state.byId, item.id, item);
+    if (state.allIds.includes(item.id)) {
+      return;
     }
+    state.allIds.push(item.id);
   },
-  setLinks(state, payload) {
-    state.links = payload;
+  remove(state, item) {
+    const idx = state.allIds.indexOf(item.id);
+
+    Vue.delete(state.byId, item.id);
+    Vue.delete(state.allIds, idx);
   },
 };
 

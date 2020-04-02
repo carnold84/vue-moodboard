@@ -107,20 +107,10 @@ export const links = {
     
     return response.data;
   },
-  getAllLinks: async () => {
+  list: async () => {
     const response = await request('/links');
 
     return response.data;
-  },
-  getLinksByProject: async projectId => {
-    const response = await request(`/links/project/${projectId}`);
-    
-    return response.data;
-  },
-  getLink: async id => {
-    const response = await request(`/links/${id}`);
-    
-    return response.data[0];
   },
 };
   
@@ -134,11 +124,6 @@ export const projects = {
     const response = await request(`/projects/${id}`, 'delete');
     
     return response.data;
-  },
-  getProject: async id => {
-    const response = await request(`/projects/${id}`);
-    
-    return response.data[0];
   },
   list: async () => {
     const response = await request('/projects');

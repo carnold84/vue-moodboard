@@ -11,13 +11,13 @@ const getters = {
   find: state => id => {
     return state.byId[id];
   },
-  list: (state, getters) => {
-    return state.allIds.map(id => {
+  findAll: (state, getters) => ids => {
+    return ids.map(id => {
       return getters.find(id);
     });
   },
-  findAll: (state, getters) => ids => {
-    return ids.map(id => {
+  list: (state, getters) => {
+    return state.allIds.map(id => {
       return getters.find(id);
     });
   },

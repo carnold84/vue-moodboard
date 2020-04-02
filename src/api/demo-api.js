@@ -300,7 +300,7 @@ export const links = {
       }, DELAY);
     });
   },
-  getAllLinks: async () => {
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let links = await instance.getItem('links');
 
@@ -309,22 +309,6 @@ export const links = {
       }, DELAY);
     });
   },
-  getLinksByProject: async projectId => {
-    return new Promise(async (resolve, reject) => {
-      const linkIds = await getLinkIdsByProject(projectId);
-
-      const linkPromises = linkIds.map(element => {
-        return getImage(element);
-      });
-
-      const projectLinks = await Promise.all(linkPromises);
-
-      setTimeout(() => {
-        resolve(projectLinks);
-      }, DELAY);
-    });
-  },
-  getLink,
 };
 
 const getProject = async id => {
@@ -387,7 +371,6 @@ export const projects = {
       }, DELAY);
     });
   },
-  getProject,
   list: async () => {
     return new Promise(async (resolve, reject) => {
       let projects = await instance.getItem('projects');

@@ -145,11 +145,11 @@ export default {
     },
     links() {
       if (this.project) {
-        let links = this.$store.getters['links/linksById'](
-          this.project.linkIds
-        );
+        let links = this.$store.getters['links/findAll'](this.project.linkIds);
 
-        return links;
+        return links.filter(element => {
+          return element !== undefined;
+        });
       } else {
         return undefined;
       }

@@ -15,7 +15,7 @@ const actions = {
     await this.dispatch('auth/getUser');
     //await this.dispatch('projects/load');
     await this.dispatch('images/load');
-    await this.dispatch('links/getAllLinks');
+    await this.dispatch('links/load');
   },
 };
 
