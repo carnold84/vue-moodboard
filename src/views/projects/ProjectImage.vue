@@ -16,7 +16,12 @@
         class="image-view-header"
       ></view-header>
       <div class="image-content">
-        <a :href="imageUrl" target="_blank" title="Click to view full image">
+        <a
+          :href="imageUrl"
+          rel="noreferrer"
+          target="_blank"
+          title="Click to view full image"
+        >
           <a-picture
             :alt="image.name"
             :fill-type="TYPES.FIT"
@@ -52,7 +57,7 @@ export default {
       return this.$route.params.imageId;
     },
     image() {
-      return this.$store.getters['images/image'](this.imageId);
+      return this.$store.getters['images/find'](this.imageId);
     },
     imageUrl() {
       if (this.image.format) {
@@ -81,7 +86,7 @@ export default {
       return undefined;
     },
     project() {
-      return this.$store.getters['projects/project'](this.id);
+      return this.$store.getters['projects/find'](this.id);
     },
   },
   data() {

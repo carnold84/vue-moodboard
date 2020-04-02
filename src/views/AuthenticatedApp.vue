@@ -15,7 +15,7 @@
       <div class="app-nav" :class="{ show: isMenuOpen }">
         <main-nav
           :onLogout="logout"
-          :projects="projects"
+          :projects="isLoading ? null : projects"
           :title="appName"
           :user="user"
         ></main-nav>
@@ -56,7 +56,7 @@ export default {
       return appConfig.appName;
     },
     projects() {
-      return this.$store.getters['projects/projects'];
+      return this.$store.getters['projects/list'];
     },
     user() {
       return this.$store.getters['auth/user'];
@@ -65,11 +65,17 @@ export default {
   data() {
     return {
       canHideMenu: false,
+      isLoading: true,
       isMenuOpen: false,
       media: undefined,
     };
   },
   methods: {
+    async loadProjects() {
+      this.isLoading = true;
+      await this.$store.dispatch('projects/load');
+      this.isLoading = false;
+    },
     async logout() {
       await this.$store.dispatch('auth/logout');
       this.$router.push('/login');
@@ -97,6 +103,8 @@ export default {
       }
       next();
     });
+
+    this.loadProjects();
 
     this.$store.dispatch('init');
   },

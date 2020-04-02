@@ -1,21 +1,20 @@
+import Vue from 'vue';
+
 import api from '@/api';
 
 const state = {
-  projects: undefined,
+  allIds: [],
+  byId: {},
 };
 
 const getters = {
-  project: state => id => {
-    if (!state.projects) {
-      return undefined;
-    }
-
-    return state.projects.filter(project => {
-      return project.id.toString() === id.toString();
-    })[0];
+  find: state => id => {
+    return state.byId[id];
   },
-  projects: state => {
-    return state.projects;
+  list: (state, getters) => {
+    return state.allIds.map(id => {
+      return getters.find(id);
+    });
   },
 };
 
@@ -23,9 +22,10 @@ const actions = {
   async create({ commit }, project) {
     try {
       let response = await api.projects.create(project);
-      commit('setProject', response.project);
+      commit('add', response.project);
+      
       return {
-        message: `${project.name} was created.`,
+        message: `${response.project.name} was created.`,
         project: response.project,
         success: true,
       };
@@ -40,7 +40,8 @@ const actions = {
   async delete({ commit }, project) {
     try {
       await api.projects.delete(project.id);
-      commit('deleteProject', project.id);
+      commit('remove', project);
+  
       return {
         message: `${project.name} was deleted.`,
         success: true,
@@ -53,56 +54,67 @@ const actions = {
       };
     }
   },
-  async getAllProjects({ commit }) {
+  load: async ({ commit }) => {
     try {
-      let projects = await api.projects.getAllProjects();
-      commit('setProjects', projects);
+      let projects = await api.projects.list();
+      projects.forEach(element => {
+        commit('add', element);
+      });
+
+      return projects;
     } catch (error) {
-      commit('setProjects', null);
-    }
-  },
-  async getProject({ commit }, id) {
-    try {
-      let project = await api.projects.getProject(id);
-      commit('setProject', project);
-    } catch (error) {
-      commit('setProject', null);
+      return {
+        error,
+        message: 'Could not load projects.',
+        success: false,
+      };
     }
   },
 };
 
 const mutations = {
-  deleteProject(state, payload) {
-    state.projects = state.projects.filter(project => {
-      return project.id.toString() !== payload.toString();
-    });
+  add(state, item) {
+    Vue.set(state.byId, item.id, item);
+    if (state.allIds.includes(item.id)) {
+      return;
+    }
+    state.allIds.push(item.id);
+  },
+  remove(state, item) {
+    const idx = state.allIds.indexOf(item.id);
+
+    Vue.delete(state.byId, item.id);
+    Vue.delete(state.allIds, idx);
   },
   linkImageToProject(state, { imageId, projectId }) {
-    const project = state.projects.filter(project => {
-      return project.id === projectId;
-    })[0];
+    const project = state.byId[projectId];
 
     if (project) {
       project.imageIds.push(imageId);
     }
   },
-  setProject(state, payload) {
-    if (state.projects && state.projects.length > 0) {
-      state.projects.push(payload);
-    } else {
-      state.projects = [payload];
+  linkLinkToProject(state, { linkId, projectId }) {
+    const project = state.byId[projectId];
+
+    if (project) {
+      project.linkIds.push(linkId);
     }
   },
-  setProjects(state, payload) {
-    state.projects = payload;
-  },
-  unlinkImageToProject(state, { imageId, projectId }) {
-    const project = state.projects.filter(project => {
-      return project.id === projectId;
-    })[0];
+  unlinkImageFromProject(state, { imageId, projectId }) {
+    const project = state.byId[projectId];
+    
     if (project) {
       project.imageIds = project.imageIds.filter(element => {
         return element !== imageId;
+      });
+    }
+  },
+  unlinkLinkFromProject(state, { linkId, projectId }) {
+    const project = state.byId[projectId];
+
+    if (project) {
+      project.linkIds = project.linkIds.filter(element => {
+        return element !== linkId;
       });
     }
   },

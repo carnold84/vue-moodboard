@@ -1,15 +1,15 @@
 import localforage from 'localforage';
 import { v4 as uuidv4 } from 'uuid';
 
-const STORE_NAME = 'vue-moodboard-demo';
-const USER_ID = 'vue-moodboard_user_id';
 const DELAY = 500;
+const STORE_NAME = 'vue-moodboard-demo';
+const TOKEN_NAME = 'vue-moodboard-demo-token';
+const USER_ID = 'vue-moodboard-demo-user-id';
 
 const instance = localforage.createInstance({
   name: STORE_NAME,
 });
 
-const TOKEN_NAME = 'aura_demo_token';
 const authToken = localStorage.getItem(TOKEN_NAME);
 let userId = localStorage.getItem(USER_ID);
 
@@ -18,9 +18,17 @@ const init = async () => {
   if (!images) {
     await instance.setItem('images', []);
   }
-  let imageProjects = await instance.getItem('imageProjects');
-  if (!imageProjects) {
-    await instance.setItem('imageProjects', []);
+  let imagesProjects = await instance.getItem('imagesProjects');
+  if (!imagesProjects) {
+    await instance.setItem('imagesProjects', []);
+  }
+  let links = await instance.getItem('links');
+  if (!links) {
+    await instance.setItem('links', []);
+  }
+  let linksProjects = await instance.getItem('linksProjects');
+  if (!linksProjects) {
+    await instance.setItem('linksProjects', []);
   }
   let projects = await instance.getItem('projects');
   if (!projects) {
@@ -87,30 +95,30 @@ export const auth = {
 };
 
 const addImageToProject = async (imageId, projectId) => {
-  let imageProjects = await instance.getItem('imageProjects');
+  let imagesProjects = await instance.getItem('imagesProjects');
 
-  imageProjects.push({
+  imagesProjects.push({
     imageId,
     projectId,
   });
 
-  await instance.setItem('imageProjects', imageProjects);
+  await instance.setItem('imagesProjects', imagesProjects);
 };
 
 const removeImageFromProject = async (imageId, projectId) => {
-  let imageProjects = await instance.getItem('imageProjects');
+  let imagesProjects = await instance.getItem('imagesProjects');
 
-  imageProjects = imageProjects.filter(element => {
+  imagesProjects = imagesProjects.filter(element => {
     return element.imageId !== imageId && element.projectId !== projectId;
   });
 
-  await instance.setItem('imageProjects', imageProjects);
+  await instance.setItem('imagesProjects', imagesProjects);
 };
 
 const getImageIdsByProject = async (projectId) => {
-  let imageProjects = await instance.getItem('imageProjects');
+  let imagesProjects = await instance.getItem('imagesProjects');
 
-  const images = imageProjects.filter(element => {
+  const images = imagesProjects.filter(element => {
     return element.projectId === projectId;
   });
 
@@ -184,7 +192,7 @@ export const images = {
       }, DELAY);
     });
   },
-  getAllImages: async () => {
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
@@ -193,22 +201,114 @@ export const images = {
       }, DELAY);
     });
   },
-  getImagesByProject: async projectId => {
+};
+
+const addLinkToProject = async (linkId, projectId) => {
+  let linksProjects = await instance.getItem('linksProjects');
+
+  linksProjects.push({
+    linkId,
+    projectId,
+  });
+
+  await instance.setItem('linksProjects', linksProjects);
+};
+
+const removeLinkFromProject = async (linkId, projectId) => {
+  let linksProjects = await instance.getItem('linksProjects');
+
+  linksProjects = linksProjects.filter(element => {
+    return element.linkId !== linkId && element.projectId !== projectId;
+  });
+
+  await instance.setItem('linksProjects', linksProjects);
+};
+
+const getLinkIdsByProject = async (projectId) => {
+  let linksProjects = await instance.getItem('linksProjects');
+
+  const links = linksProjects.filter(element => {
+    return element.projectId === projectId;
+  });
+
+  const linkIds = links.map(element => {
+    return element.linkId;
+  });
+
+  return linkIds;
+};
+
+const getLink = async id => {
+  return new Promise(async (resolve, reject) => {
+    let links = await instance.getItem('links');
+    
+    const link = links.filter(element => {
+      return element.id === id;
+    })[0];
+
+    resolve(link);
+  });
+};
+
+export const links = {
+  create: async data => {
     return new Promise(async (resolve, reject) => {
-      const imageIds = await getImageIdsByProject(projectId);
+      let links = await instance.getItem('links');
 
-      const imagePromises = imageIds.map(element => {
-        return getImage(element);
-      });
+      const id = uuidv4();
+      const {projectId} = data;
+      const newLink = {
+        ...data,
+        id,
+      };
 
-      const projectImages = await Promise.all(imagePromises);
+      if (projectId) {
+        await addLinkToProject(id, projectId);
+      }
+
+      links.push(newLink);
+
+      await instance.setItem('links', links);
 
       setTimeout(() => {
-        resolve(projectImages);
+        resolve({link: newLink, msg: 'Link created successfully'});
       }, DELAY);
     });
   },
-  getImage,
+  delete: async id => {
+    return new Promise(async (resolve, reject) => {
+      const link = await getLink(id);
+
+      if (link) {
+        const {id, projectId} = link;
+
+        if (projectId) {
+          await removeLinkFromProject(id, projectId);
+        }
+        
+        let links = await instance.getItem('links');
+
+        const newLinks = links.filter(element => {
+          return element.id !== id;
+        });
+
+        await instance.setItem('links', newLinks);
+      }
+
+      setTimeout(() => {
+        resolve({link, msg: 'Link deleted successfully'});
+      }, DELAY);
+    });
+  },
+  list: async () => {
+    return new Promise(async (resolve, reject) => {
+      let links = await instance.getItem('links');
+
+      setTimeout(() => {
+        resolve(links);
+      }, DELAY);
+    });
+  },
 };
 
 const getProject = async id => {
@@ -220,6 +320,7 @@ const getProject = async id => {
     })[0];
 
     project.imageIds = await getImageIdsByProject(project.id);
+    project.linkIds = await getLinkIdsByProject(project.id);
 
     setTimeout(() => {
       resolve(project);
@@ -236,6 +337,7 @@ export const projects = {
       const newProject = {
         ...project,
         imageIds: [],
+        linkIds: [],
         id,
       };
 
@@ -269,7 +371,7 @@ export const projects = {
       }, DELAY);
     });
   },
-  getAllProjects: async () => {
+  list: async () => {
     return new Promise(async (resolve, reject) => {
       let projects = await instance.getItem('projects');
 
@@ -284,5 +386,4 @@ export const projects = {
       }, DELAY);
     });
   },
-  getProject,
 };

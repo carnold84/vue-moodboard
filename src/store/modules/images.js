@@ -1,33 +1,25 @@
+import Vue from 'vue';
+
 import api from '@/api';
 
 const state = {
-  images: undefined,
+  allIds: [],
+  byId: {},
 };
 
 const getters = {
-  image: state => id => {
-    if (!state.images) {
-      return undefined;
-    }
-
-    return state.images.filter(image => {
-      return image.id.toString() === id.toString();
-    })[0];
+  find: state => id => {
+    return state.byId[id];
   },
-  images: state => {
-    return state.images;
+  findAll: (state, getters) => ids => {
+    return ids.map(id => {
+      return getters.find(id);
+    });
   },
-  imagesById: state => ids => {
-    if (!ids) {
-      return [];
-    }
-
-    if (state.images) {
-      return state.images.filter(image => {
-        return ids.includes(image.id);
-      });
-    }
-    return state.images;
+  list: (state, getters) => {
+    return state.allIds.map(id => {
+      return getters.find(id);
+    });
   },
 };
 
@@ -35,13 +27,14 @@ const actions = {
   async create({ commit }, image) {
     try {
       let response = await api.images.create(image);
-      commit('setImage', response.image);
+      commit('add', response.image);
 
       if (image.projectId) {
-        commit('projects/linkImageToProject', {
+        const payload = {
           imageId: response.image.id,
           projectId: image.projectId,
-        }, { root: true });
+        };
+        commit('projects/linkImageToProject', payload, { root: true });
       }
 
       return {
@@ -49,7 +42,6 @@ const actions = {
         success: true,
       };
     } catch (error) {
-      console.error(error);
       return {
         error,
         message: `${image.name} couldn't be created.`,
@@ -59,16 +51,17 @@ const actions = {
   },
   async delete({ commit }, image) {
     try {
-      let response = await api.images.delete(image.id);
+      await api.images.delete(image.id);
+      commit('remove', image);
 
       if (image.projectId) {
-        commit('projects/unlinkImageToProject', {
-          imageId: response.image.id,
+        const payload = {
+          imageId: image.id,
           projectId: image.projectId,
-        }, { root: true });
+        };
+        commit('projects/unlinkImageFromProject', payload, { root: true });
       }
 
-      commit('deleteImage', response.imageId);
       return {
         message: `${image.name} was deleted.`,
         success: true,
@@ -81,25 +74,9 @@ const actions = {
       };
     }
   },
-  async getAllImages({ commit }) {
-    try {
-      let images = await api.images.getAllImages();
-      commit('setImages', images);
-    } catch (error) {
-      commit('setImages', null);
-    }
-  },
-  async getImage({ commit }, id) {
-    try {
-      let image = await api.images.getImage(id);
-      commit('setImage', image);
-    } catch (error) {
-      commit('setImage', null);
-    }
-  },
   async remove({ commit }, {image, project}) {
     if (project) {
-      commit('projects/unlinkImageToProject', {
+      commit('projects/unlinkImageFromProject', {
         imageId: image.id,
         projectId: project.id,
       }, { root: true });
@@ -115,23 +92,35 @@ const actions = {
       };
     }
   },
+  async load({ commit }) {
+    try {
+      let images = await api.images.list();
+      images.forEach(element => {
+        commit('add', element);
+      });
+    } catch (error) {
+      return {
+        error,
+        message: 'Could not load images.',
+        success: false,
+      };
+    }
+  },
 };
 
 const mutations = {
-  deleteImage(state, payload) {
-    state.images = state.images.filter(image => {
-      return image.id.toString() !== payload;
-    });
-  },
-  setImage(state, payload) {
-    if (state.images) {
-      state.images.push(payload);
-    } else {
-      state.images = [payload];
+  add(state, item) {
+    Vue.set(state.byId, item.id, item);
+    if (state.allIds.includes(item.id)) {
+      return;
     }
+    state.allIds.push(item.id);
   },
-  setImages(state, payload) {
-    state.images = payload;
+  remove(state, item) {
+    const idx = state.allIds.indexOf(item.id);
+
+    Vue.delete(state.byId, item.id);
+    Vue.delete(state.allIds, idx);
   },
 };
 
