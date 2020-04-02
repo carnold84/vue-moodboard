@@ -120,7 +120,7 @@ export default {
 
         let images = [];
 
-        initialImages.map(element => {
+        initialImages.forEach(element => {
           if (element) {
             const { id, name } = element;
             images.push({

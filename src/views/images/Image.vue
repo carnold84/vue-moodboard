@@ -1,13 +1,12 @@
 <template>
   <div class="view-wrapper">
     <app-loading
-      v-if="image === undefined || project === undefined || isRemoving === true"
+      v-if="image === undefined || isRemoving === true"
     ></app-loading>
     <image-view
-      v-else-if="image && project && isRemoving === false"
+      v-else-if="image && isRemoving === false"
       :backUrl="backUrl"
       :image="image"
-      :project="project"
     ></image-view>
   </div>
 </template>
@@ -17,26 +16,20 @@ import AppLoading from '@/components/AppLoading';
 import ImageView from '@/components/ImageView';
 
 export default {
-  name: 'project-image',
+  name: 'images-image',
   components: {
     AppLoading,
     ImageView,
   },
   computed: {
     backUrl() {
-      return `/projects/${this.id}`;
+      return '/images';
     },
     id() {
       return this.$route.params.id;
     },
-    imageId() {
-      return this.$route.params.imageId;
-    },
     image() {
-      return this.$store.getters['images/find'](this.imageId);
-    },
-    project() {
-      return this.$store.getters['projects/find'](this.id);
+      return this.$store.getters['images/find'](this.id);
     },
   },
   data() {

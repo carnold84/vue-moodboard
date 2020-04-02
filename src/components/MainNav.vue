@@ -40,6 +40,9 @@
           </li>
         </ul>
       </li>
+      <li>
+        <router-link class="nav-item btn" to="/images">All Images</router-link>
+      </li>
     </ul>
     <div class="user-info">
       <button class="nav-item btn" @click="logout">Logout</button>

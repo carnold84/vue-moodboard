@@ -5,11 +5,15 @@ import AuthenticatedApp from '@/views/AuthenticatedApp.vue';
 import Home from '@/views/Home.vue';
 import store from '@/store';
 
-const NotFound = () => import('@/views/NotFound.vue');
+const Image = () => import('@/views/images/Image.vue');
+const Images = () => import('@/views/images/Images.vue');
+const ImagesAddImage = () => import('@/views/images/ImagesAddImage.vue');
+const ImagesList = () => import('@/views/images/ImagesList.vue');
 const Login = () => import('@/views/Login.vue');
-const ProjectEdit = () => import('@/views/projects/ProjectEdit.vue');
+const NotFound = () => import('@/views/NotFound.vue');
 const Project = () => import('@/views/projects/Project.vue');
 const ProjectAddImage = () => import('@/views/projects/ProjectAddImage.vue');
+const ProjectEdit = () => import('@/views/projects/ProjectEdit.vue');
 const ProjectAddLink = () => import('@/views/projects/ProjectAddLink.vue');
 const ProjectImage = () => import('@/views/projects/ProjectImage.vue');
 const Projects = () => import('@/views/projects/Projects.vue');
@@ -32,6 +36,27 @@ const routes = [
         component: Home,
         name: 'home',
         path: '/',
+      },
+      {
+        children: [
+          {
+            component: ImagesList,
+            name: 'images-list',
+            path: '/',
+          },
+          {
+            component: ImagesAddImage,
+            name: 'images-add-image',
+            path: 'add-image',
+          },
+          {
+            component: Image,
+            name: 'image',
+            path: ':id',
+          },
+        ],
+        component: Images,
+        path: 'images',
       },
       {
         children: [
