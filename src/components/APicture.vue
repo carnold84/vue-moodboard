@@ -88,7 +88,9 @@ export default {
   transition: opacity 500ms ease-out;
 
   &.fill {
+    height: 100%;
     object-fit: cover;
+    width: 100%;
   }
 
   &.fit {

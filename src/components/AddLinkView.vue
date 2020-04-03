@@ -66,8 +66,6 @@ export default {
         url: this.url,
       };
 
-      console.log(this.project);
-
       if (this.project) {
         data.projectId = this.project.id;
       }

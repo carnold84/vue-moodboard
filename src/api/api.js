@@ -90,7 +90,7 @@ export const images = {
     return response.data;
   },
   list: async (exclude = []) => {
-    const response = await request('/images', {
+    const response = await request('/images', 'get', {
       params: {
         exclude,
       },
