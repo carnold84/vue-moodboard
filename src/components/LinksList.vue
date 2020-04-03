@@ -1,7 +1,7 @@
 <template>
   <div class="links-list">
-    <app-loading v-if="isDeleting" />
-    <div v-if="!isDeleting" class="list" :class="breakpoints">
+    <app-loading v-if="isLoading" />
+    <div v-if="!isLoading" class="list" :class="breakpoints">
       <resizable @resize="onResize" />
       <div
         v-for="item of links"
@@ -43,7 +43,8 @@
           </span>
         </div>
         <div class="cell controls">
-          <a-button class="control-btn" @click="onDelete(item.id)">
+          <a-select :items="getItems(item)" class="control" />
+          <a-button class="control" @click="onDelete(item.id)">
             <a-block-icon height="16" width="16" />
             Delete
           </a-button>
@@ -57,6 +58,7 @@
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import AButton from '@/components/AButton';
 import AppLoading from '@/components/AppLoading';
+import ASelect from '@/components/ASelect';
 import Resizable from '@/components/Resizable';
 
 export default {
@@ -65,12 +67,18 @@ export default {
     ABlockIcon,
     AButton,
     AppLoading,
+    ASelect,
     Resizable,
+  },
+  computed: {
+    projects() {
+      return this.$store.getters['projects/list'];
+    },
   },
   data() {
     return {
       breakpoints: [],
-      isDeleting: false,
+      isLoading: false,
       isRow: false,
       columns: [
         {
@@ -87,14 +95,24 @@ export default {
           label: 'Link',
           isLink: true,
           shouldWrap: false,
-          width: '340px',
         },
       ],
     };
   },
   methods: {
+    getItems(link) {
+      return this.projects.map(element => {
+        return {
+          callback: () => {
+            this.linkToProject({ link, project: element });
+          },
+          id: link.id,
+          label: element.name,
+        };
+      });
+    },
     async onDelete(id) {
-      this.isDeleting = true;
+      this.isLoading = true;
 
       const link = this.links.filter(element => {
         return element.id === id;
@@ -107,7 +125,22 @@ export default {
       const response = await this.$store.dispatch('links/delete', link);
 
       if (response.success) {
-        this.isDeleting = false;
+        this.isLoading = false;
+      } else {
+        console.error(response.message);
+      }
+    },
+    async linkToProject({ link, project }) {
+      this.isLoading = true;
+
+      console.log(link, project);
+      const response = await this.$store.dispatch('links/link', {
+        link,
+        project,
+      });
+
+      if (response.success) {
+        this.isLoading = false;
       } else {
         console.error(response.message);
       }
@@ -167,7 +200,12 @@ export default {
   overflow: hidden;
 }
 
-.control-btn {
+.controls {
+  overflow: visible;
+}
+
+.control {
+  margin: 0 0 0 10px;
   padding: 0;
 }
 

@@ -75,6 +75,29 @@ const actions = {
       };
     }
   },
+  async link({ commit }, {link, project}) {
+    if (project) {
+      const response = await api.links.link({linkId: link.id, projectId: project.id});
+      const {linkId, projectId} = response.ids;
+
+      console.log(response);
+
+      commit('projects/linkLinkToProject', {
+        linkId,
+        projectId,
+      }, { root: true });
+
+      return {
+        message: `${link.name} was added to ${project.name}.`,
+        success: true,
+      };
+    } else {
+      return {
+        message: `${link.name} could not be added to ${project.name}.`,
+        success: false,
+      };
+    }
+  },
   async remove({ commit }, {link, project}) {
     if (project) {
       commit('projects/unlinkLinkToProject', {
