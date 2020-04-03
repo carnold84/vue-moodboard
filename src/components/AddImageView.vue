@@ -5,8 +5,9 @@
       :on-back="backUrl"
       :title="title"
     ></view-header>
-    <div v-if="isSaving === false">
-      <form class="form" @submit.prevent="create">
+    <div class="content">
+      <app-loading v-if="isSaving" />
+      <form v-if="!isSaving" class="form" @submit.prevent="create">
         <a-action-bar>
           <template v-slot:controls>
             <a-button :to="backUrl">
@@ -36,6 +37,7 @@ import AActionBar from '@/components/AActionBar';
 import AButton from '@/components/AButton';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
+import AppLoading from '@/components/AppLoading';
 import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -46,6 +48,7 @@ export default {
     AButton,
     ACheckIcon,
     ACloseIcon,
+    AppLoading,
     TextInput,
     ViewHeader,
   },
@@ -97,4 +100,9 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.content {
+  flex-grow: 1;
+  position: relative;
+}
+</style>

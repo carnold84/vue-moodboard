@@ -6,7 +6,7 @@
       :options="options"
       :title="image.name"
       class="image-view-header"
-    ></view-header>
+    />
     <div class="image-content">
       <a
         :href="imageUrl"
@@ -20,7 +20,7 @@
           :fill-type="TYPES.FIT"
           :src="imageUrl"
           class="image"
-        ></a-picture>
+        />
       </a>
     </div>
   </div>
@@ -78,6 +78,10 @@ export default {
   methods: {
     async onDelete() {
       this.isRemoving = true;
+
+      if (this.project) {
+        this.image.projectId = this.project.id;
+      }
 
       const response = await this.$store.dispatch('images/delete', this.image);
 

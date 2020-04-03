@@ -1,50 +1,53 @@
 <template>
-  <div class="a-table" :class="breakpoints">
-    <resizable @resize="onResize" />
-    <div
-      v-for="item of links"
-      :key="item.id"
-      :style="
-        isRow
-          ? {
-              gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`
-            }
-          : {
-              gridTemplateRows: `repeat(${columns.length + 1}, 1fr)`
-            }
-      "
-      class="row"
-    >
+  <div class="links-list">
+    <app-loading v-if="isDeleting" />
+    <div v-if="!isDeleting" class="list" :class="breakpoints">
+      <resizable @resize="onResize" />
       <div
-        v-for="column of columns"
-        :key="column.key"
-        class="cell"
-        :class="{
-          'has-emphasis': column.hasEmphasis === true,
-          wrap: column.shouldWrap === undefined ? true : column.shouldWrap
-        }"
-        :style="{
-          minWidth: column.width
-        }"
+        v-for="item of links"
+        :key="item.id"
+        :style="
+          isRow
+            ? {
+                gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`
+              }
+            : {
+                gridTemplateRows: `repeat(${columns.length + 1}, 1fr)`
+              }
+        "
+        class="row"
       >
-        <a
-          v-if="column.isLink"
-          :href="item[column.key]"
-          class="link"
-          rel="noreferrer"
-          target="_blank"
+        <div
+          v-for="column of columns"
+          :key="column.key"
+          class="cell"
+          :class="{
+            'has-emphasis': column.hasEmphasis === true,
+            wrap: column.shouldWrap === undefined ? true : column.shouldWrap
+          }"
+          :style="{
+            minWidth: column.width
+          }"
         >
-          {{ item[column.key] }}
-        </a>
-        <span v-else class="text">
-          {{ item[column.key] }}
-        </span>
-      </div>
-      <div class="cell controls">
-        <a-button @click="$emit('delete', item.id)">
-          <a-block-icon height="18" width="18"></a-block-icon>
-          Delete
-        </a-button>
+          <a
+            v-if="column.isLink"
+            :href="item[column.key]"
+            class="link"
+            rel="noreferrer"
+            target="_blank"
+          >
+            {{ item[column.key] }}
+          </a>
+          <span v-else class="text">
+            {{ item[column.key] }}
+          </span>
+        </div>
+        <div class="cell controls">
+          <a-button class="control-btn" @click="onDelete(item.id)">
+            <a-block-icon height="16" width="16" />
+            Delete
+          </a-button>
+        </div>
       </div>
     </div>
   </div>
@@ -53,6 +56,7 @@
 <script>
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import AButton from '@/components/AButton';
+import AppLoading from '@/components/AppLoading';
 import Resizable from '@/components/Resizable';
 
 export default {
@@ -60,15 +64,54 @@ export default {
   components: {
     ABlockIcon,
     AButton,
+    AppLoading,
     Resizable,
   },
   data() {
     return {
       breakpoints: [],
+      isDeleting: false,
       isRow: false,
+      columns: [
+        {
+          hasEmphasis: true,
+          key: 'name',
+          label: 'Name',
+        },
+        {
+          key: 'description',
+          label: 'Description',
+        },
+        {
+          key: 'url',
+          label: 'Link',
+          isLink: true,
+          shouldWrap: false,
+          width: '340px',
+        },
+      ],
     };
   },
   methods: {
+    async onDelete(id) {
+      this.isDeleting = true;
+
+      const link = this.links.filter(element => {
+        return element.id === id;
+      })[0];
+
+      if (this.project) {
+        link.projectId = this.project.id;
+      }
+
+      const response = await this.$store.dispatch('links/delete', link);
+
+      if (response.success) {
+        this.isDeleting = false;
+      } else {
+        console.error(response.message);
+      }
+    },
     onResize({ width }) {
       let classes = [];
 
@@ -82,24 +125,25 @@ export default {
     },
   },
   props: {
-    columns: {
-      type: Array,
-    },
     links: {
       default() {
         return [];
       },
       type: Array,
     },
-    onDelete: {
-      type: Function,
+    project: {
+      type: Object,
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-.a-table {
+.links-list {
+  display: grid;
+}
+
+.list {
   display: grid;
 }
 
@@ -121,6 +165,10 @@ export default {
   display: flex;
   height: 100%;
   overflow: hidden;
+}
+
+.control-btn {
+  padding: 0;
 }
 
 .text {

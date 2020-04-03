@@ -78,9 +78,6 @@ export default {
     },
   },
   methods: {
-    onCreateImage() {
-      this.$router.push('/images/create');
-    },
     thumbUrl(image) {
       if (image.format) {
         const rootUrl = 'https://res.cloudinary.com/carnold/image/upload';

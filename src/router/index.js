@@ -9,6 +9,9 @@ const Image = () => import('@/views/images/Image.vue');
 const Images = () => import('@/views/images/Images.vue');
 const ImagesAddImage = () => import('@/views/images/ImagesAddImage.vue');
 const ImagesList = () => import('@/views/images/ImagesList.vue');
+const Links = () => import('@/views/links/Links.vue');
+const LinksAddLink = () => import('@/views/links/LinksAddLink.vue');
+const LinksList = () => import('@/views/links/LinksList.vue');
 const Login = () => import('@/views/Login.vue');
 const NotFound = () => import('@/views/NotFound.vue');
 const Project = () => import('@/views/projects/Project.vue');
@@ -57,6 +60,22 @@ const routes = [
         ],
         component: Images,
         path: 'images',
+      },
+      {
+        children: [
+          {
+            component: LinksList,
+            name: 'links-list',
+            path: '/',
+          },
+          {
+            component: LinksAddLink,
+            name: 'links-add-link',
+            path: 'add-link',
+          },
+        ],
+        component: Links,
+        path: 'links',
       },
       {
         children: [

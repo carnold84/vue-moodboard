@@ -73,10 +73,9 @@
         </a-message-panel>
         <links-list
           v-if="project && !isDeleting && links && links.length > 0"
-          :columns="linkTableColumns"
           :links="links"
-          @delete="onDeleteLink"
-        ></links-list>
+          :project="project"
+        />
       </div>
     </div>
   </div>
@@ -200,24 +199,6 @@ export default {
   data() {
     return {
       isDeleting: false,
-      linkTableColumns: [
-        {
-          hasEmphasis: true,
-          key: 'name',
-          label: 'Name',
-        },
-        {
-          key: 'description',
-          label: 'Description',
-        },
-        {
-          key: 'url',
-          label: 'Link',
-          isLink: true,
-          shouldWrap: false,
-          width: '340px',
-        },
-      ],
     };
   },
   methods: {
