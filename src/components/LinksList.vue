@@ -43,7 +43,7 @@
           </span>
         </div>
         <div class="cell controls">
-          <a-select :items="getItems(item)" class="control" />
+          <a-select :items="getItems(item)" title="Add" class="control" />
           <a-button class="control" @click="onDelete(item.id)">
             <a-block-icon height="16" width="16" />
             Delete

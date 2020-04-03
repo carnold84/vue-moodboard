@@ -28,6 +28,7 @@
 
 <script>
 import APicture, { TYPES } from '@/components/APicture';
+import { DIALOG_NAME } from '@/modals/AppDialog';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -76,7 +77,17 @@ export default {
     };
   },
   methods: {
-    async onDelete() {
+    onDelete() {
+      this.$store.dispatch('modals/open', {
+        name: DIALOG_NAME,
+        props: {
+          onConfirm: this.onConfirmDelete,
+          text: `Are you sure you want to delete ${this.image.name}?`,
+          title: 'Delete Image?',
+        },
+      });
+    },
+    async onConfirmDelete() {
       this.isRemoving = true;
 
       if (this.project) {

@@ -30,6 +30,7 @@
       :class="{ show: isMenuOpen }"
       @click="onToggleMenu"
     ></div>
+    <app-dialog v-bind="dialogProps" />
   </div>
 </template>
 
@@ -38,6 +39,7 @@ import appConfig from '@/app.config';
 import AMenuIcon from '@/components/icons/AMenuIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
+import AppDialog, { DIALOG_NAME } from '@/modals/AppDialog';
 import MainNav from '@/components/MainNav';
 
 export default {
@@ -47,6 +49,7 @@ export default {
   },
   components: {
     AMenuIcon,
+    AppDialog,
     AppLoading,
     AppLogo,
     MainNav,
@@ -54,6 +57,9 @@ export default {
   computed: {
     appName() {
       return appConfig.appName;
+    },
+    dialogProps() {
+      return this.$store.getters['modals/props'](DIALOG_NAME);
     },
     projects() {
       return this.$store.getters['projects/list'];

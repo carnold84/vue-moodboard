@@ -29,8 +29,6 @@ const request = async (path, type = 'get', params) => {
   return new Promise((resolve, reject) => {
     let request = undefined;
 
-    console.log(params);
-
     if (type === 'get') {
       request = instance.get(path, params);
     } else if (type === 'post') {
@@ -118,8 +116,6 @@ export const links = {
       linkId,
       projectId,
     });
-
-    console.log(response);
     
     return response.data;
   },
