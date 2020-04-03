@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "serve-demo": "vue-cli-service serve --mode dev.demo",
+    "serve-prod": "serve -s dist",
     "build": "vue-cli-service build",
     "build-demo": "vue-cli-service build --mode prod.demo",
     "test:unit": "vue-cli-service test:unit",
@@ -39,6 +40,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
+    "serve": "^11.3.0",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [

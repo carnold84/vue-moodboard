@@ -6,7 +6,7 @@
         class="title-back-btn"
         @click="onBack"
       >
-        <a-arrow-back-icon></a-arrow-back-icon>
+        <a-arrow-back-icon />
         <span>Back</span>
       </a-button>
       <a-button
@@ -14,7 +14,7 @@
         :to="onBack"
         class="title-back-btn"
       >
-        <a-arrow-back-icon></a-arrow-back-icon>
+        <a-arrow-back-icon />
         <span>Back</span>
       </a-button>
       <div class="title">
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="secondary-content">
-      <a-select v-if="options" alignMenu="right" :items="options"></a-select>
+      <a-select v-if="options" alignMenu="right" :items="options" />
     </div>
   </header>
 </template>
@@ -70,10 +70,11 @@ export default {
 <style scoped lang="scss">
 .view-header {
   align-content: center;
+  background-color: var(--theme1);
   display: flex;
   flex-shrink: 0;
   justify-content: space-between;
-  margin: 0 0 20px;
+  margin: 0 0 10px;
   width: 100%;
 }
 

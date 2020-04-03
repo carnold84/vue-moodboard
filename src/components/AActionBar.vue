@@ -36,6 +36,7 @@ export default {
 <style scoped lang="scss">
 .a-action-bar {
   align-items: center;
+  background-color: var(--theme1);
   border-bottom: 1px solid var(--theme3);
   display: flex;
   height: 40px;

@@ -92,9 +92,9 @@ const actions = {
       };
     }
   },
-  async load({ commit }) {
+  async load({ commit, state }) {
     try {
-      let images = await api.images.list();
+      let images = await api.images.list({exclude: state.allIds});
       images.forEach(element => {
         commit('add', element);
       });
