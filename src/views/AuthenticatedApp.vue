@@ -31,6 +31,7 @@
       @click="onToggleMenu"
     ></div>
     <app-dialog v-bind="dialogProps" />
+    <link-links-modal v-bind="linkLinksProps" />
   </div>
 </template>
 
@@ -40,6 +41,7 @@ import AMenuIcon from '@/components/icons/AMenuIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
 import AppDialog, { DIALOG_NAME } from '@/modals/AppDialog';
+import LinkLinksModal, { LINK_LINKS_MODAL } from '@/modals/LinkLinks';
 import MainNav from '@/components/MainNav';
 
 export default {
@@ -52,6 +54,7 @@ export default {
     AppDialog,
     AppLoading,
     AppLogo,
+    LinkLinksModal,
     MainNav,
   },
   computed: {
@@ -60,6 +63,9 @@ export default {
     },
     dialogProps() {
       return this.$store.getters['modals/props'](DIALOG_NAME);
+    },
+    linkLinksProps() {
+      return this.$store.getters['modals/props'](LINK_LINKS_MODAL);
     },
     projects() {
       return this.$store.getters['projects/list'];

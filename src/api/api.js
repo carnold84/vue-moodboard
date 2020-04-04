@@ -119,6 +119,14 @@ export const links = {
     
     return response.data;
   },
+  unlink: async ({linkId, projectId}) => {
+    const response = await request('/links/unlink-from-project', 'post', {
+      linkId,
+      projectId,
+    });
+    
+    return response.data;
+  },
   list: async () => {
     const response = await request('/links');
 

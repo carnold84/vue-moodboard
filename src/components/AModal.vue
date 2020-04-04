@@ -1,9 +1,9 @@
 <template>
   <div v-if="isOpen" class="a-modal">
-    <div class="modal">
+    <div :style="{ maxWidth }" class="modal">
       <header class="modal-header">
         <h2 class="modal-title">{{ title }}</h2>
-        <a-button @click="onClose">
+        <a-button class="modal-close-btn" @click="onClose">
           <a-close-icon />
         </a-button>
       </header>
@@ -11,7 +11,9 @@
         <slot name="content"></slot>
       </div>
       <div class="modal-footer">
-        <slot name="footer"></slot>
+        <div class="modal-footer-buttons">
+          <slot name="footer"></slot>
+        </div>
       </div>
     </div>
     <div
@@ -51,6 +53,10 @@ export default {
       default: false,
       type: Boolean,
     },
+    maxWidth: {
+      default: '500px',
+      type: String,
+    },
     name: {
       required: true,
       type: String,
@@ -81,7 +87,6 @@ export default {
   display: flex;
   flex-direction: column;
   margin: 0 30px;
-  max-width: 600px;
   width: 100%;
   z-index: 1;
 }
@@ -93,8 +98,14 @@ export default {
   display: flex;
   flex-shrink: 0;
   height: 60px;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0 8px 0 22px;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  right: 10px;
 }
 
 .modal-title {
@@ -104,8 +115,12 @@ export default {
 }
 
 .modal-content {
+  align-items: center;
+  display: flex;
   flex-grow: 1;
-  padding: 20px 22px;
+  justify-content: center;
+  min-height: 100px;
+  position: relative;
 }
 
 .modal-footer {
@@ -115,6 +130,25 @@ export default {
   display: flex;
   flex-shrink: 0;
   height: 60px;
+  justify-content: center;
+  padding: 0 18px 0 22px;
+
+  & > * {
+    margin: 0 0 0 20px;
+  }
+}
+
+.modal-footer-buttons {
+  display: flex;
+  margin: 0;
+
+  & > * {
+    margin: 0 0 0 20px;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
 }
 
 .modal-overlay {

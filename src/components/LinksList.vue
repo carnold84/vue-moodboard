@@ -43,7 +43,9 @@
           </span>
         </div>
         <div class="cell controls">
-          <a-select :items="getItems(item)" title="Add" class="control" />
+          <a-button class="control" @click="onLinkToProject(item)">
+            <a-add-icon />
+          </a-button>
           <a-button class="control" @click="onDelete(item.id)">
             <a-block-icon height="16" width="16" />
             Delete
@@ -55,19 +57,20 @@
 </template>
 
 <script>
+import AAddIcon from '@/components/icons/AAddIcon';
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import AButton from '@/components/AButton';
 import AppLoading from '@/components/AppLoading';
-import ASelect from '@/components/ASelect';
+import { LINK_LINKS_MODAL } from '../modals/LinkLinks.vue';
 import Resizable from '@/components/Resizable';
 
 export default {
   name: 'links-list',
   components: {
+    AAddIcon,
     ABlockIcon,
     AButton,
     AppLoading,
-    ASelect,
     Resizable,
   },
   computed: {
@@ -100,17 +103,6 @@ export default {
     };
   },
   methods: {
-    getItems(link) {
-      return this.projects.map(element => {
-        return {
-          callback: () => {
-            this.linkToProject({ link, project: element });
-          },
-          id: link.id,
-          label: element.name,
-        };
-      });
-    },
     async onDelete(id) {
       this.isLoading = true;
 
@@ -130,20 +122,14 @@ export default {
         console.error(response.message);
       }
     },
-    async linkToProject({ link, project }) {
-      this.isLoading = true;
-
-      console.log(link, project);
-      const response = await this.$store.dispatch('links/link', {
-        link,
-        project,
+    onLinkToProject(link) {
+      this.$store.dispatch('modals/open', {
+        name: LINK_LINKS_MODAL,
+        props: {
+          link,
+          title: `Add ${link.name} to a project`,
+        },
       });
-
-      if (response.success) {
-        this.isLoading = false;
-      } else {
-        console.error(response.message);
-      }
     },
     onResize({ width }) {
       let classes = [];

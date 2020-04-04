@@ -80,8 +80,6 @@ const actions = {
       const response = await api.links.link({linkId: link.id, projectId: project.id});
       const {linkId, projectId} = response.ids;
 
-      console.log(response);
-
       commit('projects/linkLinkToProject', {
         linkId,
         projectId,
@@ -98,11 +96,14 @@ const actions = {
       };
     }
   },
-  async remove({ commit }, {link, project}) {
+  async unlink({ commit }, {link, project}) {
     if (project) {
-      commit('projects/unlinkLinkToProject', {
-        linkId: link.id,
-        projectId: project.id,
+      const response = await api.links.unlink({linkId: link.id, projectId: project.id});
+      const {linkId, projectId} = response.ids;
+
+      commit('projects/unlinkLinkFromProject', {
+        linkId,
+        projectId,
       }, { root: true });
 
       return {
@@ -111,7 +112,7 @@ const actions = {
       };
     } else {
       return {
-        message: `${link.name} was not found in ${project.name}.`,
+        message: `${link.name} could not be remove from ${project.name}.`,
         success: false,
       };
     }

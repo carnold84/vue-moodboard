@@ -2,6 +2,7 @@
   <a-modal
     :is-active="isActive"
     :is-open="isOpen"
+    max-width="400px"
     :name="name"
     :title="title"
     @close="onClose"
@@ -10,16 +11,14 @@
       <p class="text">{{ text }}</p>
     </template>
     <template slot="footer">
-      <div class="dialog-footer">
-        <a-button @click="onClose">
-          <a-close-icon />
-          Wait, NO!
-        </a-button>
-        <a-button v-if="onConfirm" @click="onConfirmClick">
-          <a-check-icon />
-          Yes
-        </a-button>
-      </div>
+      <a-button @click="onClose">
+        <a-close-icon />
+        No
+      </a-button>
+      <a-button v-if="onConfirm" @click="onConfirmClick">
+        <a-check-icon />
+        Yes
+      </a-button>
     </template>
   </a-modal>
 </template>
@@ -82,16 +81,6 @@ export default {
   font-size: 1em;
   font-weight: 600;
   line-height: 1.2em;
-}
-
-.dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 18px 0 22px;
-  width: 100%;
-
-  & > * {
-    margin: 0 0 0 20px;
-  }
+  padding: 22px;
 }
 </style>
