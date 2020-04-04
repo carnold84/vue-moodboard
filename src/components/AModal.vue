@@ -126,7 +126,7 @@ export default {
 .modal-footer {
   align-items: center;
   background-color: var(--theme1);
-  border-top: 1px solid var(--theme3);
+  border-top: 1px solid var(--theme);
   display: flex;
   flex-shrink: 0;
   height: 60px;
@@ -155,7 +155,7 @@ export default {
   background-color: #000000;
   height: 100%;
   left: 0;
-  opacity: 0.15;
+  opacity: 0.5;
   position: absolute;
   top: 0;
   width: 100%;

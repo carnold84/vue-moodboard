@@ -15,7 +15,7 @@
         <a-close-icon />
         No
       </a-button>
-      <a-button v-if="onConfirm" @click="onConfirmClick">
+      <a-button v-if="onConfirm" :is-primary="true" @click="onConfirmClick">
         <a-check-icon />
         Yes
       </a-button>

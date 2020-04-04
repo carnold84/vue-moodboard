@@ -1,13 +1,11 @@
 <template>
   <div class="view-wrapper">
-    <app-loading
-      v-if="image === undefined || isRemoving === true"
-    ></app-loading>
+    <app-loading v-if="image === undefined || isRemoving === true" />
     <image-view
       v-else-if="image && isRemoving === false"
       :backUrl="backUrl"
       :image="image"
-    ></image-view>
+    />
   </div>
 </template>
 

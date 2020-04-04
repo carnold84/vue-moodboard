@@ -10,7 +10,7 @@
     <template slot="content">
       <projects-list
         :areLinking="areLinking"
-        :link="link"
+        :image="image"
         @link="onLink"
         @unlink="onUnlink"
       />
@@ -26,15 +26,18 @@
 
 <script>
 import Vue from 'vue';
+import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
+import AppLoading from '@/components/AppLoading';
+import ARemoveIcon from '@/components/icons/ARemoveIcon';
 import ProjectsList from '@/components/ProjectsList';
 
-export const LINK_LINKS_MODAL = 'link-links-modal';
+export const LINK_IMAGES_MODAL = 'link-images-modal';
 
 export default {
-  name: 'link-links-modal',
+  name: 'link-images-modal',
   components: {
     AButton,
     ACloseIcon,
@@ -52,15 +55,15 @@ export default {
   data() {
     return {
       areLinking: {},
-      name: LINK_LINKS_MODAL,
+      name: LINK_IMAGES_MODAL,
     };
   },
   methods: {
     async onLink(project) {
       Vue.set(this.areLinking, project.id, project.id);
 
-      const response = await this.$store.dispatch('links/link', {
-        link: this.link,
+      const response = await this.$store.dispatch('images/link', {
+        image: this.image,
         project,
       });
 
@@ -69,8 +72,8 @@ export default {
     async onUnlink(project) {
       Vue.set(this.areLinking, project.id, project.id);
 
-      const response = await this.$store.dispatch('links/unlink', {
-        link: this.link,
+      const response = await this.$store.dispatch('images/unlink', {
+        image: this.image,
         project,
       });
 
@@ -81,7 +84,7 @@ export default {
     },
   },
   props: {
-    link: {
+    image: {
       type: Object,
     },
     title: {

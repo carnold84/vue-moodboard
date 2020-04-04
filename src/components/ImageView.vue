@@ -30,6 +30,7 @@
 import APicture, { TYPES } from '@/components/APicture';
 import { DIALOG_NAME } from '@/modals/AppDialog';
 import ViewHeader from '@/components/ViewHeader';
+import { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
 
 export default {
   name: 'image-view',
@@ -58,13 +59,20 @@ export default {
         return [
           ...options,
           {
-            callback: this.onRemove,
+            callback: this.onUnlink,
             id: 'remove',
             label: `Remove from ${this.project.name}`,
           },
         ];
       } else if (this.image && !this.project) {
-        return options;
+        return [
+          ...options,
+          {
+            callback: this.onLinkToProject,
+            id: 'manage-links',
+            label: `Add ${this.image.name} to Projects`,
+          },
+        ];
       }
 
       return undefined;
@@ -102,10 +110,19 @@ export default {
         console.error(response.message);
       }
     },
-    async onRemove() {
+    onLinkToProject() {
+      this.$store.dispatch('modals/open', {
+        name: LINK_IMAGES_MODAL,
+        props: {
+          image: this.image,
+          title: `Add ${this.image.name} to a project`,
+        },
+      });
+    },
+    async onUnlink() {
       this.isRemoving = true;
 
-      const response = await this.$store.dispatch('images/remove', {
+      const response = await this.$store.dispatch('images/unlink', {
         image: this.image,
         project: this.project,
       });
