@@ -1,32 +1,28 @@
 <template>
   <div class="view-wrapper">
-    <view-header
-      :description="subTitle"
-      :on-back="backUrl"
-      :title="title"
-    ></view-header>
+    <view-header :description="subTitle" :on-back="backUrl" :title="title" />
     <div class="content">
       <app-loading v-if="isSaving" />
       <form v-if="!isSaving" class="form" @submit.prevent="create">
         <a-action-bar>
           <template v-slot:controls>
             <a-button :to="backUrl">
-              <a-close-icon></a-close-icon>
+              <a-close-icon />
               Cancel
             </a-button>
             <a-button :isPrimary="true" type="submit">
-              <a-check-icon></a-check-icon>
-              Add Image
+              <a-check-icon />
+              Add Link
             </a-button>
           </template>
         </a-action-bar>
-        <text-input v-model="name" label="Name" name="name"></text-input>
+        <text-input v-model="name" label="Name" name="name" />
         <text-input
           v-model="description"
           label="Description"
           name="description"
-        ></text-input>
-        <text-input v-model="url" label="Url" name="url"></text-input>
+        />
+        <text-input v-model="url" label="Url" name="url" />
       </form>
     </div>
   </div>
@@ -42,7 +38,7 @@ import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
-  name: 'add-image',
+  name: 'add-link-form',
   components: {
     AActionBar,
     AButton,
@@ -64,7 +60,7 @@ export default {
     async create() {
       this.isSaving = true;
 
-      let data = {
+      const data = {
         description: this.description,
         name: this.name,
         url: this.url,
@@ -74,7 +70,7 @@ export default {
         data.projectId = this.project.id;
       }
 
-      const response = await this.$store.dispatch('images/create', data);
+      const response = await this.$store.dispatch('links/create', data);
 
       if (response.success) {
         this.$router.push(this.backUrl);

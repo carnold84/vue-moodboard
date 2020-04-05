@@ -4,10 +4,13 @@
     <div v-if="project && !isDeleting">
       <view-header
         :description="project.description"
-        :options="options"
         sectionName="Project"
         :title="project.name"
-      ></view-header>
+      >
+        <template v-slot:controls>
+          <a-select v-if="options" alignMenu="right" :items="options" />
+        </template>
+      </view-header>
     </div>
     <div v-if="project && !isDeleting">
       <div class="tabs">
@@ -33,49 +36,12 @@
         </a-action-bar>
       </div>
     </div>
-    <div class="view-content">
+    <div v-if="project && !isDeleting" class="view-content">
       <div v-if="currentTabId === 'images'">
-        <div v-if="project && !isDeleting && images === undefined">
-          <app-loading></app-loading>
-        </div>
-        <a-message-panel
-          v-if="project && !isDeleting && images && images.length === 0"
-          text="You haven't got any images."
-        >
-          <a-button
-            :isPrimary="true"
-            :to="{ name: 'project-add-image', params: { id: project.id } }"
-          >
-            <a-add-icon></a-add-icon>
-            <span>Add One!</span>
-          </a-button>
-        </a-message-panel>
-        <a-image-grid
-          v-if="project && !isDeleting && images && images.length > 0"
-          :images="images"
-        ></a-image-grid>
+        <images-list :imageIds="project.imageIds" :project="project" />
       </div>
       <div v-if="currentTabId === 'links'">
-        <div v-if="project && !isDeleting && links === undefined">
-          <app-loading></app-loading>
-        </div>
-        <a-message-panel
-          v-if="project && !isDeleting && links && links.length === 0"
-          text="You haven't got any links."
-        >
-          <a-button
-            :isPrimary="true"
-            :to="{ name: 'project-add-link', params: { id: project.id } }"
-          >
-            <a-add-icon></a-add-icon>
-            <span>Add One!</span>
-          </a-button>
-        </a-message-panel>
-        <links-list
-          v-if="project && !isDeleting && links && links.length > 0"
-          :links="links"
-          :project="project"
-        />
+        <links-list :linkIds="project.linkIds" :project="project" />
       </div>
     </div>
   </div>
@@ -88,8 +54,11 @@ import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
+import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
-import LinksList from '@/components/LinksList';
+import ASelect from '@/components/ASelect';
+import ImagesList from '@/containers/ImagesList';
+import LinksList from '@/containers/LinksList';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -97,10 +66,10 @@ export default {
   components: {
     AActionBar,
     AAddIcon,
-    AImageGrid,
     AButton,
-    AMessagePanel,
     AppLoading,
+    ASelect,
+    ImagesList,
     LinksList,
     ViewHeader,
   },
@@ -110,48 +79,6 @@ export default {
     },
     id() {
       return this.$route.params.id;
-    },
-    images() {
-      if (this.project) {
-        let initialImages = this.$store.getters['images/findAll'](
-          this.project.imageIds
-        );
-
-        let images = [];
-
-        initialImages.forEach(element => {
-          if (element) {
-            const { id, name } = element;
-            images.push({
-              id,
-              imageUrl: this.thumbUrl(element),
-              title: name,
-              to: {
-                name: 'project-image',
-                params: {
-                  id: this.project.id,
-                  imageId: id,
-                },
-              },
-            });
-          }
-        });
-
-        return images;
-      } else {
-        return undefined;
-      }
-    },
-    links() {
-      if (this.project) {
-        let links = this.$store.getters['links/findAll'](this.project.linkIds);
-
-        return links.filter(element => {
-          return element !== undefined;
-        });
-      } else {
-        return undefined;
-      }
     },
     options() {
       if (this.project) {
@@ -202,7 +129,17 @@ export default {
     };
   },
   methods: {
-    async onDeleteProject() {
+    onDeleteProject() {
+      this.$store.dispatch('modals/open', {
+        name: DIALOG_NAME,
+        props: {
+          onConfirm: this.onConfirmDelete,
+          text: `Are you sure you want to delete ${this.project.name}?`,
+          title: 'Delete Project?',
+        },
+      });
+    },
+    async onConfirmDelete() {
       this.isDeleting = true;
 
       const response = await this.$store.dispatch(
@@ -214,29 +151,6 @@ export default {
         this.$router.push('/');
       } else {
         console.error(response.message);
-      }
-    },
-    async onDeleteLink(id) {
-      this.isDeleting = true;
-
-      const link = this.links.filter(element => {
-        return element.id === id;
-      })[0];
-
-      const response = await this.$store.dispatch('links/delete', link);
-
-      if (response.success) {
-        this.isDeleting = false;
-      } else {
-        console.error(response.message);
-      }
-    },
-    thumbUrl(image) {
-      if (image.format) {
-        const rootUrl = 'https://res.cloudinary.com/carnold/image/upload';
-        return `${rootUrl}/w_260/${image.fileName}.${image.format}`;
-      } else {
-        return image.url;
       }
     },
   },

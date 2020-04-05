@@ -122,9 +122,9 @@ export default {
       next();
     });
 
-    this.loadProjects();
-
     this.$store.dispatch('init');
+
+    this.loadProjects();
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="view-wrapper">
     <app-loading v-if="!project" />
-    <add-link-view
+    <add-link-form
       v-if="project"
       :back-url="backUrl"
       :project="project"
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import AddLinkView from '@/components/AddLinkView';
+import AddLinkForm from '@/containers/AddLinkForm';
 import AppLoading from '@/components/AppLoading';
 
 export default {
   name: 'project-add-link',
   components: {
-    AddLinkView,
+    AddLinkForm,
     AppLoading,
   },
   computed: {

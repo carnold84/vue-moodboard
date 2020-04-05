@@ -1,6 +1,6 @@
 <template>
   <div class="view-wrapper">
-    <add-link-view
+    <add-link-form
       :back-url="backUrl"
       :sub-title="description"
       :title="title"
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import AddLinkView from '@/components/AddLinkView';
+import AddLinkForm from '@/containers/AddLinkForm';
 
 export default {
   name: 'links-add-link',
   components: {
-    AddLinkView,
+    AddLinkForm,
   },
   computed: {
     backUrl() {

@@ -32,7 +32,7 @@ import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
 import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
-import ProjectsList from '@/components/ProjectsList';
+import ProjectsList from '@/containers/ProjectsList';
 
 export const LINK_IMAGES_MODAL = 'link-images-modal';
 

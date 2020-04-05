@@ -1,25 +1,24 @@
 <template>
   <div class="view-wrapper">
     <app-loading v-if="!project"></app-loading>
-    <add-image-view
+    <add-image-form
       v-if="project"
       :back-url="backUrl"
       :project="project"
       :sub-title="description"
       :title="title"
-    >
-    </add-image-view>
+    />
   </div>
 </template>
 
 <script>
-import AddImageView from '@/components/AddImageView';
+import AddImageForm from '@/containers/AddImageForm';
 import AppLoading from '@/components/AppLoading';
 
 export default {
   name: 'project-add-image',
   components: {
-    AddImageView,
+    AddImageForm,
     AppLoading,
   },
   computed: {

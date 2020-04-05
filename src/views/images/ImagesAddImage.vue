@@ -1,6 +1,6 @@
 <template>
   <div class="view-wrapper">
-    <add-image-view
+    <add-image-form
       :back-url="backUrl"
       :sub-title="description"
       :title="title"
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import AddImageView from '@/components/AddImageView';
+import AddImageForm from '@/containers/AddImageForm';
 
 export default {
   name: 'images-add-image',
   components: {
-    AddImageView,
+    AddImageForm,
   },
   computed: {
     backUrl() {

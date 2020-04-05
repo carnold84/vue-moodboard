@@ -3,10 +3,13 @@
     <view-header
       :description="image.description"
       :on-back="backUrl"
-      :options="options"
       :title="image.name"
       class="image-view-header"
-    />
+    >
+      <template v-slot:controls>
+        <a-select v-if="options" alignMenu="right" :items="options" />
+      </template>
+    </view-header>
     <div class="image-content">
       <a
         :href="imageUrl"
@@ -29,13 +32,15 @@
 <script>
 import APicture, { TYPES } from '@/components/APicture';
 import { DIALOG_NAME } from '@/modals/AppDialog';
+import ASelect from '@/components/ASelect';
 import ViewHeader from '@/components/ViewHeader';
 import { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
 
 export default {
-  name: 'image-view',
+  name: 'image-detail',
   components: {
     APicture,
+    ASelect,
     ViewHeader,
   },
   computed: {
