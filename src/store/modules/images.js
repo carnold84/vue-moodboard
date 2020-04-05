@@ -121,17 +121,23 @@ const actions = {
   },
   async load({ commit, state }, ids) {
     try {
+      let exclude;
+
       if (ids) {
         ids = ids.filter(element => {
           return !state.allIds.includes(element);
         });
+      } else {
+        exclude = state.allIds;
       }
 
-      let images = await api.images.list({ids});
-      
-      images.forEach(element => {
-        commit('add', element);
-      });
+      if (!ids || ids.length > 0) {
+        let images = await api.images.list({exclude, ids});
+        
+        images.forEach(element => {
+          commit('add', element);
+        });
+      }
     } catch (error) {
       return {
         error,

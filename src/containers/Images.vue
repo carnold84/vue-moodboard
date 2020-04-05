@@ -103,7 +103,7 @@ export default {
       type: Array,
     },
     project: {
-      Object,
+      type: Object,
     },
   },
   watch: {

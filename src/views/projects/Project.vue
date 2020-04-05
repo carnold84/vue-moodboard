@@ -33,12 +33,12 @@
         </a-action-bar>
       </div>
     </div>
-    <div class="view-content">
+    <div v-if="project && !isDeleting" class="view-content">
       <div v-if="currentTabId === 'images'">
-        <images-container v-if="project" :imageIds="project.imageIds" />
+        <images-container :imageIds="project.imageIds" :project="project" />
       </div>
       <div v-if="currentTabId === 'links'">
-        <links-container v-if="project" :linkIds="project.linkIds" />
+        <links-container :linkIds="project.linkIds" :project="project" />
       </div>
     </div>
   </div>

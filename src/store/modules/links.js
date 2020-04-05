@@ -122,19 +122,23 @@ const actions = {
   },
   async load({ commit, state }, ids) {
     try {
+      let exclude;
+
       if (ids) {
         ids = ids.filter(element => {
           return !state.allIds.includes(element);
         });
+      } else {
+        exclude = state.allIds;
       }
 
-      let links = await api.links.list({ids});
-      
-      links.forEach(element => {
-        commit('add', element);
-      });
-      
-      return links;
+      if (!ids || ids.length > 0) {
+        let links = await api.links.list({exclude, ids});
+        
+        links.forEach(element => {
+          commit('add', element);
+        });
+      }
     } catch (error) {
       return {
         error,

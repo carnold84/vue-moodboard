@@ -17,7 +17,11 @@
         <span>Add One!</span>
       </a-button>
     </a-message-panel>
-    <links-list v-if="!isLoading && links.length > 0" :links="links" />
+    <links-list
+      v-if="!isLoading && links.length > 0"
+      :links="links"
+      :project="project"
+    />
   </div>
 </template>
 
@@ -69,7 +73,7 @@ export default {
       type: Array,
     },
     project: {
-      Object,
+      type: Object,
     },
   },
   watch: {

@@ -97,9 +97,10 @@ export const images = {
     
     return response.data;
   },
-  list: async ({ids}) => {
+  list: async ({exclude, ids}) => {
     const response = await request('/images', 'get', {
       params: {
+        exclude,
         ids,
       },
     });
@@ -135,9 +136,10 @@ export const links = {
     
     return response.data;
   },
-  list: async ({ids}) => {
+  list: async ({exclude, ids}) => {
     const response = await request('/links', 'get', {
       params: {
+        exclude,
         ids,
       },
     });
