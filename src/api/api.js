@@ -97,10 +97,10 @@ export const images = {
     
     return response.data;
   },
-  list: async (exclude = []) => {
+  list: async ids => {
     const response = await request('/images', 'get', {
       params: {
-        exclude,
+        ids,
       },
     });
 

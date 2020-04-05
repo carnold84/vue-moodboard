@@ -12,9 +12,12 @@ const getters = {
     return state.byId[id];
   },
   findAll: (state, getters) => ids => {
-    return ids.map(id => {
-      return getters.find(id);
-    });
+    if (ids) {
+      return ids.map(id => {
+        return getters.find(id);
+      });
+    }
+    return getters.list;
   },
   list: (state, getters) => {
     return state.allIds.map(id => {
@@ -116,9 +119,14 @@ const actions = {
       };
     }
   },
-  async load({ commit, state }) {
+  async load({ commit, state }, ids) {
     try {
-      let images = await api.images.list({exclude: state.allIds});
+      if (ids) {
+        ids = ids.filter(element => {
+          return !state.allIds.includes(element);
+        });
+      }
+      let images = await api.images.list({ids});
       images.forEach(element => {
         commit('add', element);
       });

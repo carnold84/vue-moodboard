@@ -35,25 +35,7 @@
     </div>
     <div class="view-content">
       <div v-if="currentTabId === 'images'">
-        <div v-if="project && !isDeleting && images === undefined">
-          <app-loading></app-loading>
-        </div>
-        <a-message-panel
-          v-if="project && !isDeleting && images && images.length === 0"
-          text="You haven't got any images."
-        >
-          <a-button
-            :isPrimary="true"
-            :to="{ name: 'project-add-image', params: { id: project.id } }"
-          >
-            <a-add-icon></a-add-icon>
-            <span>Add One!</span>
-          </a-button>
-        </a-message-panel>
-        <a-image-grid
-          v-if="project && !isDeleting && images && images.length > 0"
-          :images="images"
-        ></a-image-grid>
+        <images-container v-if="project" :imageIds="project.imageIds" />
       </div>
       <div v-if="currentTabId === 'links'">
         <div v-if="project && !isDeleting && links === undefined">
@@ -89,6 +71,7 @@ import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
 import AppLoading from '@/components/AppLoading';
+import ImagesContainer from '@/containers/Images';
 import LinksList from '@/components/LinksList';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -97,10 +80,10 @@ export default {
   components: {
     AActionBar,
     AAddIcon,
-    AImageGrid,
     AButton,
     AMessagePanel,
     AppLoading,
+    ImagesContainer,
     LinksList,
     ViewHeader,
   },
@@ -110,37 +93,6 @@ export default {
     },
     id() {
       return this.$route.params.id;
-    },
-    images() {
-      if (this.project) {
-        let initialImages = this.$store.getters['images/findAll'](
-          this.project.imageIds
-        );
-
-        let images = [];
-
-        initialImages.forEach(element => {
-          if (element) {
-            const { id, name } = element;
-            images.push({
-              id,
-              imageUrl: this.thumbUrl(element),
-              title: name,
-              to: {
-                name: 'project-image',
-                params: {
-                  id: this.project.id,
-                  imageId: id,
-                },
-              },
-            });
-          }
-        });
-
-        return images;
-      } else {
-        return undefined;
-      }
     },
     links() {
       if (this.project) {
@@ -229,14 +181,6 @@ export default {
         this.isDeleting = false;
       } else {
         console.error(response.message);
-      }
-    },
-    thumbUrl(image) {
-      if (image.format) {
-        const rootUrl = 'https://res.cloudinary.com/carnold/image/upload';
-        return `${rootUrl}/w_260/${image.fileName}.${image.format}`;
-      } else {
-        return image.url;
       }
     },
   },

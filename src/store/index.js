@@ -15,8 +15,8 @@ const actions = {
   async init() {
     await this.dispatch('auth/getUser');
     //await this.dispatch('projects/load');
-    await this.dispatch('images/load');
-    await this.dispatch('links/load');
+    //await this.dispatch('images/load');
+    //await this.dispatch('links/load');
   },
 };
 
