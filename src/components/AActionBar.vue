@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="controls">
-      <slot name="controls"></slot>
+      <slot name="controls" />
     </div>
   </div>
 </template>

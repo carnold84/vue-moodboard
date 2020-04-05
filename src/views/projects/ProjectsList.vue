@@ -1,6 +1,10 @@
 <template>
   <div class="view-wrapper">
-    <view-header :options="options" title="Projects"></view-header>
+    <view-header title="Projects">
+      <template v-slot:controls>
+        <a-select v-if="options" alignMenu="right" :items="options" />
+      </template>
+    </view-header>
     <app-loading v-if="projects === undefined"></app-loading>
     <div v-if="projects && projects.length === 0">No Projects</div>
     <div v-if="projects && projects.length > 0">
@@ -15,15 +19,17 @@
 </template>
 
 <script>
-import ViewHeader from '@/components/ViewHeader';
 import AImageLink from '@/components/AImageLink';
 import AppLoading from '@/components/AppLoading';
+import ASelect from '@/components/ASelect';
+import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'projects',
   components: {
     AImageLink,
     AppLoading,
+    ASelect,
     ViewHeader,
   },
   computed: {

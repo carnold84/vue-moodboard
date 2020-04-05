@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="secondary-content">
-      <a-select v-if="options" alignMenu="right" :items="options" />
+      <slot name="controls" />
     </div>
   </header>
 </template>
@@ -33,14 +33,12 @@
 <script>
 import AArrowBackIcon from '@/components/icons/AArrowBackIcon';
 import AButton from '@/components/AButton';
-import ASelect from '@/components/ASelect';
 
 export default {
   name: 'view-header',
   components: {
     AArrowBackIcon,
     AButton,
-    ASelect,
   },
   computed: {
     isBackFunction() {
@@ -50,9 +48,6 @@ export default {
   props: {
     onBack: {
       type: [Function, Object, String],
-    },
-    options: {
-      type: Array,
     },
     description: {
       type: String,

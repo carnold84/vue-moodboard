@@ -1,14 +1,13 @@
 <template>
   <div class="view-wrapper">
-    <view-header title="Links" description="View and manage all your links." />
-    <a-action-bar>
+    <view-header title="Links" description="View and manage all your links.">
       <template v-slot:controls>
         <a-button :isPrimary="true" :to="{ name: 'links-add-link' }">
           <a-add-icon />
-          <span>Add Links</span>
+          <span>Add Link</span>
         </a-button>
       </template>
-    </a-action-bar>
+    </view-header>
     <div class="view-content">
       <links-list />
     </div>
@@ -25,7 +24,6 @@ import ViewHeader from '@/components/ViewHeader';
 export default {
   name: 'links',
   components: {
-    AActionBar,
     AAddIcon,
     AButton,
     LinksList,

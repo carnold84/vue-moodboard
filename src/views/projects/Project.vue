@@ -4,10 +4,13 @@
     <div v-if="project && !isDeleting">
       <view-header
         :description="project.description"
-        :options="options"
         sectionName="Project"
         :title="project.name"
-      ></view-header>
+      >
+        <template v-slot:controls>
+          <a-select v-if="options" alignMenu="right" :items="options" />
+        </template>
+      </view-header>
     </div>
     <div v-if="project && !isDeleting">
       <div class="tabs">
@@ -51,7 +54,9 @@ import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
+import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
+import ASelect from '@/components/ASelect';
 import ImagesList from '@/containers/ImagesList';
 import LinksList from '@/containers/LinksList';
 import ViewHeader from '@/components/ViewHeader';
@@ -63,6 +68,7 @@ export default {
     AAddIcon,
     AButton,
     AppLoading,
+    ASelect,
     ImagesList,
     LinksList,
     ViewHeader,
@@ -123,7 +129,17 @@ export default {
     };
   },
   methods: {
-    async onDeleteProject() {
+    onDeleteProject() {
+      this.$store.dispatch('modals/open', {
+        name: DIALOG_NAME,
+        props: {
+          onConfirm: this.onConfirmDelete,
+          text: `Are you sure you want to delete ${this.project.name}?`,
+          title: 'Delete Project?',
+        },
+      });
+    },
+    async onConfirmDelete() {
       this.isDeleting = true;
 
       const response = await this.$store.dispatch(

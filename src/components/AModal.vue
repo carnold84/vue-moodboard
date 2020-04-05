@@ -119,7 +119,7 @@ export default {
   display: flex;
   flex-grow: 1;
   justify-content: center;
-  min-height: 100px;
+  min-height: 70px;
   position: relative;
 }
 
