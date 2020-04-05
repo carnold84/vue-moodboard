@@ -33,7 +33,7 @@ import ViewHeader from '@/components/ViewHeader';
 import { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
 
 export default {
-  name: 'image-view',
+  name: 'image-detail',
   components: {
     APicture,
     ViewHeader,

@@ -73,7 +73,7 @@ import { LINK_LINKS_MODAL } from '../modals/LinkLinks.vue';
 import Resizable from '@/components/Resizable';
 
 export default {
-  name: 'links-list',
+  name: 'links-table',
   components: {
     ABlockIcon,
     AButton,

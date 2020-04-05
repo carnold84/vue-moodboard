@@ -2,25 +2,25 @@
   <div class="view-wrapper">
     <app-loading
       v-if="image === undefined || project === undefined || isRemoving === true"
-    ></app-loading>
-    <image-view
+    />
+    <image-detail
       v-else-if="image && project && isRemoving === false"
       :backUrl="backUrl"
       :image="image"
       :project="project"
-    ></image-view>
+    />
   </div>
 </template>
 
 <script>
 import AppLoading from '@/components/AppLoading';
-import ImageView from '@/components/ImageView';
+import ImageDetail from '@/containers/ImageDetail';
 
 export default {
   name: 'project-image',
   components: {
     AppLoading,
-    ImageView,
+    ImageDetail,
   },
   computed: {
     backUrl() {

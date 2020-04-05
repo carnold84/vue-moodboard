@@ -10,7 +10,7 @@
       </template>
     </a-action-bar>
     <div class="view-content">
-      <links-container />
+      <links-list />
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@
 import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
-import LinksContainer from '@/containers/Links';
+import LinksList from '@/containers/LinksList';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -28,7 +28,7 @@ export default {
     AActionBar,
     AAddIcon,
     AButton,
-    LinksContainer,
+    LinksList,
     ViewHeader,
   },
 };

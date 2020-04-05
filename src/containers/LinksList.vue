@@ -17,7 +17,7 @@
         <span>Add One!</span>
       </a-button>
     </a-message-panel>
-    <links-list
+    <links-table
       v-if="!isLoading && links.length > 0"
       :links="links"
       :project="project"
@@ -30,16 +30,16 @@ import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
 import AppLoading from '@/components/AppLoading';
 import AMessagePanel from '@/components/AMessagePanel';
-import LinksList from '@/components/LinksList';
+import LinksTable from '@/containers/LinksTable';
 
 export default {
-  name: 'links-container',
+  name: 'links-list',
   components: {
     AAddIcon,
     AButton,
     AppLoading,
     AMessagePanel,
-    LinksList,
+    LinksTable,
   },
   computed: {
     links() {

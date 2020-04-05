@@ -35,10 +35,10 @@
     </div>
     <div v-if="project && !isDeleting" class="view-content">
       <div v-if="currentTabId === 'images'">
-        <images-container :imageIds="project.imageIds" :project="project" />
+        <images-list :imageIds="project.imageIds" :project="project" />
       </div>
       <div v-if="currentTabId === 'links'">
-        <links-container :linkIds="project.linkIds" :project="project" />
+        <links-list :linkIds="project.linkIds" :project="project" />
       </div>
     </div>
   </div>
@@ -52,8 +52,8 @@ import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
 import AppLoading from '@/components/AppLoading';
-import ImagesContainer from '@/containers/Images';
-import LinksContainer from '@/containers/Links';
+import ImagesList from '@/containers/ImagesList';
+import LinksList from '@/containers/LinksList';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -63,8 +63,8 @@ export default {
     AAddIcon,
     AButton,
     AppLoading,
-    ImagesContainer,
-    LinksContainer,
+    ImagesList,
+    LinksList,
     ViewHeader,
   },
   computed: {

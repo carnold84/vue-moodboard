@@ -29,7 +29,7 @@ import AppLoading from '@/components/AppLoading';
 import AMessagePanel from '@/components/AMessagePanel';
 
 export default {
-  name: 'images-container',
+  name: 'images-list',
   components: {
     AAddIcon,
     AButton,
