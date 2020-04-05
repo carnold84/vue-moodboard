@@ -74,11 +74,35 @@ const actions = {
       };
     }
   },
-  async remove({ commit }, {image, project}) {
+  async link({ commit }, {image, project}) {
     if (project) {
+      const response = await api.images.link({imageId: image.id, projectId: project.id});
+      const {imageId, projectId} = response.ids;
+
+      commit('projects/linkImageToProject', {
+        imageId,
+        projectId,
+      }, { root: true });
+
+      return {
+        message: `${image.name} was added to ${project.name}.`,
+        success: true,
+      };
+    } else {
+      return {
+        message: `${image.name} could not be added to ${project.name}.`,
+        success: false,
+      };
+    }
+  },
+  async unlink({ commit }, {image, project}) {
+    if (project) {
+      const response = await api.images.unlink({imageId: image.id, projectId: project.id});
+      const {imageId, projectId} = response.ids;
+
       commit('projects/unlinkImageFromProject', {
-        imageId: image.id,
-        projectId: project.id,
+        imageId,
+        projectId,
       }, { root: true });
 
       return {
@@ -87,7 +111,7 @@ const actions = {
       };
     } else {
       return {
-        message: `${image.name} was not found in ${project.name}.`,
+        message: `${image.name} could not be remove from ${project.name}.`,
         success: false,
       };
     }

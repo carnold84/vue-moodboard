@@ -50,8 +50,6 @@ export default {
     links() {
       let links = this.$store.getters['links/list'];
 
-      console.log(links);
-
       return links.filter(element => {
         return element !== undefined;
       });

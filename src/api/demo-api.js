@@ -192,12 +192,30 @@ export const images = {
       }, DELAY);
     });
   },
+  link: async ({imageId, projectId}) => {
+    return new Promise(async (resolve, reject) => {
+      await addImageToProject(imageId, projectId);
+
+      setTimeout(() => {
+        resolve({ ids: { imageId, projectId }, msg: 'Image linked successfully' });
+      }, DELAY);
+    });
+  },
   list: async () => {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
       setTimeout(() => {
         resolve(images);
+      }, DELAY);
+    });
+  },
+  unlink: async ({imageId, projectId}) => {
+    return new Promise(async (resolve, reject) => {
+      await removeImageFromProject(imageId, projectId);
+
+      setTimeout(() => {
+        resolve({ ids: { imageId, projectId }, msg: 'Image unlinked successfully' });
       }, DELAY);
     });
   },
@@ -300,12 +318,30 @@ export const links = {
       }, DELAY);
     });
   },
+  link: async ({linkId, projectId}) => {
+    return new Promise(async (resolve, reject) => {
+      await addLinkToProject(linkId, projectId);
+
+      setTimeout(() => {
+        resolve({ ids: { linkId, projectId }, msg: 'Link linked successfully' });
+      }, DELAY);
+    });
+  },
   list: async () => {
     return new Promise(async (resolve, reject) => {
       let links = await instance.getItem('links');
 
       setTimeout(() => {
         resolve(links);
+      }, DELAY);
+    });
+  },
+  unlink: async ({linkId, projectId}) => {
+    return new Promise(async (resolve, reject) => {
+      await removeLinkFromProject(linkId, projectId);
+
+      setTimeout(() => {
+        resolve({ ids: { linkId, projectId }, msg: 'Link unlinked successfully' });
       }, DELAY);
     });
   },

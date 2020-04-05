@@ -23,7 +23,7 @@
         :key="item.id"
         class="select-item"
         :title="item.label"
-        @click="item.callback"
+        @click="item.callback(item.id)"
       >
         {{ item.label }}
       </button>
@@ -37,7 +37,7 @@ import AMoreIcon from '@/components/icons/AMoreIcon';
 import vClickOutside from 'v-click-outside';
 
 export default {
-  name: 'a-tag',
+  name: 'a-select',
   components: {
     AButton,
     AMoreIcon,
@@ -124,6 +124,7 @@ export default {
   min-width: 100px;
   max-width: 240px;
   position: absolute;
+  z-index: 10;
 
   .is-left & {
     left: 0;

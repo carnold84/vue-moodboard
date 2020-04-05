@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import auth from '@/store/modules/auth';
 import images from '@/store/modules/images';
 import links from '@/store/modules/links';
+import modals from '@/store/modules/modals';
 import projects from '@/store/modules/projects';
 
 Vue.use(Vuex);
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     auth,
     images,
     links,
+    modals,
     projects,
   },
   strict: debug,

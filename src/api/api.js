@@ -89,6 +89,14 @@ export const images = {
     
     return response.data;
   },
+  link: async ({imageId, projectId}) => {
+    const response = await request('/images/link-to-project', 'post', {
+      imageId,
+      projectId,
+    });
+    
+    return response.data;
+  },
   list: async (exclude = []) => {
     const response = await request('/images', 'get', {
       params: {
@@ -96,6 +104,14 @@ export const images = {
       },
     });
 
+    return response.data;
+  },
+  unlink: async ({imageId, projectId}) => {
+    const response = await request('/images/unlink-from-project', 'post', {
+      imageId,
+      projectId,
+    });
+    
     return response.data;
   },
 };
@@ -111,9 +127,25 @@ export const links = {
     
     return response.data;
   },
+  link: async ({linkId, projectId}) => {
+    const response = await request('/links/link-to-project', 'post', {
+      linkId,
+      projectId,
+    });
+    
+    return response.data;
+  },
   list: async () => {
     const response = await request('/links');
 
+    return response.data;
+  },
+  unlink: async ({linkId, projectId}) => {
+    const response = await request('/links/unlink-from-project', 'post', {
+      linkId,
+      projectId,
+    });
+    
     return response.data;
   },
 };
