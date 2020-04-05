@@ -3,20 +3,7 @@
     <app-loading v-if="isLoading" />
     <div v-if="!isLoading" class="list" :class="breakpoints">
       <resizable @resize="onResize" />
-      <div
-        v-for="item of links"
-        :key="item.id"
-        :style="
-          isRow
-            ? {
-                gridTemplateColumns: `repeat(${columns.length + 1}, 1fr)`
-              }
-            : {
-                gridTemplateRows: `repeat(${columns.length + 1}, 1fr)`
-              }
-        "
-        class="row"
-      >
+      <div v-for="item of links" :key="item.id" class="row">
         <div
           v-for="column of columns"
           :key="column.key"
@@ -43,12 +30,31 @@
           </span>
         </div>
         <div class="cell controls">
-          <a-button class="control" @click="onLinkToProject(item)">
-            <a-add-icon />
+          <a-button
+            v-if="!project"
+            class="control"
+            :title="`Add/Remove ${item.name} from/to Projects`"
+            @click="onLinkToProject(item)"
+          >
+            <a-list-icon />
           </a-button>
-          <a-button class="control" @click="onDelete(item.id)">
+          <div v-if="project" class="control-loading">
+            <app-loading v-if="areLinking[item.id]" diameter="20" />
+            <a-button
+              v-if="!areLinking[item.id]"
+              class="control"
+              :title="`Remove ${item.name} from ${project.name}`"
+              @click="onUnlinkFromProject(item)"
+            >
+              <a-remove-icon />
+            </a-button>
+          </div>
+          <a-button
+            class="control"
+            :title="`Delete ${item.name}`"
+            @click="onDelete(item.id)"
+          >
             <a-block-icon height="16" width="16" />
-            Delete
           </a-button>
         </div>
       </div>
@@ -57,20 +63,23 @@
 </template>
 
 <script>
-import AAddIcon from '@/components/icons/AAddIcon';
+import Vue from 'vue';
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import AButton from '@/components/AButton';
+import AListIcon from '@/components/icons/AListIcon';
 import AppLoading from '@/components/AppLoading';
+import ARemoveIcon from '@/components/icons/ARemoveIcon';
 import { LINK_LINKS_MODAL } from '../modals/LinkLinks.vue';
 import Resizable from '@/components/Resizable';
 
 export default {
   name: 'links-list',
   components: {
-    AAddIcon,
     ABlockIcon,
     AButton,
+    AListIcon,
     AppLoading,
+    ARemoveIcon,
     Resizable,
   },
   computed: {
@@ -80,6 +89,7 @@ export default {
   },
   data() {
     return {
+      areLinking: {},
       breakpoints: [],
       isLoading: false,
       isRow: false,
@@ -131,6 +141,16 @@ export default {
         },
       });
     },
+    async onUnlinkFromProject(link) {
+      Vue.set(this.areLinking, link.id, link.id);
+
+      const response = await this.$store.dispatch('links/unlink', {
+        link,
+        project: this.project,
+      });
+
+      Vue.delete(this.areLinking, link.id);
+    },
     onResize({ width }) {
       let classes = [];
 
@@ -171,10 +191,11 @@ export default {
   display: grid;
   margin: 0 0 10px;
   padding: 5px 0;
+  row-gap: 10px;
 
   .md & {
-    column-gap: 30px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
+    grid-template-columns: 18% 18% auto 60px;
     row-gap: 30px;
   }
 }
@@ -191,8 +212,18 @@ export default {
 }
 
 .control {
-  margin: 0 0 0 10px;
+  margin: 0 10px 0 0;
   padding: 0;
+
+  .md & {
+    margin: 0 0 0 10px;
+  }
+}
+
+.control-loading {
+  height: 36px;
+  position: relative;
+  width: 36px;
 }
 
 .text {
