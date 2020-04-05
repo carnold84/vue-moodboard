@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AppLoading from '@/components/AppLoading';
@@ -30,6 +31,7 @@ import AMessagePanel from '@/components/AMessagePanel';
 export default {
   name: 'images-container',
   components: {
+    AAddIcon,
     AButton,
     AppLoading,
     AImageGrid,
@@ -75,6 +77,10 @@ export default {
   },
   methods: {
     async load() {
+      if (this.imageIds && this.imageIds.length === 0) {
+        this.isLoading = false;
+        return;
+      }
       this.isLoading = true;
       const images = await this.$store.dispatch('images/load', this.imageIds);
       this.isLoading = false;
@@ -98,6 +104,11 @@ export default {
     },
     project: {
       Object,
+    },
+  },
+  watch: {
+    imageIds(val, oldVal) {
+      this.load();
     },
   },
 };

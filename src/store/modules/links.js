@@ -12,9 +12,12 @@ const getters = {
     return state.byId[id];
   },
   findAll: (state, getters) => ids => {
-    return ids.map(id => {
-      return getters.find(id);
-    });
+    if (ids) {
+      return ids.map(id => {
+        return getters.find(id);
+      });
+    }
+    return getters.list;
   },
   list: (state, getters) => {
     return state.allIds.map(id => {
@@ -117,9 +120,15 @@ const actions = {
       };
     }
   },
-  async load({ commit }) {
+  async load({ commit, state }, ids) {
     try {
-      let links = await api.links.list();
+      if (ids) {
+        ids = ids.filter(element => {
+          return !state.allIds.includes(element);
+        });
+      }
+
+      let links = await api.links.list({ids});
       
       links.forEach(element => {
         commit('add', element);

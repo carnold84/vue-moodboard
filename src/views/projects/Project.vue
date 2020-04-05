@@ -38,26 +38,7 @@
         <images-container v-if="project" :imageIds="project.imageIds" />
       </div>
       <div v-if="currentTabId === 'links'">
-        <div v-if="project && !isDeleting && links === undefined">
-          <app-loading></app-loading>
-        </div>
-        <a-message-panel
-          v-if="project && !isDeleting && links && links.length === 0"
-          text="You haven't got any links."
-        >
-          <a-button
-            :isPrimary="true"
-            :to="{ name: 'project-add-link', params: { id: project.id } }"
-          >
-            <a-add-icon></a-add-icon>
-            <span>Add One!</span>
-          </a-button>
-        </a-message-panel>
-        <links-list
-          v-if="project && !isDeleting && links && links.length > 0"
-          :links="links"
-          :project="project"
-        />
+        <links-container v-if="project" :linkIds="project.linkIds" />
       </div>
     </div>
   </div>
@@ -72,7 +53,7 @@ import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
 import AppLoading from '@/components/AppLoading';
 import ImagesContainer from '@/containers/Images';
-import LinksList from '@/components/LinksList';
+import LinksContainer from '@/containers/Links';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -81,10 +62,9 @@ export default {
     AActionBar,
     AAddIcon,
     AButton,
-    AMessagePanel,
     AppLoading,
     ImagesContainer,
-    LinksList,
+    LinksContainer,
     ViewHeader,
   },
   computed: {
@@ -93,17 +73,6 @@ export default {
     },
     id() {
       return this.$route.params.id;
-    },
-    links() {
-      if (this.project) {
-        let links = this.$store.getters['links/findAll'](this.project.linkIds);
-
-        return links.filter(element => {
-          return element !== undefined;
-        });
-      } else {
-        return undefined;
-      }
     },
     options() {
       if (this.project) {
@@ -164,21 +133,6 @@ export default {
 
       if (response.success) {
         this.$router.push('/');
-      } else {
-        console.error(response.message);
-      }
-    },
-    async onDeleteLink(id) {
-      this.isDeleting = true;
-
-      const link = this.links.filter(element => {
-        return element.id === id;
-      })[0];
-
-      const response = await this.$store.dispatch('links/delete', link);
-
-      if (response.success) {
-        this.isDeleting = false;
       } else {
         console.error(response.message);
       }

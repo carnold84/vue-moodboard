@@ -1,6 +1,6 @@
 <template>
   <div class="view-wrapper">
-    <view-header title="Links" description="View all your links." />
+    <view-header title="Links" description="View and manage all your links." />
     <a-action-bar>
       <template v-slot:controls>
         <a-button :isPrimary="true" :to="{ name: 'links-add-link' }">
@@ -10,17 +10,7 @@
       </template>
     </a-action-bar>
     <div class="view-content">
-      <app-loading v-if="links === undefined" />
-      <a-message-panel
-        v-if="links && links.length === 0"
-        text="You haven't got any links."
-      >
-        <a-button :isPrimary="true" :to="{ name: 'links-add-link' }">
-          <a-add-icon></a-add-icon>
-          <span>Add One!</span>
-        </a-button>
-      </a-message-panel>
-      <links-list v-if="links && links.length > 0" :links="links" />
+      <links-container />
     </div>
   </div>
 </template>
@@ -29,10 +19,7 @@
 import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
-import AMessagePanel from '@/components/AMessagePanel';
-import AImageGrid from '@/components/AImageGrid';
-import AppLoading from '@/components/AppLoading';
-import LinksList from '@/components/LinksList';
+import LinksContainer from '@/containers/Links';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -41,19 +28,8 @@ export default {
     AActionBar,
     AAddIcon,
     AButton,
-    AMessagePanel,
-    AppLoading,
-    LinksList,
+    LinksContainer,
     ViewHeader,
-  },
-  computed: {
-    links() {
-      let links = this.$store.getters['links/list'];
-
-      return links.filter(element => {
-        return element !== undefined;
-      });
-    },
   },
 };
 </script>

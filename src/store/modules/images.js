@@ -126,7 +126,9 @@ const actions = {
           return !state.allIds.includes(element);
         });
       }
+
       let images = await api.images.list({ids});
+      
       images.forEach(element => {
         commit('add', element);
       });

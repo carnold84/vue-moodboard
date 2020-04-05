@@ -2,7 +2,7 @@
   <div class="view-wrapper">
     <view-header
       title="Images"
-      description="View all your images."
+      description="View and manage all your images."
     ></view-header>
     <a-action-bar>
       <template v-slot:controls>

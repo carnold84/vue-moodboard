@@ -97,7 +97,7 @@ export const images = {
     
     return response.data;
   },
-  list: async ids => {
+  list: async ({ids}) => {
     const response = await request('/images', 'get', {
       params: {
         ids,
@@ -135,8 +135,12 @@ export const links = {
     
     return response.data;
   },
-  list: async () => {
-    const response = await request('/links');
+  list: async ({ids}) => {
+    const response = await request('/links', 'get', {
+      params: {
+        ids,
+      },
+    });
 
     return response.data;
   },
