@@ -52,7 +52,7 @@
           <a-button
             class="control"
             :title="`Delete ${item.name}`"
-            @click="onDelete(item.id)"
+            @click="onDelete(item)"
           >
             <a-block-icon height="16" width="16" />
           </a-button>
@@ -67,6 +67,7 @@ import Vue from 'vue';
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import AButton from '@/components/AButton';
 import AListIcon from '@/components/icons/AListIcon';
+import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
 import { LINK_LINKS_MODAL } from '../modals/LinkLinks.vue';
@@ -113,7 +114,17 @@ export default {
     };
   },
   methods: {
-    async onDelete(id) {
+    onDelete(link) {
+      this.$store.dispatch('modals/open', {
+        name: DIALOG_NAME,
+        props: {
+          onConfirm: () => this.onConfirmDelete(link.id),
+          text: `Are you sure you want to delete ${link.name}?`,
+          title: 'Delete Link?',
+        },
+      });
+    },
+    async onConfirmDelete(id) {
       this.isLoading = true;
 
       const link = this.links.filter(element => {

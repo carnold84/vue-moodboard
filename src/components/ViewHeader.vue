@@ -115,5 +115,13 @@ export default {
 .secondary-content {
   align-items: center;
   display: flex;
+
+  & > * {
+    margin: 0 0 0 10px;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
 }
 </style>
