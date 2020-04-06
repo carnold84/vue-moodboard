@@ -86,7 +86,6 @@ export default {
 .title {
   align-items: center;
   display: flex;
-  min-height: 50px;
   margin: 0 0 10px;
 }
 

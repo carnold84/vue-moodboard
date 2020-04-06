@@ -22,7 +22,7 @@
       </div>
       <div class="app-content">
         <transition name="view">
-          <router-view />
+          <router-view :key="$route.path" />
         </transition>
       </div>
     </div>

@@ -107,9 +107,7 @@ export default {
     },
   },
   watch: {
-    imageIds(val, oldVal) {
-      this.load();
-    },
+    imageIds: 'load',
   },
 };
 </script>

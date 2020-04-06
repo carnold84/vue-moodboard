@@ -77,9 +77,7 @@ export default {
     },
   },
   watch: {
-    linkIds(val, oldVal) {
-      this.load();
-    },
+    linkIds: 'load',
   },
 };
 </script>

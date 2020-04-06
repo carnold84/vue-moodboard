@@ -26,7 +26,11 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 50px;
+  padding: 90px 30px 30px;
   position: relative;
+
+  @media (min-width: 992px) {
+    padding: 50px;
+  }
 }
 </style>

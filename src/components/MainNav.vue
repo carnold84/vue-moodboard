@@ -47,14 +47,22 @@
         <router-link class="nav-item btn" to="/links">All Links</router-link>
       </li>
     </ul>
-    <div class="user-info">
-      <button class="nav-item btn" @click="logout">Logout</button>
+    <div class="user">
+      <div class="user-info">
+        <h4 class="user-name">{{ user.name }}</h4>
+        <p class="user-email">{{ user.email }}</p>
+      </div>
+      <button class="user-logout-btn" @click="logout">
+        <a-logout-icon />
+        <span>Logout</span>
+      </button>
     </div>
   </nav>
 </template>
 
 <script>
 import AAddIcon from '@/components/icons/AAddIcon';
+import ALogoutIcon from '@/components/icons/ALogoutIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
 
@@ -62,6 +70,7 @@ export default {
   name: 'main-nav',
   components: {
     AAddIcon,
+    ALogoutIcon,
     AppLoading,
     AppLogo,
   },
@@ -123,6 +132,47 @@ export default {
   color: var(--text1);
   font-size: 1em;
   font-weight: 700;
+}
+
+.user {
+  border-top: 1px solid #eeeeee;
+  bottom: 0;
+  display: flex;
+  padding: 20px 30px;
+  position: fixed;
+  width: calc(100% - 1px);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.user-name {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 0 5px;
+}
+
+.user-email {
+  font-size: 1em;
+}
+
+.user-logout-btn {
+  align-items: center;
+  color: var(--text1);
+  cursor: pointer;
+  fill: var(--text1);
+  font-size: 1em;
+  background-color: transparent;
+  border: none;
+  display: flex;
+
+  &:hover {
+    color: var(--primary1);
+    fill: var(--primary1);
+  }
 }
 
 .nav-item {
