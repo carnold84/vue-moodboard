@@ -86,7 +86,6 @@ export default {
 .title {
   align-items: center;
   display: flex;
-  min-height: 50px;
   margin: 0 0 10px;
 }
 
@@ -116,5 +115,13 @@ export default {
 .secondary-content {
   align-items: center;
   display: flex;
+
+  & > * {
+    margin: 0 0 0 10px;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
 }
 </style>

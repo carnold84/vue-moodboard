@@ -1,35 +1,35 @@
 <template>
-  <div class="view-wrapper">
-    <view-header :description="subTitle" :on-back="backUrl" :title="title" />
-    <div class="content">
-      <app-loading v-if="isSaving" />
-      <form v-if="!isSaving" class="form" @submit.prevent="create">
-        <a-action-bar>
-          <template v-slot:controls>
-            <a-button :to="backUrl">
-              <a-close-icon />
-              Cancel
-            </a-button>
-            <a-button :isPrimary="true" type="submit">
-              <a-check-icon />
-              Add Link
-            </a-button>
-          </template>
-        </a-action-bar>
-        <text-input v-model="name" label="Name" name="name" />
-        <text-input
-          v-model="description"
-          label="Description"
-          name="description"
-        />
-        <text-input v-model="url" label="Url" name="url" />
-      </form>
-    </div>
+  <div class="add-link-form content">
+    <form class="content" @submit.prevent="create">
+      <view-header :description="subTitle" :on-back="backUrl" :title="title">
+        <template v-slot:controls>
+          <a-button :to="backUrl">
+            <a-close-icon />
+            Cancel
+          </a-button>
+          <a-button :isPrimary="true" type="submit">
+            <a-check-icon />
+            Add Link
+          </a-button>
+        </template>
+      </view-header>
+      <div class="content">
+        <app-loading v-if="isSaving" />
+        <div v-if="!isSaving" class="content">
+          <text-input v-model="name" label="Name" name="name" />
+          <text-input
+            v-model="description"
+            label="Description"
+            name="description"
+          />
+          <text-input v-model="url" label="Url" name="url" />
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
-import AActionBar from '@/components/AActionBar';
 import AButton from '@/components/AButton';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
@@ -40,7 +40,6 @@ import ViewHeader from '@/components/ViewHeader';
 export default {
   name: 'add-link-form',
   components: {
-    AActionBar,
     AButton,
     ACheckIcon,
     ACloseIcon,
@@ -96,8 +95,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .content {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   position: relative;
 }

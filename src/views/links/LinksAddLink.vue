@@ -1,20 +1,22 @@
 <template>
-  <div class="view-wrapper">
+  <view-container>
     <add-link-form
       :back-url="backUrl"
       :sub-title="description"
       :title="title"
     />
-  </div>
+  </view-container>
 </template>
 
 <script>
 import AddLinkForm from '@/containers/AddLinkForm';
+import ViewContainer from '@/components/ViewContainer';
 
 export default {
   name: 'links-add-link',
   components: {
     AddLinkForm,
+    ViewContainer,
   },
   computed: {
     backUrl() {

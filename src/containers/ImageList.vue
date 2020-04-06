@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <div class="image-list">
     <app-loading v-if="isLoading" />
     <a-message-panel
       v-if="!isLoading && images.length === 0"
@@ -29,7 +29,7 @@ import AppLoading from '@/components/AppLoading';
 import AMessagePanel from '@/components/AMessagePanel';
 
 export default {
-  name: 'images-list',
+  name: 'image-list',
   components: {
     AAddIcon,
     AButton,
@@ -107,11 +107,15 @@ export default {
     },
   },
   watch: {
-    imageIds(val, oldVal) {
-      this.load();
-    },
+    imageIds: 'load',
   },
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.image-list {
+  flex-grow: 1;
+  min-height: 100%;
+  position: relative;
+}
+</style>

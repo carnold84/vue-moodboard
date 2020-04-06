@@ -40,26 +40,15 @@ img {
 body {
   background-color: var(--app__bg-color);
   color: var(--text1);
+  font-family: var(--fontFamily--secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.view-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: relative;
-}
-
-.view-title {
-  align-items: center;
-  display: flex;
-  font-family: var(--fontFamily--primary);
-  font-size: 2.3em;
-  font-weight: 300;
+  overflow: hidden;
 }
 
 .view-content {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   position: relative;
 }

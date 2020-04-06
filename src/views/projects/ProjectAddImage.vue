@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <view-container>
     <app-loading v-if="!project"></app-loading>
     <add-image-form
       v-if="project"
@@ -8,18 +8,20 @@
       :sub-title="description"
       :title="title"
     />
-  </div>
+  </view-container>
 </template>
 
 <script>
 import AddImageForm from '@/containers/AddImageForm';
 import AppLoading from '@/components/AppLoading';
+import ViewContainer from '@/components/ViewContainer';
 
 export default {
   name: 'project-add-image',
   components: {
     AddImageForm,
     AppLoading,
+    ViewContainer,
   },
   computed: {
     backUrl() {

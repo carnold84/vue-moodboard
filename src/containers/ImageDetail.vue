@@ -1,5 +1,5 @@
 <template>
-  <div class="image-container">
+  <div class="image-detail">
     <view-header
       :description="image.description"
       :on-back="backUrl"
@@ -155,14 +155,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.image-view-header {
-  z-index: 1;
-}
-
-.image-container {
+.image-detail {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.image-view-header {
+  z-index: 1;
 }
 
 .image-content {

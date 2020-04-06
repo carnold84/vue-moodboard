@@ -21,7 +21,9 @@
         ></main-nav>
       </div>
       <div class="app-content">
-        <router-view />
+        <transition name="view">
+          <router-view :key="$route.path" />
+        </transition>
       </div>
     </div>
     <div
@@ -179,13 +181,9 @@ export default {
 
 .app-content {
   flex-grow: 1;
-  padding: 90px 30px 30px;
+  overflow: auto;
   position: relative;
   z-index: 0;
-
-  @media (min-width: 992px) {
-    padding: 50px 50px 50px 330px;
-  }
 }
 
 .app-nav {
@@ -205,7 +203,7 @@ export default {
 
   @media (min-width: 992px) {
     height: 100%;
-    position: fixed;
+    position: relative;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -225,4 +223,40 @@ export default {
     pointer-events: all;
   }
 }
+
+.view-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.view-leave-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.view-enter {
+  opacity: 0;
+}
+
+.view-leave-to {
+  opacity: 0;
+}
+
+/* .view-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: transform 500ms;
+}
+
+.view-leave-active {
+  transform: translate3d(0, 0, 0);
+  transition: transform 500ms;
+}
+
+.view-enter {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.view-leave-to {
+  transform: translate3d(100%, 0, 0);
+} */
 </style>

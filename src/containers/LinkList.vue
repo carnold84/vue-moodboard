@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <div class="link-list">
     <app-loading v-if="isLoading" />
     <a-message-panel
       v-if="!isLoading && links.length === 0"
@@ -33,7 +33,7 @@ import AMessagePanel from '@/components/AMessagePanel';
 import LinksTable from '@/containers/LinksTable';
 
 export default {
-  name: 'links-list',
+  name: 'link-list',
   components: {
     AAddIcon,
     AButton,
@@ -77,11 +77,15 @@ export default {
     },
   },
   watch: {
-    linkIds(val, oldVal) {
-      this.load();
-    },
+    linkIds: 'load',
   },
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.link-list {
+  flex-grow: 1;
+  min-height: 100%;
+  position: relative;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <view-container>
     <app-loading v-if="isSaving === true"></app-loading>
     <view-header
       description="Create a project to save images, links and notes."
@@ -29,7 +29,7 @@
         ></text-input>
       </form>
     </div>
-  </div>
+  </view-container>
 </template>
 
 <script>
@@ -39,6 +39,7 @@ import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AppLoading from '@/components/AppLoading';
 import TextInput from '@/components/TextInput';
+import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -50,6 +51,7 @@ export default {
     AButton,
     AppLoading,
     TextInput,
+    ViewContainer,
     ViewHeader,
   },
   data() {
