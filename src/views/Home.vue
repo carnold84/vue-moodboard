@@ -1,11 +1,15 @@
 <template>
-  <div>Home</div>
+  <view-container>Home</view-container>
 </template>
 
 <script>
+import ViewContainer from '@/components/ViewContainer';
+
 export default {
   name: 'home',
-  components: {},
+  components: {
+    ViewContainer,
+  },
 };
 </script>
 

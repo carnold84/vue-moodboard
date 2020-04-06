@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <view-container>
     <app-loading v-if="project === undefined || isDeleting"></app-loading>
     <div v-if="project && !isDeleting">
       <view-header
@@ -37,14 +37,14 @@
       </div>
     </div>
     <div v-if="project && !isDeleting" class="view-content">
-      <div v-if="currentTabId === 'images'">
-        <images-list :imageIds="project.imageIds" :project="project" />
+      <div v-if="currentTabId === 'images'" class="panel">
+        <image-list :imageIds="project.imageIds" :project="project" />
       </div>
-      <div v-if="currentTabId === 'links'">
-        <links-list :linkIds="project.linkIds" :project="project" />
+      <div v-if="currentTabId === 'links'" class="panel">
+        <link-list :linkIds="project.linkIds" :project="project" />
       </div>
     </div>
-  </div>
+  </view-container>
 </template>
 
 <script>
@@ -57,8 +57,9 @@ import APicture from '@/components/APicture';
 import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
-import ImagesList from '@/containers/ImagesList';
-import LinksList from '@/containers/LinksList';
+import ImageList from '@/containers/ImageList';
+import LinkList from '@/containers/LinkList';
+import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -69,8 +70,9 @@ export default {
     AButton,
     AppLoading,
     ASelect,
-    ImagesList,
-    LinksList,
+    ImageList,
+    LinkList,
+    ViewContainer,
     ViewHeader,
   },
   computed: {
@@ -160,6 +162,7 @@ export default {
 <style scoped lang="scss">
 .panel {
   flex-grow: 1;
+  position: relative;
 }
 
 .tabs {

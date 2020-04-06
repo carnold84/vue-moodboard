@@ -1,5 +1,5 @@
 <template>
-  <div class="links-list">
+  <div class="links-table">
     <app-loading v-if="isLoading" />
     <div v-if="!isLoading" class="list" :class="breakpoints">
       <resizable @resize="onResize" />
@@ -178,7 +178,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.links-list {
+.links-table {
   display: grid;
 }
 

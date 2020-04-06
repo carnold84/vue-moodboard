@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <div class="add-link-form">
     <view-header :description="subTitle" :on-back="backUrl" :title="title" />
     <div class="content">
       <app-loading v-if="isSaving" />
@@ -96,7 +96,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+.add-link-form {
+  position: relative;
+}
+
 .content {
   flex-grow: 1;
   position: relative;

@@ -44,22 +44,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.view-wrapper {
+.view-content {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  position: relative;
-}
-
-.view-title {
-  align-items: center;
-  display: flex;
-  font-family: var(--fontFamily--primary);
-  font-size: 2.3em;
-  font-weight: 300;
-}
-
-.view-content {
   flex-grow: 1;
   position: relative;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <div class="add-image-form">
     <view-header
       :description="subTitle"
       :on-back="backUrl"
@@ -100,7 +100,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+.add-image-form {
+  position: relative;
+}
+
 .content {
   flex-grow: 1;
   position: relative;

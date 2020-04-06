@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <view-container>
     <app-loading
       v-if="image === undefined || project === undefined || isRemoving === true"
     />
@@ -9,18 +9,20 @@
       :image="image"
       :project="project"
     />
-  </div>
+  </view-container>
 </template>
 
 <script>
 import AppLoading from '@/components/AppLoading';
 import ImageDetail from '@/containers/ImageDetail';
+import ViewContainer from '@/components/ViewContainer';
 
 export default {
   name: 'project-image',
   components: {
     AppLoading,
     ImageDetail,
+    ViewContainer,
   },
   computed: {
     backUrl() {

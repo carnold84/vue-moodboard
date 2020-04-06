@@ -1,5 +1,5 @@
 <template>
-  <div class="view-wrapper">
+  <view-container>
     <view-header title="Projects">
       <template v-slot:controls>
         <a-select v-if="options" alignMenu="right" :items="options" />
@@ -15,13 +15,14 @@
         ></a-image-link>
       </div>
     </div>
-  </div>
+  </view-container>
 </template>
 
 <script>
 import AImageLink from '@/components/AImageLink';
 import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
+import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -30,6 +31,7 @@ export default {
     AImageLink,
     AppLoading,
     ASelect,
+    ViewContainer,
     ViewHeader,
   },
   computed: {

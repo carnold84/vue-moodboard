@@ -21,7 +21,9 @@
         ></main-nav>
       </div>
       <div class="app-content">
-        <router-view />
+        <transition name="view">
+          <router-view />
+        </transition>
       </div>
     </div>
     <div
@@ -179,13 +181,8 @@ export default {
 
 .app-content {
   flex-grow: 1;
-  padding: 90px 30px 30px;
   position: relative;
   z-index: 0;
-
-  @media (min-width: 992px) {
-    padding: 50px 50px 50px 330px;
-  }
 }
 
 .app-nav {
@@ -205,7 +202,7 @@ export default {
 
   @media (min-width: 992px) {
     height: 100%;
-    position: fixed;
+    position: relative;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -224,5 +221,14 @@ export default {
     opacity: 1;
     pointer-events: all;
   }
+}
+
+.view-enter-active,
+.view-leave-active {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+.view-enter, .view-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
