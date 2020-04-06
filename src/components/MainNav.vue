@@ -52,16 +52,17 @@
         <h4 class="user-name">{{ user.name }}</h4>
         <p class="user-email">{{ user.email }}</p>
       </div>
-      <button class="user-logout-btn" @click="logout">
+      <a-button @click="logout">
         <a-logout-icon />
         <span>Logout</span>
-      </button>
+      </a-button>
     </div>
   </nav>
 </template>
 
 <script>
 import AAddIcon from '@/components/icons/AAddIcon';
+import AButton from '@/components/AButton';
 import ALogoutIcon from '@/components/icons/ALogoutIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
@@ -70,6 +71,7 @@ export default {
   name: 'main-nav',
   components: {
     AAddIcon,
+    AButton,
     ALogoutIcon,
     AppLoading,
     AppLogo,
@@ -138,7 +140,7 @@ export default {
   border-top: 1px solid #eeeeee;
   bottom: 0;
   display: flex;
-  padding: 20px 30px;
+  padding: 20px 24px 20px 30px;
   position: fixed;
   width: calc(100% - 1px);
 }

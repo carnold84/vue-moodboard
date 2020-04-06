@@ -181,6 +181,7 @@ export default {
 
 .app-content {
   flex-grow: 1;
+  overflow: auto;
   position: relative;
   z-index: 0;
 }
@@ -223,12 +224,39 @@ export default {
   }
 }
 
-.view-enter-active,
+.view-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
 .view-leave-active {
   opacity: 1;
-  transition: opacity 0.5s;
+  transition: opacity 300ms;
 }
-.view-enter, .view-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.view-enter {
   opacity: 0;
 }
+
+.view-leave-to {
+  opacity: 0;
+}
+
+/* .view-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: transform 500ms;
+}
+
+.view-leave-active {
+  transform: translate3d(0, 0, 0);
+  transition: transform 500ms;
+}
+
+.view-enter {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.view-leave-to {
+  transform: translate3d(100%, 0, 0);
+} */
 </style>

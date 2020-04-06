@@ -40,8 +40,10 @@ img {
 body {
   background-color: var(--app__bg-color);
   color: var(--text1);
+  font-family: var(--fontFamily--secondary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 .view-content {

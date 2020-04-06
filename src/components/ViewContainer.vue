@@ -14,9 +14,9 @@ export default {
 
 <style scoped lang="scss">
 .view-container {
-  height: 100%;
+  display: flex;
   left: 0;
-  overflow: auto;
+  min-height: 100%;
   position: absolute;
   top: 0;
   width: 100%;
@@ -25,7 +25,7 @@ export default {
 .view-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex-grow: 1;
   padding: 90px 30px 30px;
   position: relative;
 
