@@ -4,11 +4,15 @@
       <view-header :description="subTitle" :on-back="backUrl" :title="title">
         <template v-slot:controls>
           <a-button :to="backUrl">
-            <a-close-icon />
+            <template v-slot:icon-left>
+              <a-close-icon />
+            </template>
             Cancel
           </a-button>
           <a-button :isPrimary="true" type="submit">
-            <a-check-icon />
+            <template v-slot:icon-left>
+              <a-check-icon />
+            </template>
             Add Link
           </a-button>
         </template>

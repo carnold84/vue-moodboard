@@ -10,11 +10,15 @@
       >
         <template v-slot:controls>
           <a-button @click="onCancel">
-            <a-close-icon></a-close-icon>
+            <template v-slot:icon-left>
+              <a-close-icon />
+            </template>
             Cancel
           </a-button>
           <a-button :isPrimary="true" type="submit">
-            <a-check-icon></a-check-icon>
+            <template v-slot:icon-left>
+              <a-check-icon />
+            </template>
             Create
           </a-button>
         </template>

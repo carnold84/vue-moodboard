@@ -36,7 +36,9 @@
             :title="`Add/Remove ${item.name} from/to Projects`"
             @click="onLinkToProject(item)"
           >
-            <a-list-icon />
+            <template v-slot:icon-left>
+              <a-list-icon />
+            </template>
           </a-button>
           <div v-if="project" class="control-loading">
             <app-loading v-if="areLinking[item.id]" diameter="20" />
@@ -46,7 +48,9 @@
               :title="`Remove ${item.name} from ${project.name}`"
               @click="onUnlinkFromProject(item)"
             >
-              <a-remove-icon />
+              <template v-slot:icon-left>
+                <a-remove-icon />
+              </template>
             </a-button>
           </div>
           <a-button
@@ -54,7 +58,9 @@
             :title="`Delete ${item.name}`"
             @click="onDelete(item)"
           >
-            <a-block-icon height="16" width="16" />
+            <template v-slot:icon-left>
+              <a-block-icon height="16" width="16" />
+            </template>
           </a-button>
         </div>
       </div>

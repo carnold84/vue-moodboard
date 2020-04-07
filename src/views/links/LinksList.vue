@@ -3,7 +3,9 @@
     <view-header title="Links" description="View and manage all your links.">
       <template v-slot:controls>
         <a-button :isPrimary="true" :to="{ name: 'links-add-link' }">
-          <a-add-icon />
+          <template v-slot:icon-left>
+            <a-add-icon />
+          </template>
           <span>Add Link</span>
         </a-button>
       </template>

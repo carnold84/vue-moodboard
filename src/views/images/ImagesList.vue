@@ -3,7 +3,9 @@
     <view-header title="Images" description="View and manage all your images.">
       <template v-slot:controls>
         <a-button :isPrimary="true" :to="{ name: 'images-add-image' }">
-          <a-add-icon></a-add-icon>
+          <template v-slot:icon-left>
+            <a-add-icon></a-add-icon>
+          </template>
           <span>Add Image</span>
         </a-button>
       </template>

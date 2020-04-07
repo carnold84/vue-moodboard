@@ -25,7 +25,9 @@
           style="max-width: 200px; width: 100%;"
           type="submit"
         >
-          <a-check-icon></a-check-icon>
+          <template v-slot:icon-left>
+            <a-check-icon />
+          </template>
           <span style="margin: 0 0 0 5px">Login</span>
         </a-button>
       </form>

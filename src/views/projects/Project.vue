@@ -21,7 +21,9 @@
               :isPrimary="true"
               :to="{ name: 'project-add-image', params: { id: project.id } }"
             >
-              <a-add-icon></a-add-icon>
+              <template v-slot:icon-left>
+                <a-add-icon></a-add-icon>
+              </template>
               <span>Add Image</span>
             </a-button>
             <a-button
@@ -29,7 +31,9 @@
               :isPrimary="true"
               :to="{ name: 'project-add-link', params: { id: project.id } }"
             >
-              <a-add-icon></a-add-icon>
+              <template v-slot:icon-left>
+                <a-add-icon></a-add-icon>
+              </template>
               <span>Add Link</span>
             </a-button>
           </template>

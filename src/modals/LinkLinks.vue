@@ -17,7 +17,9 @@
     </template>
     <template slot="footer">
       <a-button @click="onClose">
-        <a-close-icon />
+        <template v-slot:icon-left>
+          <a-close-icon />
+        </template>
         Close
       </a-button>
     </template>

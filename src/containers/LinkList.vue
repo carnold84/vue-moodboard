@@ -13,7 +13,9 @@
             : { name: 'links-add-link' }
         "
       >
-        <a-add-icon></a-add-icon>
+        <template v-slot:icon-left>
+          <a-add-icon />
+        </template>
         <span>Add One!</span>
       </a-button>
     </a-message-panel>

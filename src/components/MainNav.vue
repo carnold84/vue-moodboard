@@ -53,7 +53,9 @@
         <p class="user-email">{{ user.email }}</p>
       </div>
       <a-button @click="logout">
-        <a-logout-icon />
+        <template v-slot:icon-left>
+          <a-logout-icon />
+        </template>
         <span>Logout</span>
       </a-button>
     </div>
