@@ -38,6 +38,7 @@ import AButton from '@/components/AButton';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AppLoading from '@/components/AppLoading';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -76,8 +77,23 @@ export default {
       const response = await this.$store.dispatch('images/create', data);
 
       if (response.success) {
+        this.$store.dispatch('toasts/add', {
+          text: `"${data.name}" was created.`,
+          timeout: 3000,
+          title: 'Image Created',
+          type: TOAST_TYPES.SUCCESS,
+        });
+
         this.$router.push(this.backUrl);
       } else {
+        this.isSaving = false;
+
+        this.$store.dispatch('toasts/add', {
+          text: `"${data.name}" couldn\'t be created.`,
+          title: 'Error',
+          type: TOAST_TYPES.ERROR,
+        });
+
         console.error(response.message);
       }
     },

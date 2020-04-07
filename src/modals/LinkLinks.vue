@@ -31,6 +31,7 @@ import Vue from 'vue';
 import AButton from '@/components/AButton';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ProjectsList from '@/containers/ProjectsList';
 
 export const LINK_LINKS_MODAL = 'link-links-modal';
@@ -67,6 +68,13 @@ export default {
       });
 
       Vue.delete(this.areLinking, project.id);
+
+      this.$store.dispatch('toasts/add', {
+        text: `"${this.link.name}" was added to "${project.name}".`,
+        timeout: 3000,
+        title: 'Link Added',
+        type: TOAST_TYPES.SUCCESS,
+      });
     },
     async onUnlink(project) {
       Vue.set(this.areLinking, project.id, project.id);
@@ -77,6 +85,13 @@ export default {
       });
 
       Vue.delete(this.areLinking, project.id);
+
+      this.$store.dispatch('toasts/add', {
+        text: `"${this.link.name}" was removed from "${project.name}".`,
+        timeout: 3000,
+        title: 'Link Removed',
+        type: TOAST_TYPES.SUCCESS,
+      });
     },
     onClose() {
       this.$store.dispatch('modals/close', this.name);

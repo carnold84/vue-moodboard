@@ -7,7 +7,7 @@
         @click="onBack"
       >
         <template v-slot:icon-left>
-          <a-logout-icon />
+          <a-arrow-back-icon />
         </template>
         <span>Back</span>
       </a-button>

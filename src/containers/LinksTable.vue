@@ -36,9 +36,7 @@
             :title="`Add/Remove ${item.name} from/to Projects`"
             @click="onLinkToProject(item)"
           >
-            <template v-slot:icon-left>
-              <a-list-icon />
-            </template>
+            <a-list-icon />
           </a-button>
           <div v-if="project" class="control-loading">
             <app-loading v-if="areLinking[item.id]" diameter="20" />
@@ -48,9 +46,7 @@
               :title="`Remove ${item.name} from ${project.name}`"
               @click="onUnlinkFromProject(item)"
             >
-              <template v-slot:icon-left>
-                <a-remove-icon />
-              </template>
+              <a-remove-icon />
             </a-button>
           </div>
           <a-button
@@ -58,9 +54,7 @@
             :title="`Delete ${item.name}`"
             @click="onDelete(item)"
           >
-            <template v-slot:icon-left>
-              <a-block-icon height="16" width="16" />
-            </template>
+            <a-block-icon height="16" width="16" />
           </a-button>
         </div>
       </div>
@@ -153,6 +147,12 @@ export default {
           type: TOAST_TYPES.SUCCESS,
         });
       } else {
+        this.isLoading = false;
+        this.$store.dispatch('toasts/add', {
+          text: `"${link.name}" could not be deleted.`,
+          title: 'Error',
+          type: TOAST_TYPES.ERROR,
+        });
         console.error(response.message);
       }
     },
@@ -174,6 +174,13 @@ export default {
       });
 
       Vue.delete(this.areLinking, link.id);
+
+      this.$store.dispatch('toasts/add', {
+        text: `"${link.name}" was removed from ${this.project.name}.`,
+        timeout: 4000,
+        title: 'Link Removed',
+        type: TOAST_TYPES.SUCCESS,
+      });
     },
     onResize({ width }) {
       let classes = [];

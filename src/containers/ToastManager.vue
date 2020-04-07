@@ -6,6 +6,7 @@
       :key="toast.id"
       :text="toast.text"
       :title="toast.title"
+      :type="toast.type"
       @dismiss="onDismiss"
       class="toast"
     />

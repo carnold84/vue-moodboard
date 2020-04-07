@@ -6,11 +6,11 @@
     :disabled="isDisabled"
     :to="to"
   >
-    <div class="icon-left">
+    <div v-if="$scopedSlots['icon-left']" class="icon-left">
       <slot name="icon-left" />
     </div>
     <slot></slot>
-    <div class="icon-right">
+    <div v-if="$scopedSlots['icon-right']" class="icon-right">
       <slot name="icon-right" />
     </div>
   </router-link>
@@ -22,11 +22,11 @@
     v-else
     @click="onClick"
   >
-    <div class="icon-left">
+    <div v-if="$scopedSlots['icon-left']" class="icon-left">
       <slot name="icon-left" />
     </div>
     <slot></slot>
-    <div class="icon-right">
+    <div v-if="$scopedSlots['icon-right']" class="icon-right">
       <slot name="icon-right" />
     </div>
   </button>
@@ -41,9 +41,6 @@ export default {
         this.$listeners.click(evt);
       }
     },
-  },
-  mounted() {
-    console.log(this);
   },
   props: {
     isDisabled: {

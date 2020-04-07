@@ -52,7 +52,7 @@ export default {
       type: String,
     },
     type: {
-      default: TOAST_TYPES.ERROR,
+      default: TOAST_TYPES.INFO,
       type: String,
     },
   },
@@ -83,15 +83,15 @@ export default {
 }
 
 .icon {
-  margin: 0 15px 0 0;
+  margin: 0 20px 0 0;
 }
 
 .content {
-  border-left: 1px solid var(--theme3);
+  border-left: 1px solid var(--theme2);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 0 10px 0 15px;
+  padding: 0 10px 0 20px;
 }
 
 .title {

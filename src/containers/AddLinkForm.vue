@@ -85,10 +85,8 @@ export default {
         });
         this.$router.push(this.backUrl);
       } else {
-        console.error(response.message);
         this.$store.dispatch('toasts/add', {
-          text: `${response.message}`,
-          timeout: 3000,
+          text: `"${data.name}" couldn\'t be created.`,
           title: 'Error',
           type: TOAST_TYPES.ERROR,
         });
