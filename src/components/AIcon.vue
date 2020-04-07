@@ -2,7 +2,6 @@
   <svg
     class="a-icon"
     :height="height"
-    style="margin: 0 5px 0 0;"
     viewBox="0 0 24 24"
     :width="width"
     xmlns="http://www.w3.org/2000/svg"

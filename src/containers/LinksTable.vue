@@ -139,6 +139,11 @@ export default {
 
       if (response.success) {
         this.isLoading = false;
+        this.$store.dispatch('toasts/add', {
+          text: `"${link.name}" was deleted.`,
+          title: 'Link Deleted',
+          type: 'success',
+        });
       } else {
         console.error(response.message);
       }

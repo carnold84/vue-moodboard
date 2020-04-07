@@ -1,40 +1,38 @@
 <template>
   <view-container>
     <app-loading v-if="isSaving === true"></app-loading>
-    <view-header
-      description="Create a project to save images, links and notes."
-      :on-back="onCancel"
-      section-name="Project"
-      title="Create Project"
-    ></view-header>
-    <div v-if="isSaving === false">
-      <form class="form" @submit.prevent="create">
-        <a-action-bar>
-          <template v-slot:controls>
-            <a-button @click="onCancel">
-              <a-close-icon></a-close-icon>
-              Cancel
-            </a-button>
-            <a-button :isPrimary="true" type="submit">
-              <a-check-icon></a-check-icon>
-              Create
-            </a-button>
-          </template>
-        </a-action-bar>
+    <form v-if="isSaving === false" class="form" @submit.prevent="create">
+      <view-header
+        description="Create a project to save images, links and notes."
+        :on-back="onCancel"
+        section-name="Project"
+        title="Create Project"
+      >
+        <template v-slot:controls>
+          <a-button @click="onCancel">
+            <a-close-icon></a-close-icon>
+            Cancel
+          </a-button>
+          <a-button :isPrimary="true" type="submit">
+            <a-check-icon></a-check-icon>
+            Create
+          </a-button>
+        </template>
+      </view-header>
+      <div class="form">
         <text-input v-model="name" label="Name" name="name"></text-input>
         <text-input
           v-model="description"
           label="Description"
           name="description"
         ></text-input>
-      </form>
-    </div>
+      </div>
+    </form>
   </view-container>
 </template>
 
 <script>
 import AButton from '@/components/AButton';
-import AActionBar from '@/components/AActionBar';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AppLoading from '@/components/AppLoading';
@@ -45,7 +43,6 @@ import ViewHeader from '@/components/ViewHeader';
 export default {
   name: 'project-edit',
   components: {
-    AActionBar,
     ACheckIcon,
     ACloseIcon,
     AButton,

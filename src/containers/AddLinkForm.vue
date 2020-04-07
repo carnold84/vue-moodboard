@@ -72,9 +72,19 @@ export default {
       const response = await this.$store.dispatch('links/create', data);
 
       if (response.success) {
+        this.$store.dispatch('toasts/add', {
+          text: `"${data.name}" was created.`,
+          title: 'Link Created',
+          type: 'success',
+        });
         this.$router.push(this.backUrl);
       } else {
         console.error(response.message);
+        this.$store.dispatch('toasts/add', {
+          text: `${response.message}`,
+          title: 'Error',
+          type: 'error',
+        });
       }
     },
   },
