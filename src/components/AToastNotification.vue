@@ -67,7 +67,7 @@ export default {
   box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.15);
   display: flex;
   padding: 20px;
-  width: 300px;
+  width: 340px;
 
   &.error {
     fill: var(--error1);
@@ -90,7 +90,8 @@ export default {
   border-left: 1px solid var(--theme3);
   display: flex;
   flex-direction: column;
-  padding: 0 0 0 15px;
+  flex-grow: 1;
+  padding: 0 10px 0 15px;
 }
 
 .title {

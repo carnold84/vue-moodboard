@@ -34,6 +34,7 @@ import AButton from '@/components/AButton';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AppLoading from '@/components/AppLoading';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -74,16 +75,18 @@ export default {
       if (response.success) {
         this.$store.dispatch('toasts/add', {
           text: `"${data.name}" was created.`,
+          timeout: 3000,
           title: 'Link Created',
-          type: 'success',
+          type: TOAST_TYPES.SUCCESS,
         });
         this.$router.push(this.backUrl);
       } else {
         console.error(response.message);
         this.$store.dispatch('toasts/add', {
           text: `${response.message}`,
+          timeout: 3000,
           title: 'Error',
-          type: 'error',
+          type: TOAST_TYPES.ERROR,
         });
       }
     },

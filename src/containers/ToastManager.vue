@@ -25,17 +25,35 @@ export default {
       return this.$store.getters['toasts/list'];
     },
   },
+  data() {
+    return {
+      activeToasts: {},
+    };
+  },
   methods: {
     dismiss(id) {
+      const timeout = this.activeToasts[id];
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
       this.$store.dispatch('toasts/remove', id);
+      delete this.activeToasts[id];
     },
     onDismiss(id) {
       this.dismiss(id);
     },
   },
   watch: {
-    toasts(oldToasts, newToasts) {
-      console.log(oldToasts, newToasts);
+    toasts(newToasts, oldToasts) {
+      for (const toast of newToasts) {
+        // create timeout for any new toast
+        if (toast.timeout && !this.activeToasts[toast.id]) {
+          this.activeToasts[toast.id] = setTimeout(() => {
+            this.dismiss(toast.id);
+          }, toast.timeout);
+        }
+      }
     },
   },
 };
