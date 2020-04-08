@@ -1,15 +1,18 @@
 <template>
   <div class="toast-manager">
-    <a-toast-notification
-      v-for="toast of toasts"
-      :id="toast.id"
-      :key="toast.id"
-      :text="toast.text"
-      :title="toast.title"
-      :type="toast.type"
-      @dismiss="onDismiss"
-      class="toast"
-    />
+    <transition-group name="slide">
+      <a-toast-notification
+        v-for="(toast, index) of toasts"
+        :id="toast.id"
+        :key="toast.id"
+        :style="getStyles(index)"
+        :text="toast.text"
+        :title="toast.title"
+        :type="toast.type"
+        @dismiss="onDismiss"
+        class="toast"
+      />
+    </transition-group>
   </div>
 </template>
 
@@ -41,6 +44,16 @@ export default {
       this.$store.dispatch('toasts/remove', id);
       delete this.activeToasts[id];
     },
+    getStyles(index) {
+      const yPos = (this.toasts.length - index - 1) * 100;
+      const margin = (this.toasts.length - index - 1) * 15;
+      const duration = 300 + (this.toasts.length - index) * 100;
+
+      return {
+        transform: `translate3d(0, calc(-${yPos}% - ${margin}px), 0)`,
+        transitionDuration: `${duration}ms`,
+      };
+    },
     onDismiss(id) {
       this.dismiss(id);
     },
@@ -69,11 +82,23 @@ export default {
 }
 
 .toast {
-  margin: 0 0 15px;
-  transition: all 300ms ease;
+  bottom: 0;
+  position: absolute;
+  transition: opacity 500ms, transform 500ms;
 
   &:last-child {
     margin: 0;
+  }
+
+  &.slide-enter-active,
+  &.slide-leave-active {
+    opacity: 1;
+  }
+
+  &.slide-enter,
+  &.slide-leave-to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0) !important;
   }
 }
 </style>
