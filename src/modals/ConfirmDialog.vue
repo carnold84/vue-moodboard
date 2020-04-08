@@ -33,10 +33,8 @@ import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
 
-export const DIALOG_NAME = 'dialog';
-
 export default {
-  name: 'app-dialog',
+  name: 'confirm-dialog',
   components: {
     AButton,
     ACheckIcon,
@@ -53,12 +51,12 @@ export default {
   },
   data() {
     return {
-      name: DIALOG_NAME,
+      name: 'confirm-dialog',
     };
   },
   methods: {
     onClose() {
-      this.$store.dispatch('modals/close', this.name);
+      this.$emit('dismiss', this.id);
     },
     onConfirmClick() {
       this.onConfirm();
@@ -66,6 +64,10 @@ export default {
     },
   },
   props: {
+    id: {
+      required: true,
+      type: String,
+    },
     onConfirm: {
       type: Function,
     },

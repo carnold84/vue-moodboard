@@ -67,11 +67,10 @@ import Vue from 'vue';
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import AButton from '@/components/AButton';
 import AListIcon from '@/components/icons/AListIcon';
-import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
-import { LINK_LINKS_MODAL } from '../modals/LinkLinks.vue';
+import { MODAL_TYPES } from '@/containers/ModalManager';
 import Resizable from '@/components/Resizable';
 
 export default {
@@ -117,7 +116,7 @@ export default {
   methods: {
     onDelete(link) {
       this.$store.dispatch('modals/open', {
-        name: DIALOG_NAME,
+        name: MODAL_TYPES.CONFIRM_DIALOG,
         props: {
           onConfirm: () => this.onConfirmDelete(link.id),
           text: `Are you sure you want to delete ${link.name}?`,
@@ -158,7 +157,7 @@ export default {
     },
     onLinkToProject(link) {
       this.$store.dispatch('modals/open', {
-        name: LINK_LINKS_MODAL,
+        name: MODAL_TYPES.LINK_LINKS,
         props: {
           link,
           title: `Add ${link.name} to a project`,

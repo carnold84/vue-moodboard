@@ -32,9 +32,7 @@
       :class="{ show: isMenuOpen }"
       @click="onToggleMenu"
     ></div>
-    <app-dialog v-bind="dialogProps" />
-    <link-images-modal v-bind="linkImagesProps" />
-    <link-links-modal v-bind="linkLinksProps" />
+    <modal-manager />
     <toast-manager />
   </div>
 </template>
@@ -44,10 +42,8 @@ import appConfig from '@/app.config';
 import AMenuIcon from '@/components/icons/AMenuIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
-import AppDialog, { DIALOG_NAME } from '@/modals/AppDialog';
-import LinkImagesModal, { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
-import LinkLinksModal, { LINK_LINKS_MODAL } from '@/modals/LinkLinks';
-import MainNav from '@/components/MainNav';
+import MainNav from '@/containers/MainNav';
+import ModalManager from '@/containers/ModalManager';
 import ToastManager from '@/containers/ToastManager';
 
 export default {
@@ -57,26 +53,15 @@ export default {
   },
   components: {
     AMenuIcon,
-    AppDialog,
     AppLoading,
     AppLogo,
-    LinkImagesModal,
-    LinkLinksModal,
     MainNav,
+    ModalManager,
     ToastManager,
   },
   computed: {
     appName() {
       return appConfig.appName;
-    },
-    dialogProps() {
-      return this.$store.getters['modals/props'](DIALOG_NAME);
-    },
-    linkImagesProps() {
-      return this.$store.getters['modals/props'](LINK_IMAGES_MODAL);
-    },
-    linkLinksProps() {
-      return this.$store.getters['modals/props'](LINK_LINKS_MODAL);
     },
     projects() {
       return this.$store.getters['projects/list'];

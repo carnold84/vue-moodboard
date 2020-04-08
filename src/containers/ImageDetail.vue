@@ -31,10 +31,9 @@
 
 <script>
 import APicture, { TYPES } from '@/components/APicture';
-import { DIALOG_NAME } from '@/modals/AppDialog';
 import ASelect from '@/components/ASelect';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
-import { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
+import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -93,7 +92,7 @@ export default {
   methods: {
     onDelete() {
       this.$store.dispatch('modals/open', {
-        name: DIALOG_NAME,
+        name: MODAL_TYPES.CONFIRM_DIALOG,
         props: {
           onConfirm: this.onConfirmDelete,
           text: `Are you sure you want to delete ${this.image.name}?`,
@@ -130,7 +129,7 @@ export default {
     },
     onLinkToProject() {
       this.$store.dispatch('modals/open', {
-        name: LINK_IMAGES_MODAL,
+        name: MODAL_TYPES.LINK_IMAGES,
         props: {
           image: this.image,
           title: `Add ${this.image.name} to a project`,

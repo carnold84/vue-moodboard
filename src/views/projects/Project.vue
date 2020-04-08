@@ -58,11 +58,11 @@ import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
-import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';
+import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -137,7 +137,7 @@ export default {
   methods: {
     onDeleteProject() {
       this.$store.dispatch('modals/open', {
-        name: DIALOG_NAME,
+        name: MODAL_TYPES.CONFIRM_DIALOG,
         props: {
           onConfirm: this.onConfirmDelete,
           text: `Are you sure you want to delete ${this.project.name}?`,

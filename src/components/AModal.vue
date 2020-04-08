@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isOpen" class="a-modal">
+  <div class="a-modal">
     <div :style="{ maxWidth }" class="modal">
       <header class="modal-header">
         <h2 class="modal-title">{{ title }}</h2>
@@ -16,11 +16,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="modal-overlay"
-      :class="{ 'is-active': isActive }"
-      @click="onClose"
-    />
+    <div class="modal-overlay" @click="onClose" />
   </div>
 </template>
 
@@ -30,35 +26,22 @@ import ACloseIcon from '@/components/icons/ACloseIcon';
 
 export default {
   name: 'a-modal',
-  beforeDestroy() {
-    if (this.isOpen) {
-      this.onClose();
-    }
-  },
   components: {
     AButton,
     ACloseIcon,
   },
   methods: {
     onClose(evt) {
-      this.$emit('close', evt);
+      this.$emit('dismiss', this.id);
     },
   },
   props: {
-    isActive: {
-      default: false,
-      type: Boolean,
-    },
-    isOpen: {
-      default: false,
-      type: Boolean,
+    id: {
+      required: true,
+      type: String,
     },
     maxWidth: {
       default: '500px',
-      type: String,
-    },
-    name: {
-      required: true,
       type: String,
     },
     title: {
@@ -98,14 +81,14 @@ export default {
   display: flex;
   flex-shrink: 0;
   height: 60px;
-  justify-content: center;
-  padding: 0 8px 0 22px;
+  justify-content: flex-start;
+  padding: 0 0 0 25px;
   position: relative;
 }
 
 .modal-close-btn {
   position: absolute;
-  right: 10px;
+  right: 20px;
 }
 
 .modal-title {
@@ -118,7 +101,6 @@ export default {
   align-items: center;
   display: flex;
   flex-grow: 1;
-  justify-content: center;
   min-height: 70px;
   position: relative;
 }
@@ -126,12 +108,12 @@ export default {
 .modal-footer {
   align-items: center;
   background-color: var(--theme1);
-  border-top: 1px solid var(--theme);
+  border-top: 1px solid var(--theme3);
   display: flex;
   flex-shrink: 0;
   height: 60px;
-  justify-content: center;
-  padding: 0 18px 0 22px;
+  justify-content: flex-end;
+  padding: 0 25px;
 
   & > * {
     margin: 0 0 0 20px;

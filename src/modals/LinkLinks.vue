@@ -94,10 +94,14 @@ export default {
       });
     },
     onClose() {
-      this.$store.dispatch('modals/close', this.name);
+      this.$emit('dismiss', this.id);
     },
   },
   props: {
+    id: {
+      required: true,
+      type: String,
+    },
     link: {
       type: Object,
     },

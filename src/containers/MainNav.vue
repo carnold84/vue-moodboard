@@ -16,9 +16,9 @@
       <li class="nav-item sub-nav">
         <div class="sub-nav-header">
           <h2 class="sub-nav-title nav-item">Projects</h2>
-          <router-link class="add-btn" to="/projects/create">
+          <a-button class="add-btn" @click="onCreateProject">
             <a-add-icon></a-add-icon>
-          </router-link>
+          </a-button>
         </div>
         <div v-if="!projects && showProjects" class="sub-nav-loading">
           <app-loading diameter="30px"></app-loading>
@@ -68,6 +68,7 @@ import AButton from '@/components/AButton';
 import ALogoutIcon from '@/components/icons/ALogoutIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
+import { MODAL_TYPES } from '@/containers/ModalManager';
 
 export default {
   name: 'main-nav',
@@ -86,6 +87,12 @@ export default {
   methods: {
     logout() {
       this.onLogout();
+    },
+    onCreateProject() {
+      this.$store.dispatch('modals/add', {
+        title: 'Add Project',
+        type: MODAL_TYPES.ADD_PROJECT,
+      });
     },
     toggleProjects() {
       this.showProjects = !this.showProjects;
@@ -227,17 +234,9 @@ export default {
   }
 
   .add-btn {
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    fill: var(--text1);
-    padding: 0 20px;
-
-    &:hover {
-      fill: var(--primary1);
-    }
+    height: auto;
+    margin: 2px 10px 2px 0;
+    padding: 0 10px;
   }
 
   .sub-nav-title {

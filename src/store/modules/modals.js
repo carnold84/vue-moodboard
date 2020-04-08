@@ -1,43 +1,47 @@
 import Vue from 'vue';
+import uid from 'uid';
 
 const state = {
-  open: [],
-  props: {},
+  allIds: [],
+  byId: {},
 };
 
 const getters = {
-  active: state => {
-    return state.open.length > 0 ? state.open[0] : null;
+  find: state => id => {
+    return state.byId[id];
   },
-	allOpen: state => {
-    return state.open;
-  },
-	props: state => {
-    return name => {
-      return state.props[name];
-    };
+  list: (state, getters) => {
+    return state.allIds.map(id => {
+      return getters.find(id);
+    });
   },
 };
 
 const actions = {
-  open: ({ commit }, payload) => {
-    commit('open', payload);
+  add({ commit }, modal) {
+    commit('add', {
+      ...modal,
+      id: uid(),
+    });
   },
-  close: ({ commit }, payload) => {
-    commit('close', payload);
+  remove({ commit }, id) {
+    commit('remove', id);
   },
 };
 
 const mutations = {
-  open: (state, payload) => {
-    state.open.unshift(payload.name);
-    Vue.set(state.props, payload.name, payload.props);
+  add(state, item) {
+    Vue.set(state.byId, item.id, item);
+    if (state.allIds.includes(item.id)) {
+      return;
+    }
+    state.allIds.push(item.id);
   },
-  close: (state, name) => {
-    const idx = state.open.indexOf(name);
+  remove(state, id) {
+    const idx = state.allIds.indexOf(id);
 
-    Vue.delete(state.open, idx);
-    Vue.delete(state.props, name);
+    Vue.delete(state.byId, id);
+    Vue.delete(state.allIds, idx);
   },
 };
 
