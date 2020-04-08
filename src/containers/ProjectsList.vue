@@ -7,13 +7,17 @@
           v-if="!areLinking[project.id] && !isLinked(project)"
           @click="onLink(project)"
         >
-          <a-add-icon />
+          <template v-slot:icon-left>
+            <a-add-icon />
+          </template>
         </a-button>
         <a-button
           v-if="!areLinking[project.id] && isLinked(project)"
           @click="onUnlink(project)"
         >
-          <a-remove-icon />
+          <template v-slot:icon-left>
+            <a-remove-icon />
+          </template>
         </a-button>
       </div>
       {{ project.name }}

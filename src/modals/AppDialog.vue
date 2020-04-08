@@ -12,11 +12,15 @@
     </template>
     <template slot="footer">
       <a-button @click="onClose">
-        <a-close-icon />
+        <template v-slot:icon-left>
+          <a-close-icon />
+        </template>
         No
       </a-button>
       <a-button v-if="onConfirm" :is-primary="true" @click="onConfirmClick">
-        <a-check-icon />
+        <template v-slot:icon-left>
+          <a-check-icon />
+        </template>
         Yes
       </a-button>
     </template>

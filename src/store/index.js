@@ -6,6 +6,7 @@ import images from '@/store/modules/images';
 import links from '@/store/modules/links';
 import modals from '@/store/modules/modals';
 import projects from '@/store/modules/projects';
+import toasts from '@/store/modules/toasts';
 
 Vue.use(Vuex);
 
@@ -14,9 +15,6 @@ const debug = process.env.NODE_ENV !== 'production';
 const actions = {
   async init() {
     await this.dispatch('auth/getUser');
-    //await this.dispatch('projects/load');
-    //await this.dispatch('images/load');
-    //await this.dispatch('links/load');
   },
 };
 
@@ -28,6 +26,7 @@ export default new Vuex.Store({
     links,
     modals,
     projects,
+    toasts,
   },
   strict: debug,
 });

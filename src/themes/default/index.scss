@@ -5,13 +5,17 @@
   --primary1: #a72a8c;
   --primary2: #c747ab;
   --theme1: #ffffff;
-  --theme2: #f9f9f9;
+  --theme2: #f3f3f3;
   --theme3: #e1e1e1;
   --theme4: #dddddd;
   --theme5: #cccccc;
-  --text1: #444444;
-  --text2: #666666;
-  --text3: #888888;
+  --error1: #d06e6e;
+  --info1: var(--primary1);
+  --success1: #bdd075;
+
+  --text1: #333333;
+  --text2: #4d4d4d;
+  --text3: #666666;
   --textAlt1: #ffffff;
   --textAlt2: #cccccc;
   --textAlt3: #999999;

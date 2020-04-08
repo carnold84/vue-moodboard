@@ -1,5 +1,5 @@
 import localforage from 'localforage';
-import { v4 as uuidv4 } from 'uuid';
+import uid from 'uid';
 
 const DELAY = 500;
 const STORE_NAME = 'vue-moodboard-demo';
@@ -146,7 +146,7 @@ export const images = {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
-      const id = uuidv4();
+      const id = uid();
       const {projectId, url} = data;
       const newImage = {
         ...data,
@@ -273,7 +273,7 @@ export const links = {
     return new Promise(async (resolve, reject) => {
       let links = await instance.getItem('links');
 
-      const id = uuidv4();
+      const id = uid();
       const {projectId} = data;
       const newLink = {
         ...data,
@@ -369,7 +369,7 @@ export const projects = {
     return new Promise(async (resolve, reject) => {
       let projects = await instance.getItem('projects');
 
-      const id = uuidv4();
+      const id = uid();
       const newProject = {
         ...project,
         imageIds: [],

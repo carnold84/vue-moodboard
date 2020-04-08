@@ -70,6 +70,7 @@ import AListIcon from '@/components/icons/AListIcon';
 import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import { LINK_LINKS_MODAL } from '../modals/LinkLinks.vue';
 import Resizable from '@/components/Resizable';
 
@@ -139,7 +140,19 @@ export default {
 
       if (response.success) {
         this.isLoading = false;
+        this.$store.dispatch('toasts/add', {
+          text: `"${link.name}" was deleted.`,
+          timeout: 3000,
+          title: 'Link Deleted',
+          type: TOAST_TYPES.SUCCESS,
+        });
       } else {
+        this.isLoading = false;
+        this.$store.dispatch('toasts/add', {
+          text: `"${link.name}" could not be deleted.`,
+          title: 'Error',
+          type: TOAST_TYPES.ERROR,
+        });
         console.error(response.message);
       }
     },
@@ -161,6 +174,13 @@ export default {
       });
 
       Vue.delete(this.areLinking, link.id);
+
+      this.$store.dispatch('toasts/add', {
+        text: `"${link.name}" was removed from ${this.project.name}.`,
+        timeout: 4000,
+        title: 'Link Removed',
+        type: TOAST_TYPES.SUCCESS,
+      });
     },
     onResize({ width }) {
       let classes = [];

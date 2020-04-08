@@ -33,8 +33,9 @@
 import APicture, { TYPES } from '@/components/APicture';
 import { DIALOG_NAME } from '@/modals/AppDialog';
 import ASelect from '@/components/ASelect';
-import ViewHeader from '@/components/ViewHeader';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
+import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'image-detail',
@@ -109,9 +110,21 @@ export default {
 
       const response = await this.$store.dispatch('images/delete', this.image);
 
-      if (response.success) {
+      if (!response.success) {
+        this.$store.dispatch('toasts/add', {
+          text: `"${this.image.name}" was deleted.`,
+          timeout: 4000,
+          title: 'Image Deleted',
+          type: TOAST_TYPES.SUCCESS,
+        });
         this.$router.push(this.backUrl);
       } else {
+        this.isRemoving = false;
+        this.$store.dispatch('toasts/add', {
+          text: `"${this.image.name}" couldn't be deleted.`,
+          title: 'Error',
+          type: TOAST_TYPES.ERROR,
+        });
         console.error(response.message);
       }
     },

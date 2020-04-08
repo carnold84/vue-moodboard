@@ -4,11 +4,15 @@
       <view-header :description="subTitle" :on-back="backUrl" :title="title">
         <template v-slot:controls>
           <a-button :to="backUrl">
-            <a-close-icon />
+            <template v-slot:icon-left>
+              <a-close-icon />
+            </template>
             Cancel
           </a-button>
           <a-button :isPrimary="true" type="submit">
-            <a-check-icon />
+            <template v-slot:icon-left>
+              <a-check-icon />
+            </template>
             Add Link
           </a-button>
         </template>
@@ -34,6 +38,7 @@ import AButton from '@/components/AButton';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AppLoading from '@/components/AppLoading';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -72,9 +77,19 @@ export default {
       const response = await this.$store.dispatch('links/create', data);
 
       if (response.success) {
+        this.$store.dispatch('toasts/add', {
+          text: `"${data.name}" was created.`,
+          timeout: 3000,
+          title: 'Link Created',
+          type: TOAST_TYPES.SUCCESS,
+        });
         this.$router.push(this.backUrl);
       } else {
-        console.error(response.message);
+        this.$store.dispatch('toasts/add', {
+          text: `"${data.name}" couldn\'t be created.`,
+          title: 'Error',
+          type: TOAST_TYPES.ERROR,
+        });
       }
     },
   },

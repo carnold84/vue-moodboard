@@ -14,7 +14,9 @@
       class="trigger-btn"
       @click="onTriggerClick"
     >
-      <a-more-icon></a-more-icon>
+      <template v-slot:icon-left>
+        <a-more-icon></a-more-icon>
+      </template>
       <span class="trigger-btn-title">{{ title }}</span>
     </a-button>
     <div v-if="isActive" class="select-menu" id="select-menu" role="menu">

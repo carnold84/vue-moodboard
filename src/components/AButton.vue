@@ -6,7 +6,13 @@
     :disabled="isDisabled"
     :to="to"
   >
+    <div v-if="$scopedSlots['icon-left']" class="icon-left">
+      <slot name="icon-left" />
+    </div>
     <slot></slot>
+    <div v-if="$scopedSlots['icon-right']" class="icon-right">
+      <slot name="icon-right" />
+    </div>
   </router-link>
   <button
     class="a-button"
@@ -16,7 +22,13 @@
     v-else
     @click="onClick"
   >
+    <div v-if="$scopedSlots['icon-left']" class="icon-left">
+      <slot name="icon-left" />
+    </div>
     <slot></slot>
+    <div v-if="$scopedSlots['icon-right']" class="icon-right">
+      <slot name="icon-right" />
+    </div>
   </button>
 </template>
 
@@ -99,5 +111,17 @@ export default {
       box-shadow: 0 0 0 2px var(--button__outline-color--primary-focus);
     }
   }
+}
+
+.icon-left {
+  align-items: center;
+  display: flex;
+  margin: 0 5px 0 0;
+}
+
+.icon-right {
+  align-items: center;
+  display: flex;
+  margin: 0 0 0 5px;
 }
 </style>

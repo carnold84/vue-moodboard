@@ -35,6 +35,7 @@
     <app-dialog v-bind="dialogProps" />
     <link-images-modal v-bind="linkImagesProps" />
     <link-links-modal v-bind="linkLinksProps" />
+    <toast-manager />
   </div>
 </template>
 
@@ -47,6 +48,7 @@ import AppDialog, { DIALOG_NAME } from '@/modals/AppDialog';
 import LinkImagesModal, { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
 import LinkLinksModal, { LINK_LINKS_MODAL } from '@/modals/LinkLinks';
 import MainNav from '@/components/MainNav';
+import ToastManager from '@/containers/ToastManager';
 
 export default {
   name: 'authenticated-app',
@@ -61,6 +63,7 @@ export default {
     LinkImagesModal,
     LinkLinksModal,
     MainNav,
+    ToastManager,
   },
   computed: {
     appName() {

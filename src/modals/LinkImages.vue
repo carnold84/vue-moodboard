@@ -17,7 +17,9 @@
     </template>
     <template slot="footer">
       <a-button @click="onClose">
-        <a-close-icon />
+        <template v-slot:icon-left>
+          <a-close-icon />
+        </template>
         Close
       </a-button>
     </template>
@@ -32,6 +34,7 @@ import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
 import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ProjectsList from '@/containers/ProjectsList';
 
 export const LINK_IMAGES_MODAL = 'link-images-modal';
@@ -68,6 +71,13 @@ export default {
       });
 
       Vue.delete(this.areLinking, project.id);
+
+      this.$store.dispatch('toasts/add', {
+        text: `"${this.image.name}" was added to "${project.name}".`,
+        timeout: 3000,
+        title: 'Image Added',
+        type: TOAST_TYPES.SUCCESS,
+      });
     },
     async onUnlink(project) {
       Vue.set(this.areLinking, project.id, project.id);
@@ -78,6 +88,13 @@ export default {
       });
 
       Vue.delete(this.areLinking, project.id);
+
+      this.$store.dispatch('toasts/add', {
+        text: `"${this.image.name}" was removed from "${project.name}".`,
+        timeout: 3000,
+        title: 'Image Removed',
+        type: TOAST_TYPES.SUCCESS,
+      });
     },
     onClose() {
       this.$store.dispatch('modals/close', this.name);

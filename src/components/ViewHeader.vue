@@ -6,7 +6,9 @@
         class="title-back-btn"
         @click="onBack"
       >
-        <a-arrow-back-icon />
+        <template v-slot:icon-left>
+          <a-arrow-back-icon />
+        </template>
         <span>Back</span>
       </a-button>
       <a-button
@@ -14,7 +16,9 @@
         :to="onBack"
         class="title-back-btn"
       >
-        <a-arrow-back-icon />
+        <template v-slot:icon-left>
+          <a-arrow-back-icon />
+        </template>
         <span>Back</span>
       </a-button>
       <div class="title">
