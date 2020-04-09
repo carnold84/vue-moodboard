@@ -6,6 +6,7 @@
       <add-project-modal
         v-if="modal.type === MODAL_TYPES.ADD_PROJECT"
         :id="modal.id"
+        :project="modal.project"
         :title="modal.title"
         @dismiss="dismiss"
       />

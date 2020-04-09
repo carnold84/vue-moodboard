@@ -8,6 +8,12 @@
         :title="project.name"
       >
         <template v-slot:controls>
+          <a-button @click="onEdit">
+            <template v-slot:icon-left>
+              <a-create-icon height="16" width="16" />
+            </template>
+            <span>Edit</span>
+          </a-button>
           <a-select v-if="options" alignMenu="right" :items="options" />
         </template>
       </view-header>
@@ -22,7 +28,7 @@
               :to="{ name: 'project-add-image', params: { id: project.id } }"
             >
               <template v-slot:icon-left>
-                <a-add-icon></a-add-icon>
+                <a-add-icon />
               </template>
               <span>Add Image</span>
             </a-button>
@@ -32,7 +38,7 @@
               :to="{ name: 'project-add-link', params: { id: project.id } }"
             >
               <template v-slot:icon-left>
-                <a-add-icon></a-add-icon>
+                <a-add-icon />
               </template>
               <span>Add Link</span>
             </a-button>
@@ -55,6 +61,7 @@
 import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
+import ACreateIcon from '@/components/icons/ACreateIcon';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
@@ -73,6 +80,7 @@ export default {
     AActionBar,
     AAddIcon,
     AButton,
+    ACreateIcon,
     AppLoading,
     ASelect,
     ImageList,
@@ -91,7 +99,7 @@ export default {
       if (this.project) {
         return [
           {
-            callback: this.onDeleteProject,
+            callback: this.onDelete,
             id: 'delete',
             label: `Delete ${this.project.name}`,
           },
@@ -136,14 +144,6 @@ export default {
     };
   },
   methods: {
-    onDeleteProject() {
-      this.$store.dispatch('modals/add', {
-        onConfirm: this.onConfirmDelete,
-        text: `Are you sure you want to delete ${this.project.name}?`,
-        title: 'Delete Project?',
-        type: MODAL_TYPES.CONFIRM_DIALOG,
-      });
-    },
     async onConfirmDelete() {
       this.isDeleting = true;
 
@@ -170,6 +170,21 @@ export default {
         });
         console.error(response.message);
       }
+    },
+    onDelete() {
+      this.$store.dispatch('modals/add', {
+        onConfirm: this.onConfirmDelete,
+        text: `Are you sure you want to delete ${this.project.name}?`,
+        title: 'Delete Project?',
+        type: MODAL_TYPES.CONFIRM_DIALOG,
+      });
+    },
+    onEdit() {
+      this.$store.dispatch('modals/add', {
+        project: this.project,
+        title: `Edit ${this.project.name}`,
+        type: MODAL_TYPES.ADD_PROJECT,
+      });
     },
   },
 };

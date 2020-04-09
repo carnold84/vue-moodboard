@@ -16,9 +16,11 @@
   --text1: #333333;
   --text2: #4d4d4d;
   --text3: #666666;
+  --text--disabled: #999999;
   --textAlt1: #ffffff;
   --textAlt2: #cccccc;
   --textAlt3: #999999;
+  --textAlt--disabled: #666666;
   --errorText: #821717;
 
   --app__bg-color: var(--theme1);
@@ -32,6 +34,7 @@
   --button__bg-color--hover: var(--theme4);
   --button__border-color--hover: var(--text1);
   --button__color--hover: var(--primary1);
+  --button__color--disabled: var(--text--disabled);
   --button__bg-color--primary: var(--primary1);
   --button__border-color--primary: var(--primary1);
   --button__color--primary: var(--primary1);

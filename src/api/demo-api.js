@@ -422,4 +422,29 @@ export const projects = {
       }, DELAY);
     });
   },
+  update: async project => {
+    return new Promise(async (resolve, reject) => {
+      let projects = await instance.getItem('projects');
+
+      let updatedProject;
+
+      projects = projects.map(element => {
+        if (element.id === project.id) {
+          updatedProject = {
+            ...element,
+            ...project,
+          };
+          return updatedProject;
+        }
+
+        return element;
+      });
+
+      await instance.setItem('projects', projects);
+
+      setTimeout(() => {
+        resolve({project: updatedProject, msg: 'Project updated successfully'});
+      }, DELAY);
+    });
+  },
 };
