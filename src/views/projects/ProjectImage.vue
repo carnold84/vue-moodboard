@@ -1,12 +1,10 @@
 <template>
   <view-container>
-    <app-loading
-      v-if="image === undefined || project === undefined || isRemoving === true"
-    />
+    <app-loading v-if="project === undefined" />
     <image-detail
-      v-else-if="image && project && isRemoving === false"
+      v-else-if="project"
       :backUrl="backUrl"
-      :image="image"
+      :imageId="imageId"
       :project="project"
     />
   </view-container>
@@ -34,17 +32,9 @@ export default {
     imageId() {
       return this.$route.params.imageId;
     },
-    image() {
-      return this.$store.getters['images/find'](this.imageId);
-    },
     project() {
       return this.$store.getters['projects/find'](this.id);
     },
-  },
-  data() {
-    return {
-      isRemoving: false,
-    };
   },
 };
 </script>
