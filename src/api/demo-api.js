@@ -142,14 +142,14 @@ const getImage = async id => {
 };
 
 export const images = {
-  create: async data => {
+  create: async image => {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
       const id = uid();
-      const {projectId, url} = data;
+      const {projectId, url} = image;
       const newImage = {
-        ...data,
+        ...image,
         fileName: url,
         id,
       };
@@ -216,6 +216,33 @@ export const images = {
 
       setTimeout(() => {
         resolve({ ids: { imageId, projectId }, msg: 'Image unlinked successfully' });
+      }, DELAY);
+    });
+  },
+  update: async image => {
+    return new Promise(async (resolve, reject) => {
+      let images = await instance.getItem('images');
+
+      let updatedImage;
+
+      images = images.map(element => {
+        if (element.id === image.id) {
+          const {url} = image;
+          updatedImage = {
+            ...element,
+            ...image,
+            fileName: url,
+          };
+          return updatedImage;
+        }
+
+        return element;
+      });
+
+      await instance.setItem('images', images);
+
+      setTimeout(() => {
+        resolve({image: updatedImage, msg: 'Image updated successfully'});
       }, DELAY);
     });
   },

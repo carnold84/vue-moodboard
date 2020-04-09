@@ -7,6 +7,12 @@
       class="image-view-header"
     >
       <template v-slot:controls>
+        <a-button @click="onEdit">
+          <template v-slot:icon-left>
+            <a-create-icon height="16" width="16" />
+          </template>
+          <span>Edit</span>
+        </a-button>
         <a-select v-if="options" alignMenu="right" :items="options" />
       </template>
     </view-header>
@@ -30,6 +36,8 @@
 </template>
 
 <script>
+import AButton from '@/components/AButton';
+import ACreateIcon from '@/components/icons/ACreateIcon';
 import APicture, { TYPES } from '@/components/APicture';
 import ASelect from '@/components/ASelect';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
@@ -39,6 +47,8 @@ import ViewHeader from '@/components/ViewHeader';
 export default {
   name: 'image-detail',
   components: {
+    AButton,
+    ACreateIcon,
     APicture,
     ASelect,
     ViewHeader,
@@ -90,14 +100,6 @@ export default {
     };
   },
   methods: {
-    onDelete() {
-      this.$store.dispatch('modals/add', {
-        onConfirm: this.onConfirmDelete,
-        text: `Are you sure you want to delete ${this.image.name}?`,
-        title: 'Delete Image?',
-        type: MODAL_TYPES.CONFIRM_DIALOG,
-      });
-    },
     async onConfirmDelete() {
       this.isRemoving = true;
 
@@ -124,6 +126,22 @@ export default {
         });
         console.error(response.message);
       }
+    },
+    onDelete() {
+      this.$store.dispatch('modals/add', {
+        onConfirm: this.onConfirmDelete,
+        text: `Are you sure you want to delete ${this.image.name}?`,
+        title: 'Delete Image?',
+        type: MODAL_TYPES.CONFIRM_DIALOG,
+      });
+    },
+    onEdit() {
+      this.$store.dispatch('modals/add', {
+        image: this.image,
+        project: this.project,
+        title: `Edit ${this.image.name}`,
+        type: MODAL_TYPES.ADD_IMAGE,
+      });
     },
     onLinkToProject() {
       this.$store.dispatch('modals/add', {

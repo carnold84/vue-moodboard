@@ -3,21 +3,13 @@
     <template v-slot:content>
       <app-loading v-if="isSaving" style="height: 250px; position: relative;" />
       <form v-if="!isSaving" class="form" ref="form" @submit.prevent="onSubmit">
-        <text-input
-          v-model="name"
-          :errors="errors.name"
-          label="Name"
-          name="name"
-          style="margin: 0 0 25px"
-        />
+        <text-input v-model="name" label="Name" name="name" />
         <text-input
           v-model="description"
-          class="text-input"
           label="Description"
           name="description"
-          style="margin: 0 0 15px"
         />
-        <input type="submit" hidden="hidden" />
+        <text-input v-model="url" label="Url" name="url" />
       </form>
     </template>
     <template v-slot:footer>
@@ -35,7 +27,7 @@
         <template v-slot:icon-left>
           <a-check-icon />
         </template>
-        <span>{{ project ? "Update" : "Create" }}</span>
+        <span>{{ image ? "Update" : "Create" }}</span>
       </a-button>
     </template>
   </a-modal>
@@ -51,7 +43,7 @@ import TextInput from '@/components/TextInput';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 
 export default {
-  name: 'add-project-modal',
+  name: 'add-image-modal',
   components: {
     AButton,
     ACheckIcon,
@@ -62,12 +54,14 @@ export default {
   },
   data() {
     return {
-      description: this.project ? this.project.description : '',
+      description: this.image ? this.image.description : '',
       errors: {
         name: undefined,
+        url: undefined,
       },
       isSaving: false,
-      name: this.project ? this.project.name : '',
+      name: this.image ? this.image.name : '',
+      url: this.image ? this.image.url : '',
     };
   },
   methods: {
@@ -83,8 +77,14 @@ export default {
       this.$emit('dismiss', this.id);
     },
     async onSubmit() {
-      if (this.name === '') {
-        this.errors.name = 'Name is required.';
+      if (this.name === '' || this.url === '') {
+        if (this.name === '') {
+          this.errors.name = 'Name is required.';
+        }
+
+        if (this.url === '') {
+          this.errors.url = 'Url is required.';
+        }
         return;
       }
 
@@ -97,23 +97,29 @@ export default {
       let title;
       let type = TOAST_TYPES.SUCCESS;
 
-      if (this.project) {
+      if (this.image) {
         data = {
-          ...this.project,
+          ...this.image,
           description: this.description,
           name: this.name,
         };
         text = `"${data.name}" was updated.`;
-        title = 'Project Updated';
-        response = await this.$store.dispatch('projects/update', data);
+        title = 'Image Updated';
+        response = await this.$store.dispatch('images/update', data);
       } else {
         data = {
           description: this.description,
           name: this.name,
+          url: this.url,
         };
         text = `"${data.name}" was created.`;
-        title = 'Project Created';
-        response = await this.$store.dispatch('projects/create', data);
+        title = 'Image Created';
+
+        if (this.project) {
+          data.projectId = this.project.id;
+        }
+
+        response = await this.$store.dispatch('images/create', data);
       }
 
       if (response.success) {
@@ -137,6 +143,9 @@ export default {
     id: {
       required: true,
       type: String,
+    },
+    image: {
+      type: Object,
     },
     project: {
       type: Object,

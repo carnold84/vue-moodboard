@@ -1,8 +1,14 @@
 <template>
   <div class="modal-manager">
-    {{ modals }}
     <div v-for="modal of modals" :key="modal.id">
-      {{ modal }}
+      <add-image-modal
+        v-if="modal.type === MODAL_TYPES.ADD_IMAGE"
+        :id="modal.id"
+        :image="modal.image"
+        :project="modal.project"
+        :title="modal.title"
+        @dismiss="dismiss"
+      />
       <add-project-modal
         v-if="modal.type === MODAL_TYPES.ADD_PROJECT"
         :id="modal.id"
@@ -37,12 +43,14 @@
 </template>
 
 <script>
+import AddImageModal from '@/modals/AddImage';
 import AddProjectModal from '@/modals/AddProject';
 import ConfirmDialog from '@/modals/ConfirmDialog';
 import LinkImagesModal from '@/modals/LinkImages';
 import LinkLinksModal from '@/modals/LinkLinks';
 
 export const MODAL_TYPES = {
+  ADD_IMAGE: AddImageModal.name,
   ADD_PROJECT: AddProjectModal.name,
   CONFIRM_DIALOG: ConfirmDialog.name,
   LINK_IMAGES: LinkImagesModal.name,
@@ -52,6 +60,7 @@ export const MODAL_TYPES = {
 export default {
   name: 'modal-manager',
   components: {
+    AddImageModal,
     AddProjectModal,
     ConfirmDialog,
     LinkImagesModal,
