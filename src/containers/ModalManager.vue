@@ -26,7 +26,9 @@
       />
       <link-links-modal
         v-if="modal.type === MODAL_TYPES.LINK_LINKS"
-        v-bind="modal.props"
+        :id="modal.id"
+        :link="modal.link"
+        :title="modal.title"
         @dismiss="dismiss"
       />
     </div>

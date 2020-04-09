@@ -154,12 +154,10 @@ export default {
       }
     },
     onLinkToProject(link) {
-      this.$store.dispatch('modals/open', {
-        name: MODAL_TYPES.LINK_LINKS,
-        props: {
-          link,
-          title: `Add ${link.name} to a project`,
-        },
+      this.$store.dispatch('modals/add', {
+        link,
+        title: `Add ${link.name} to a project`,
+        type: MODAL_TYPES.LINK_LINKS,
       });
     },
     async onUnlinkFromProject(link) {

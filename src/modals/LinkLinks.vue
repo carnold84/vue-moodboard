@@ -1,12 +1,5 @@
 <template>
-  <a-modal
-    :is-active="isActive"
-    :is-open="isOpen"
-    max-width="400px"
-    :name="name"
-    :title="title"
-    @close="onClose"
-  >
+  <a-modal :id="id" max-width="400px" :title="title" @dismiss="onDismiss">
     <template slot="content">
       <projects-list
         :areLinking="areLinking"
@@ -16,7 +9,7 @@
       />
     </template>
     <template slot="footer">
-      <a-button @click="onClose">
+      <a-button @click="onDismiss">
         <template v-slot:icon-left>
           <a-close-icon />
         </template>
@@ -34,8 +27,6 @@ import AModal from '@/components/AModal';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ProjectsList from '@/containers/ProjectsList';
 
-export const LINK_LINKS_MODAL = 'link-links-modal';
-
 export default {
   name: 'link-links-modal',
   components: {
@@ -44,21 +35,15 @@ export default {
     AModal,
     ProjectsList,
   },
-  computed: {
-    isActive() {
-      return this.$store.getters['modals/active'] === this.name;
-    },
-    isOpen() {
-      return this.$store.getters['modals/allOpen'].includes(this.name);
-    },
-  },
   data() {
     return {
       areLinking: {},
-      name: LINK_LINKS_MODAL,
     };
   },
   methods: {
+    onDismiss() {
+      this.$emit('dismiss', this.id);
+    },
     async onLink(project) {
       Vue.set(this.areLinking, project.id, project.id);
 
@@ -92,9 +77,6 @@ export default {
         title: 'Link Removed',
         type: TOAST_TYPES.SUCCESS,
       });
-    },
-    onClose() {
-      this.$emit('dismiss', this.id);
     },
   },
   props: {
