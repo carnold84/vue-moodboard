@@ -127,11 +127,9 @@ export default {
     },
     onLinkToProject() {
       this.$store.dispatch('modals/add', {
-        name: MODAL_TYPES.LINK_IMAGES,
-        props: {
-          image: this.image,
-          title: `Add ${this.image.name} to a project`,
-        },
+        image: this.image,
+        title: `Add ${this.image.name} To A Project`,
+        type: MODAL_TYPES.LINK_IMAGES,
       });
     },
     async onUnlink() {

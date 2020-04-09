@@ -19,7 +19,9 @@
       />
       <link-images-modal
         v-if="modal.type === MODAL_TYPES.LINK_IMAGES"
-        v-bind="modal.props"
+        :id="modal.id"
+        :image="modal.image"
+        :title="modal.title"
         @dismiss="dismiss"
       />
       <link-links-modal

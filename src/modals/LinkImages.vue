@@ -1,12 +1,5 @@
 <template>
-  <a-modal
-    :is-active="isActive"
-    :is-open="isOpen"
-    max-width="400px"
-    :name="name"
-    :title="title"
-    @close="onClose"
-  >
+  <a-modal :id="id" max-width="400px" :title="title" @dismiss="onDismiss">
     <template slot="content">
       <projects-list
         :areLinking="areLinking"
@@ -16,7 +9,7 @@
       />
     </template>
     <template slot="footer">
-      <a-button @click="onClose">
+      <a-button @click="onDismiss">
         <template v-slot:icon-left>
           <a-close-icon />
         </template>
@@ -37,8 +30,6 @@ import ARemoveIcon from '@/components/icons/ARemoveIcon';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ProjectsList from '@/containers/ProjectsList';
 
-export const LINK_IMAGES_MODAL = 'link-images-modal';
-
 export default {
   name: 'link-images-modal',
   components: {
@@ -47,21 +38,15 @@ export default {
     AModal,
     ProjectsList,
   },
-  computed: {
-    isActive() {
-      return this.$store.getters['modals/active'] === this.name;
-    },
-    isOpen() {
-      return this.$store.getters['modals/allOpen'].includes(this.name);
-    },
-  },
   data() {
     return {
       areLinking: {},
-      name: LINK_IMAGES_MODAL,
     };
   },
   methods: {
+    onDismiss() {
+      this.$emit('dismiss', this.id);
+    },
     async onLink(project) {
       Vue.set(this.areLinking, project.id, project.id);
 
@@ -95,9 +80,6 @@ export default {
         title: 'Image Removed',
         type: TOAST_TYPES.SUCCESS,
       });
-    },
-    onClose() {
-      this.$emit('dismiss', this.id);
     },
   },
   props: {
