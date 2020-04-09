@@ -34,8 +34,21 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       isRemoving: false,
     };
+  },
+  methods: {
+    async load() {
+      this.isLoading = true;
+      const images = await this.$store.dispatch('images/load', [this.id]);
+      this.isLoading = false;
+    },
+  },
+  mounted() {
+    if (this.image === undefined) {
+      this.load();
+    }
   },
 };
 </script>
