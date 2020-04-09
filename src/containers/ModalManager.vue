@@ -9,6 +9,14 @@
         :title="modal.title"
         @dismiss="dismiss"
       />
+      <add-link-modal
+        v-if="modal.type === MODAL_TYPES.ADD_LINK"
+        :id="modal.id"
+        :link="modal.link"
+        :project="modal.project"
+        :title="modal.title"
+        @dismiss="dismiss"
+      />
       <add-project-modal
         v-if="modal.type === MODAL_TYPES.ADD_PROJECT"
         :id="modal.id"
@@ -44,6 +52,7 @@
 
 <script>
 import AddImageModal from '@/modals/AddImage';
+import AddLinkModal from '@/modals/AddLink';
 import AddProjectModal from '@/modals/AddProject';
 import ConfirmDialog from '@/modals/ConfirmDialog';
 import LinkImagesModal from '@/modals/LinkImages';
@@ -51,6 +60,7 @@ import LinkLinksModal from '@/modals/LinkLinks';
 
 export const MODAL_TYPES = {
   ADD_IMAGE: AddImageModal.name,
+  ADD_LINK: AddLinkModal.name,
   ADD_PROJECT: AddProjectModal.name,
   CONFIRM_DIALOG: ConfirmDialog.name,
   LINK_IMAGES: LinkImagesModal.name,
@@ -61,6 +71,7 @@ export default {
   name: 'modal-manager',
   components: {
     AddImageModal,
+    AddLinkModal,
     AddProjectModal,
     ConfirmDialog,
     LinkImagesModal,

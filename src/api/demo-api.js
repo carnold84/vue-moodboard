@@ -372,6 +372,33 @@ export const links = {
       }, DELAY);
     });
   },
+  update: async link => {
+    return new Promise(async (resolve, reject) => {
+      let links = await instance.getItem('links');
+
+      let updatedLink;
+
+      links = links.map(element => {
+        if (element.id === link.id) {
+          const {url} = link;
+          updatedLink = {
+            ...element,
+            ...link,
+            fileName: url,
+          };
+          return updatedLink;
+        }
+
+        return element;
+      });
+
+      await instance.setItem('links', links);
+
+      setTimeout(() => {
+        resolve({link: updatedLink, msg: 'Link updated successfully'});
+      }, DELAY);
+    });
+  },
 };
 
 const getProject = async id => {

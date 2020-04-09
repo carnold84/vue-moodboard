@@ -51,6 +51,13 @@
           </div>
           <a-button
             class="control"
+            :title="`Edit ${item.name}`"
+            @click="onEdit(item)"
+          >
+            <a-create-icon height="16" width="16" />
+          </a-button>
+          <a-button
+            class="control"
             :title="`Delete ${item.name}`"
             @click="onDelete(item)"
           >
@@ -66,6 +73,7 @@
 import Vue from 'vue';
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import AButton from '@/components/AButton';
+import ACreateIcon from '@/components/icons/ACreateIcon';
 import AListIcon from '@/components/icons/AListIcon';
 import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
@@ -78,6 +86,7 @@ export default {
   components: {
     ABlockIcon,
     AButton,
+    ACreateIcon,
     AListIcon,
     AppLoading,
     ARemoveIcon,
@@ -114,14 +123,6 @@ export default {
     };
   },
   methods: {
-    onDelete(link) {
-      this.$store.dispatch('modals/add', {
-        onConfirm: () => this.onConfirmDelete(link.id),
-        text: `Are you sure you want to delete ${link.name}?`,
-        title: 'Delete Link?',
-        type: MODAL_TYPES.CONFIRM_DIALOG,
-      });
-    },
     async onConfirmDelete(id) {
       this.isLoading = true;
 
@@ -152,6 +153,22 @@ export default {
         });
         console.error(response.message);
       }
+    },
+    onDelete(link) {
+      this.$store.dispatch('modals/add', {
+        onConfirm: () => this.onConfirmDelete(link.id),
+        text: `Are you sure you want to delete ${link.name}?`,
+        title: 'Delete Link?',
+        type: MODAL_TYPES.CONFIRM_DIALOG,
+      });
+    },
+    onEdit(link) {
+      this.$store.dispatch('modals/add', {
+        link,
+        project: this.project,
+        title: `Edit ${link.name}`,
+        type: MODAL_TYPES.ADD_LINK,
+      });
     },
     onLinkToProject(link) {
       this.$store.dispatch('modals/add', {
@@ -221,7 +238,7 @@ export default {
 
   .md & {
     column-gap: 10px;
-    grid-template-columns: 18% 18% auto 60px;
+    grid-template-columns: 18% 18% auto 90px;
     row-gap: 30px;
   }
 }
