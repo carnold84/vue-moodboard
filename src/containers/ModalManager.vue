@@ -11,7 +11,10 @@
       />
       <confirm-dialog
         v-if="modal.type === MODAL_TYPES.CONFIRM_DIALOG"
-        v-bind="modal.props"
+        :id="modal.id"
+        :text="modal.text"
+        :title="modal.title"
+        @confirm="modal.onConfirm"
         @dismiss="dismiss"
       />
       <link-images-modal

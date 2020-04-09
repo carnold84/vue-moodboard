@@ -91,13 +91,11 @@ export default {
   },
   methods: {
     onDelete() {
-      this.$store.dispatch('modals/open', {
-        name: MODAL_TYPES.CONFIRM_DIALOG,
-        props: {
-          onConfirm: this.onConfirmDelete,
-          text: `Are you sure you want to delete ${this.image.name}?`,
-          title: 'Delete Image?',
-        },
+      this.$store.dispatch('modals/add', {
+        onConfirm: this.onConfirmDelete,
+        text: `Are you sure you want to delete ${this.image.name}?`,
+        title: 'Delete Image?',
+        type: MODAL_TYPES.CONFIRM_DIALOG,
       });
     },
     async onConfirmDelete() {
@@ -109,7 +107,7 @@ export default {
 
       const response = await this.$store.dispatch('images/delete', this.image);
 
-      if (!response.success) {
+      if (response.success) {
         this.$store.dispatch('toasts/add', {
           text: `"${this.image.name}" was deleted.`,
           timeout: 4000,
@@ -128,7 +126,7 @@ export default {
       }
     },
     onLinkToProject() {
-      this.$store.dispatch('modals/open', {
+      this.$store.dispatch('modals/add', {
         name: MODAL_TYPES.LINK_IMAGES,
         props: {
           image: this.image,

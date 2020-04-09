@@ -115,13 +115,11 @@ export default {
   },
   methods: {
     onDelete(link) {
-      this.$store.dispatch('modals/open', {
-        name: MODAL_TYPES.CONFIRM_DIALOG,
-        props: {
-          onConfirm: () => this.onConfirmDelete(link.id),
-          text: `Are you sure you want to delete ${link.name}?`,
-          title: 'Delete Link?',
-        },
+      this.$store.dispatch('modals/add', {
+        onConfirm: () => this.onConfirmDelete(link.id),
+        text: `Are you sure you want to delete ${link.name}?`,
+        title: 'Delete Link?',
+        type: MODAL_TYPES.CONFIRM_DIALOG,
       });
     },
     async onConfirmDelete(id) {

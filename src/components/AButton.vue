@@ -117,12 +117,12 @@ export default {
 .icon-left {
   align-items: center;
   display: flex;
-  margin: 0 1px 0 0;
+  margin: 0 5px 0 0;
 }
 
 .icon-right {
   align-items: center;
   display: flex;
-  margin: 0 0 0 1px;
+  margin: 0 0 0 5px;
 }
 </style>

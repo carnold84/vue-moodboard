@@ -71,7 +71,6 @@ export default {
   methods: {
     async onSubmit() {
       if (this.name === '') {
-        console.log('error');
         this.errors.name = 'Name is required.';
         return;
       }

@@ -1,27 +1,20 @@
 <template>
-  <a-modal
-    :is-active="isActive"
-    :is-open="isOpen"
-    max-width="400px"
-    :name="name"
-    :title="title"
-    @close="onClose"
-  >
+  <a-modal :id="id" max-width="400px" :title="title" @dismiss="onDismiss">
     <template slot="content">
       <p class="text">{{ text }}</p>
     </template>
     <template slot="footer">
-      <a-button @click="onClose">
+      <a-button @click="onDismiss">
         <template v-slot:icon-left>
           <a-close-icon />
         </template>
-        No
+        <span>No</span>
       </a-button>
-      <a-button v-if="onConfirm" :is-primary="true" @click="onConfirmClick">
+      <a-button :is-primary="true" @click="onConfirmClick">
         <template v-slot:icon-left>
           <a-check-icon />
         </template>
-        Yes
+        <span>Yes</span>
       </a-button>
     </template>
   </a-modal>
@@ -41,26 +34,13 @@ export default {
     ACloseIcon,
     AModal,
   },
-  computed: {
-    isActive() {
-      return this.$store.getters['modals/active'] === this.name;
-    },
-    isOpen() {
-      return this.$store.getters['modals/allOpen'].includes(this.name);
-    },
-  },
-  data() {
-    return {
-      name: 'confirm-dialog',
-    };
-  },
   methods: {
-    onClose() {
+    onDismiss() {
       this.$emit('dismiss', this.id);
     },
     onConfirmClick() {
-      this.onConfirm();
-      this.onClose();
+      this.$emit('confirm', this.id);
+      this.onDismiss();
     },
   },
   props: {
@@ -68,13 +48,10 @@ export default {
       required: true,
       type: String,
     },
-    onConfirm: {
-      type: Function,
-    },
-    title: {
+    text: {
       type: String,
     },
-    text: {
+    title: {
       type: String,
     },
   },
