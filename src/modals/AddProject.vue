@@ -125,6 +125,8 @@ export default {
         console.error(response.message);
       }
 
+      this.isSaving = false;
+
       this.$store.dispatch('toasts/add', {
         text,
         timeout,

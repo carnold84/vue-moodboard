@@ -201,7 +201,7 @@ export default {
     },
     imageId: {
       required: true,
-      type: String,
+      type: [Number, String],
     },
     project: {
       type: Object,

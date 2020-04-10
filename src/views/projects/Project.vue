@@ -25,7 +25,7 @@
             <a-button
               v-if="currentTabId === 'images'"
               :isPrimary="true"
-              :to="{ name: 'project-add-image', params: { id: project.id } }"
+              @click="onAddImage"
             >
               <template v-slot:icon-left>
                 <a-add-icon />
@@ -35,7 +35,7 @@
             <a-button
               v-if="currentTabId === 'links'"
               :isPrimary="true"
-              :to="{ name: 'project-add-link', params: { id: project.id } }"
+              @click="onAddLink"
             >
               <template v-slot:icon-left>
                 <a-add-icon />
@@ -144,6 +144,20 @@ export default {
     };
   },
   methods: {
+    onAddImage() {
+      this.$store.dispatch('modals/add', {
+        project: this.project,
+        title: `Add An Image To ${this.project.name}`,
+        type: MODAL_TYPES.ADD_IMAGE,
+      });
+    },
+    onAddLink() {
+      this.$store.dispatch('modals/add', {
+        project: this.project,
+        title: `Add A Link To ${this.project.name}`,
+        type: MODAL_TYPES.ADD_LINK,
+      });
+    },
     async onConfirmDelete() {
       this.isDeleting = true;
 

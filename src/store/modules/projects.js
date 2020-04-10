@@ -81,6 +81,7 @@ const actions = {
         success: true,
       };
     } catch (error) {
+      console.error(error);
       return {
         error,
         message: `${project.name} couldn't be updated.`,

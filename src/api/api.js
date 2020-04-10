@@ -35,6 +35,8 @@ const request = async (path, type = 'get', params) => {
       request = instance.post(path, params);
     } else if (type === 'delete') {
       request = instance.delete(path, params);
+    } else if (type === 'put') {
+      request = instance.put(path, params);
     }
 
     request
@@ -115,6 +117,11 @@ export const images = {
     
     return response.data;
   },
+  update: async image => {
+    const response = await request('/images', 'put', image);
+    
+    return response.data;
+  },
 };
 
 export const links = {
@@ -154,6 +161,11 @@ export const links = {
     
     return response.data;
   },
+  update: async link => {
+    const response = await request('/links', 'put', link);
+    
+    return response.data;
+  },
 };
   
 export const projects = {
@@ -169,6 +181,11 @@ export const projects = {
   },
   list: async () => {
     const response = await request('/projects');
+    
+    return response.data;
+  },
+  update: async project => {
+    const response = await request('/projects', 'put', project);
     
     return response.data;
   },
