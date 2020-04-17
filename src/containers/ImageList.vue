@@ -90,7 +90,7 @@ export default {
     thumbUrl(image) {
       if (image.format) {
         const rootUrl = 'https://res.cloudinary.com/carnold/image/upload';
-        return `${rootUrl}/w_260/${image.fileName}.${image.format}`;
+        return `${rootUrl}/w_380/${image.fileName}.${image.format}`;
       } else {
         return image.url;
       }

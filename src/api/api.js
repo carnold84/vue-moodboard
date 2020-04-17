@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: process.env.VUE_APP_API_URL || 'http://localhost:8000/api',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });
 
-const TOKEN_NAME = 'aura_token';
-const USER_ID = 'aura_user_id';
+const TOKEN_NAME = 'moodboard_token';
+const USER_ID = 'moodboard_user_id';
 const authToken = localStorage.getItem(TOKEN_NAME);
 let userId = localStorage.getItem(USER_ID);
 
