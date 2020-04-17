@@ -82,12 +82,9 @@ export default {
   justify-content: center;
   line-height: 1.2em;
   outline: transparent solid 2px;
+  padding: 0 5px;
   text-decoration: none;
   transition: all 150ms ease-in-out;
-
-  &:disabled {
-    pointer-events: none;
-  }
 
   &:focus {
     box-shadow: 0 0 0 2px var(--button__outline-color--focus);
@@ -110,6 +107,12 @@ export default {
     &:focus {
       box-shadow: 0 0 0 2px var(--button__outline-color--primary-focus);
     }
+  }
+
+  &:disabled {
+    color: var(--button__color--disabled);
+    fill: var(--button__color--disabled);
+    pointer-events: none;
   }
 }
 

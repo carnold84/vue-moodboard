@@ -1,0 +1,158 @@
+<template>
+  <a-modal :id="id" max-width="540px" :title="title" @dismiss="onDismiss">
+    <template v-slot:content>
+      <app-loading v-if="isSaving" style="height: 250px; position: relative;" />
+      <form v-if="!isSaving" class="form" ref="form" @submit.prevent="onSubmit">
+        <text-input
+          v-model="name"
+          :errors="errors.name"
+          label="Name"
+          name="name"
+          style="margin: 0 0 25px"
+        />
+        <text-input
+          v-model="description"
+          class="text-input"
+          label="Description"
+          name="description"
+          style="margin: 0 0 15px"
+        />
+        <input type="submit" hidden="hidden" />
+      </form>
+    </template>
+    <template v-slot:footer>
+      <a-button :disabled="isSaving" @click="onDismiss">
+        <template v-slot:icon-left>
+          <a-close-icon />
+        </template>
+        <span>Cancel</span>
+      </a-button>
+      <a-button
+        :disabled="isSaving"
+        :isPrimary="true"
+        @click.prevent="onClickSubmit"
+      >
+        <template v-slot:icon-left>
+          <a-check-icon />
+        </template>
+        <span>{{ project ? "Update" : "Create" }}</span>
+      </a-button>
+    </template>
+  </a-modal>
+</template>
+
+<script>
+import AButton from '@/components/AButton';
+import ACheckIcon from '@/components/icons/ACheckIcon';
+import ACloseIcon from '@/components/icons/ACloseIcon';
+import AModal from '@/components/AModal';
+import AppLoading from '@/components/AppLoading';
+import TextInput from '@/components/TextInput';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
+
+export default {
+  name: 'add-project-modal',
+  components: {
+    AButton,
+    ACheckIcon,
+    ACloseIcon,
+    AModal,
+    AppLoading,
+    TextInput,
+  },
+  data() {
+    return {
+      description: this.project ? this.project.description : '',
+      errors: {
+        name: undefined,
+      },
+      isSaving: false,
+      name: this.project ? this.project.name : '',
+    };
+  },
+  methods: {
+    onClickSubmit() {
+      const event = new Event('submit', {
+        bubbles: true,
+        cancelable: true,
+      });
+
+      this.$refs.form.dispatchEvent(event);
+    },
+    onDismiss() {
+      this.$emit('dismiss', this.id);
+    },
+    async onSubmit() {
+      if (this.name === '') {
+        this.errors.name = 'Name is required.';
+        return;
+      }
+
+      this.isSaving = true;
+
+      let data;
+      let response;
+      let text;
+      let timeout = 3000;
+      let title;
+      let type = TOAST_TYPES.SUCCESS;
+
+      if (this.project) {
+        data = {
+          ...this.project,
+          description: this.description,
+          name: this.name,
+        };
+        text = `"${data.name}" was updated.`;
+        title = 'Project Updated';
+        response = await this.$store.dispatch('projects/update', data);
+      } else {
+        data = {
+          description: this.description,
+          name: this.name,
+        };
+        text = `"${data.name}" was created.`;
+        title = 'Project Created';
+        response = await this.$store.dispatch('projects/create', data);
+      }
+
+      if (response.success) {
+        this.onDismiss();
+      } else {
+        text = `"${data.name}" couldn't be updated.`;
+        title = 'Error';
+        type = TOAST_TYPES.ERROR;
+        console.error(response.message);
+      }
+
+      this.isSaving = false;
+
+      this.$store.dispatch('toasts/add', {
+        text,
+        timeout,
+        title,
+        type,
+      });
+    },
+  },
+  props: {
+    id: {
+      required: true,
+      type: String,
+    },
+    project: {
+      type: Object,
+    },
+    title: {
+      type: String,
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
+.form {
+  padding: 25px 40px;
+  width: 100%;
+}
+</style>

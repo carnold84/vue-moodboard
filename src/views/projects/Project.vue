@@ -8,6 +8,12 @@
         :title="project.name"
       >
         <template v-slot:controls>
+          <a-button @click="onEdit">
+            <template v-slot:icon-left>
+              <a-create-icon height="16" width="16" />
+            </template>
+            <span>Edit</span>
+          </a-button>
           <a-select v-if="options" alignMenu="right" :items="options" />
         </template>
       </view-header>
@@ -19,20 +25,20 @@
             <a-button
               v-if="currentTabId === 'images'"
               :isPrimary="true"
-              :to="{ name: 'project-add-image', params: { id: project.id } }"
+              @click="onAddImage"
             >
               <template v-slot:icon-left>
-                <a-add-icon></a-add-icon>
+                <a-add-icon />
               </template>
               <span>Add Image</span>
             </a-button>
             <a-button
               v-if="currentTabId === 'links'"
               :isPrimary="true"
-              :to="{ name: 'project-add-link', params: { id: project.id } }"
+              @click="onAddLink"
             >
               <template v-slot:icon-left>
-                <a-add-icon></a-add-icon>
+                <a-add-icon />
               </template>
               <span>Add Link</span>
             </a-button>
@@ -55,14 +61,16 @@
 import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
+import ACreateIcon from '@/components/icons/ACreateIcon';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
-import { DIALOG_NAME } from '@/modals/AppDialog';
 import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';
+import { MODAL_TYPES } from '@/containers/ModalManager';
+import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -72,6 +80,7 @@ export default {
     AActionBar,
     AAddIcon,
     AButton,
+    ACreateIcon,
     AppLoading,
     ASelect,
     ImageList,
@@ -90,9 +99,9 @@ export default {
       if (this.project) {
         return [
           {
-            callback: this.onDeleteProject,
+            callback: this.onDelete,
             id: 'delete',
-            label: 'Delete',
+            label: `Delete ${this.project.name}`,
           },
         ];
       }
@@ -135,18 +144,24 @@ export default {
     };
   },
   methods: {
-    onDeleteProject() {
-      this.$store.dispatch('modals/open', {
-        name: DIALOG_NAME,
-        props: {
-          onConfirm: this.onConfirmDelete,
-          text: `Are you sure you want to delete ${this.project.name}?`,
-          title: 'Delete Project?',
-        },
+    onAddImage() {
+      this.$store.dispatch('modals/add', {
+        project: this.project,
+        title: `Add An Image To ${this.project.name}`,
+        type: MODAL_TYPES.ADD_IMAGE,
+      });
+    },
+    onAddLink() {
+      this.$store.dispatch('modals/add', {
+        project: this.project,
+        title: `Add A Link To ${this.project.name}`,
+        type: MODAL_TYPES.ADD_LINK,
       });
     },
     async onConfirmDelete() {
       this.isDeleting = true;
+
+      let name = this.project.name;
 
       const response = await this.$store.dispatch(
         'projects/delete',
@@ -154,10 +169,36 @@ export default {
       );
 
       if (response.success) {
+        this.$store.dispatch('toasts/add', {
+          text: `"${name}" was deleted.`,
+          timeout: 4000,
+          title: 'Project Deleted',
+          type: TOAST_TYPES.SUCCESS,
+        });
         this.$router.push('/');
       } else {
+        this.$store.dispatch('toasts/add', {
+          text: `"${name}" couldn't be deleted.`,
+          title: 'Error',
+          type: TOAST_TYPES.ERROR,
+        });
         console.error(response.message);
       }
+    },
+    onDelete() {
+      this.$store.dispatch('modals/add', {
+        onConfirm: this.onConfirmDelete,
+        text: `Are you sure you want to delete ${this.project.name}?`,
+        title: 'Delete Project?',
+        type: MODAL_TYPES.CONFIRM_DIALOG,
+      });
+    },
+    onEdit() {
+      this.$store.dispatch('modals/add', {
+        project: this.project,
+        title: `Edit ${this.project.name}`,
+        type: MODAL_TYPES.ADD_PROJECT,
+      });
     },
   },
 };

@@ -2,7 +2,7 @@
   <view-container>
     <view-header title="Links" description="View and manage all your links.">
       <template v-slot:controls>
-        <a-button :isPrimary="true" :to="{ name: 'links-add-link' }">
+        <a-button :isPrimary="true" @click="onAdd">
           <template v-slot:icon-left>
             <a-add-icon />
           </template>
@@ -21,6 +21,7 @@ import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AButton from '@/components/AButton';
 import LinkList from '@/containers/LinkList';
+import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -32,6 +33,14 @@ export default {
     LinkList,
     ViewContainer,
     ViewHeader,
+  },
+  methods: {
+    onAdd() {
+      this.$store.dispatch('modals/add', {
+        title: 'Create A New Link',
+        type: MODAL_TYPES.ADD_LINK,
+      });
+    },
   },
 };
 </script>

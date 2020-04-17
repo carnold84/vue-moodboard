@@ -32,7 +32,6 @@ export default {
     },
     errors: {
       type: String,
-      default: '',
     },
     id: {
       type: String,
@@ -100,6 +99,6 @@ export default {
 .errors {
   color: var(--textInput__errors__color);
   height: 15px;
-  margin: 8px 0 20px;
+  margin: 8px 0 0;
 }
 </style>

@@ -142,14 +142,14 @@ const getImage = async id => {
 };
 
 export const images = {
-  create: async data => {
+  create: async image => {
     return new Promise(async (resolve, reject) => {
       let images = await instance.getItem('images');
 
       const id = uid();
-      const {projectId, url} = data;
+      const {projectId, url} = image;
       const newImage = {
-        ...data,
+        ...image,
         fileName: url,
         id,
       };
@@ -216,6 +216,33 @@ export const images = {
 
       setTimeout(() => {
         resolve({ ids: { imageId, projectId }, msg: 'Image unlinked successfully' });
+      }, DELAY);
+    });
+  },
+  update: async image => {
+    return new Promise(async (resolve, reject) => {
+      let images = await instance.getItem('images');
+
+      let updatedImage;
+
+      images = images.map(element => {
+        if (element.id === image.id) {
+          const {url} = image;
+          updatedImage = {
+            ...element,
+            ...image,
+            fileName: url,
+          };
+          return updatedImage;
+        }
+
+        return element;
+      });
+
+      await instance.setItem('images', images);
+
+      setTimeout(() => {
+        resolve({image: updatedImage, msg: 'Image updated successfully'});
       }, DELAY);
     });
   },
@@ -345,6 +372,33 @@ export const links = {
       }, DELAY);
     });
   },
+  update: async link => {
+    return new Promise(async (resolve, reject) => {
+      let links = await instance.getItem('links');
+
+      let updatedLink;
+
+      links = links.map(element => {
+        if (element.id === link.id) {
+          const {url} = link;
+          updatedLink = {
+            ...element,
+            ...link,
+            fileName: url,
+          };
+          return updatedLink;
+        }
+
+        return element;
+      });
+
+      await instance.setItem('links', links);
+
+      setTimeout(() => {
+        resolve({link: updatedLink, msg: 'Link updated successfully'});
+      }, DELAY);
+    });
+  },
 };
 
 const getProject = async id => {
@@ -419,6 +473,31 @@ export const projects = {
 
       setTimeout(() => {
         resolve(projects);
+      }, DELAY);
+    });
+  },
+  update: async project => {
+    return new Promise(async (resolve, reject) => {
+      let projects = await instance.getItem('projects');
+
+      let updatedProject;
+
+      projects = projects.map(element => {
+        if (element.id === project.id) {
+          updatedProject = {
+            ...element,
+            ...project,
+          };
+          return updatedProject;
+        }
+
+        return element;
+      });
+
+      await instance.setItem('projects', projects);
+
+      setTimeout(() => {
+        resolve({project: updatedProject, msg: 'Project updated successfully'});
       }, DELAY);
     });
   },

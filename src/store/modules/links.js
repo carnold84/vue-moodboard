@@ -147,6 +147,23 @@ const actions = {
       };
     }
   },
+  async update({ commit }, link) {
+    try {
+      let response = await api.links.update(link);
+      commit('add', response.link);
+
+      return {
+        message: `${link.name} was updated.`,
+        success: true,
+      };
+    } catch (error) {
+      return {
+        error,
+        message: `${link.name} couldn't be updated.`,
+        success: false,
+      };
+    }
+  },
 };
 
 const mutations = {

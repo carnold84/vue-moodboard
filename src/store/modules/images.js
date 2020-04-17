@@ -98,27 +98,6 @@ const actions = {
       };
     }
   },
-  async unlink({ commit }, {image, project}) {
-    if (project) {
-      const response = await api.images.unlink({imageId: image.id, projectId: project.id});
-      const {imageId, projectId} = response.ids;
-
-      commit('projects/unlinkImageFromProject', {
-        imageId,
-        projectId,
-      }, { root: true });
-
-      return {
-        message: `${image.name} was removed from ${project.name}.`,
-        success: true,
-      };
-    } else {
-      return {
-        message: `${image.name} could not be remove from ${project.name}.`,
-        success: false,
-      };
-    }
-  },
   async load({ commit, state }, ids) {
     try {
       let exclude;
@@ -142,6 +121,44 @@ const actions = {
       return {
         error,
         message: 'Could not load images.',
+        success: false,
+      };
+    }
+  },
+  async unlink({ commit }, {image, project}) {
+    if (project) {
+      const response = await api.images.unlink({imageId: image.id, projectId: project.id});
+      const {imageId, projectId} = response.ids;
+
+      commit('projects/unlinkImageFromProject', {
+        imageId,
+        projectId,
+      }, { root: true });
+
+      return {
+        message: `${image.name} was removed from ${project.name}.`,
+        success: true,
+      };
+    } else {
+      return {
+        message: `${image.name} could not be remove from ${project.name}.`,
+        success: false,
+      };
+    }
+  },
+  async update({ commit }, image) {
+    try {
+      let response = await api.images.update(image);
+      commit('add', response.image);
+
+      return {
+        message: `${image.name} was updated.`,
+        success: true,
+      };
+    } catch (error) {
+      return {
+        error,
+        message: `${image.name} couldn't be updated.`,
         success: false,
       };
     }

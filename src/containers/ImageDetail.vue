@@ -1,50 +1,67 @@
 <template>
   <div class="image-detail">
-    <view-header
-      :description="image.description"
-      :on-back="backUrl"
-      :title="image.name"
-      class="image-view-header"
-    >
-      <template v-slot:controls>
-        <a-select v-if="options" alignMenu="right" :items="options" />
-      </template>
-    </view-header>
-    <div class="image-content">
-      <a
-        :href="imageUrl"
-        rel="noreferrer"
-        target="_blank"
-        title="Click to view full image"
+    <app-loading v-if="isLoading || isRemoving" />
+    <div v-if="image && !isLoading && !isRemoving" class="content">
+      <view-header
+        :description="image.description"
+        :on-back="backUrl"
+        :title="image.name"
+        class="image-view-header"
       >
-        <a-picture
-          :alt="image.name"
-          border="1px solid var(--theme4)"
-          :fill-type="TYPES.FIT"
-          :src="imageUrl"
-          class="image"
-        />
-      </a>
+        <template v-slot:controls>
+          <a-button @click="onEdit">
+            <template v-slot:icon-left>
+              <a-create-icon height="16" width="16" />
+            </template>
+            <span>Edit</span>
+          </a-button>
+          <a-select v-if="options" alignMenu="right" :items="options" />
+        </template>
+      </view-header>
+      <div class="image-content">
+        <a
+          :href="imageUrl"
+          rel="noreferrer"
+          target="_blank"
+          title="Click to view full image"
+        >
+          <a-picture
+            :alt="image.name"
+            border="1px solid var(--theme4)"
+            :fill-type="TYPES.FIT"
+            :src="imageUrl"
+            class="image"
+          />
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import AButton from '@/components/AButton';
+import ACreateIcon from '@/components/icons/ACreateIcon';
 import APicture, { TYPES } from '@/components/APicture';
-import { DIALOG_NAME } from '@/modals/AppDialog';
+import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
-import { LINK_IMAGES_MODAL } from '../modals/LinkImages.vue';
+import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
   name: 'image-detail',
   components: {
+    AButton,
+    ACreateIcon,
+    AppLoading,
     APicture,
     ASelect,
     ViewHeader,
   },
   computed: {
+    image() {
+      return this.$store.getters['images/find'](this.imageId);
+    },
     imageUrl() {
       if (this.image.format) {
         const rootUrl = 'https://res.cloudinary.com/carnold/image/upload';
@@ -86,20 +103,16 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       isRemoving: false,
       TYPES,
     };
   },
   methods: {
-    onDelete() {
-      this.$store.dispatch('modals/open', {
-        name: DIALOG_NAME,
-        props: {
-          onConfirm: this.onConfirmDelete,
-          text: `Are you sure you want to delete ${this.image.name}?`,
-          title: 'Delete Image?',
-        },
-      });
+    async load() {
+      this.isLoading = true;
+      const images = await this.$store.dispatch('images/load', [this.imageId]);
+      this.isLoading = false;
     },
     async onConfirmDelete() {
       this.isRemoving = true;
@@ -110,7 +123,7 @@ export default {
 
       const response = await this.$store.dispatch('images/delete', this.image);
 
-      if (!response.success) {
+      if (response.success) {
         this.$store.dispatch('toasts/add', {
           text: `"${this.image.name}" was deleted.`,
           timeout: 4000,
@@ -128,13 +141,27 @@ export default {
         console.error(response.message);
       }
     },
+    onDelete() {
+      this.$store.dispatch('modals/add', {
+        onConfirm: this.onConfirmDelete,
+        text: `Are you sure you want to delete ${this.image.name}?`,
+        title: 'Delete Image?',
+        type: MODAL_TYPES.CONFIRM_DIALOG,
+      });
+    },
+    onEdit() {
+      this.$store.dispatch('modals/add', {
+        image: this.image,
+        project: this.project,
+        title: `Edit ${this.image.name}`,
+        type: MODAL_TYPES.ADD_IMAGE,
+      });
+    },
     onLinkToProject() {
-      this.$store.dispatch('modals/open', {
-        name: LINK_IMAGES_MODAL,
-        props: {
-          image: this.image,
-          title: `Add ${this.image.name} to a project`,
-        },
+      this.$store.dispatch('modals/add', {
+        image: this.image,
+        title: `Add ${this.image.name} To A Project`,
+        type: MODAL_TYPES.LINK_IMAGES,
       });
     },
     async onUnlink() {
@@ -146,19 +173,35 @@ export default {
       });
 
       if (response.success) {
+        this.$store.dispatch('toasts/add', {
+          text: `"${this.image.name}" was removed from "${this.project.name}".`,
+          timeout: 4000,
+          title: 'Image Removed',
+          type: TOAST_TYPES.SUCCESS,
+        });
         this.$router.push(this.backUrl);
       } else {
+        this.$store.dispatch('toasts/add', {
+          text: `"${this.image.name}" couldn't be removed.`,
+          title: 'Error',
+          type: TOAST_TYPES.ERROR,
+        });
         console.error(response.message);
       }
     },
+  },
+  mounted() {
+    if (this.image === undefined) {
+      this.load();
+    }
   },
   props: {
     backUrl: {
       type: [Object, String],
     },
-    image: {
+    imageId: {
       required: true,
-      type: Object,
+      type: [Number, String],
     },
     project: {
       type: Object,
@@ -172,10 +215,17 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 }
 
 .image-view-header {
   z-index: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .image-content {

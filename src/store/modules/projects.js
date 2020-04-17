@@ -70,6 +70,25 @@ const actions = {
       };
     }
   },
+  async update({ commit }, project) {
+    try {
+      let response = await api.projects.update(project);
+      commit('add', response.project);
+      
+      return {
+        message: `${response.project.name} was updated.`,
+        project: response.project,
+        success: true,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        error,
+        message: `${project.name} couldn't be updated.`,
+        success: false,
+      };
+    }
+  },
 };
 
 const mutations = {
