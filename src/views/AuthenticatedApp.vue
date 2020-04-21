@@ -141,6 +141,10 @@ export default {
 
   .app-logo {
     align-self: center;
+    display: flex;
+    left: 50%;
+    margin: 0 0 0 -43px;
+    position: absolute;
   }
 
   .app-menu-btn {

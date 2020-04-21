@@ -6,7 +6,6 @@
           height="30px"
           style="align-self: center; margin: 0 10px 0 0;"
         ></app-logo>
-        <h1 class="title">{{ title }}</h1>
       </router-link>
     </div>
     <ul>

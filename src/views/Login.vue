@@ -3,8 +3,7 @@
     <app-loading v-if="isLoggingIn" diameter="50px"></app-loading>
     <div v-if="!isLoggingIn" class="container">
       <div class="app-logo">
-        <app-logo class="logo"></app-logo>
-        <h2 class="app-name">{{ appName }}</h2>
+        <app-logo height="40px"></app-logo>
       </div>
       <form class="form" @submit.prevent="login">
         <p v-if="message" class="error">{{ message }}</p>
@@ -120,11 +119,7 @@ export default {
 .app-logo {
   align-items: center;
   display: flex;
-  margin: 0 0 40px;
-}
-
-.logo {
-  margin: 0 10px 0 0;
+  margin: 0 0 30px;
 }
 
 .app-name {
