@@ -9,7 +9,7 @@
         :imageUrl="image.imageUrl"
         :title="image.title"
         :to="image.to"
-      ></a-image-link>
+      />
     </div>
   </div>
 </template>

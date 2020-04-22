@@ -3,12 +3,12 @@
     <form class="content" @submit.prevent="create">
       <view-header :description="subTitle" :on-back="backUrl" :title="title">
         <template v-slot:controls>
-          <a-button :to="backUrl">
+          <router-button :to="backUrl">
             <template v-slot:icon-left>
               <a-close-icon />
             </template>
             Cancel
-          </a-button>
+          </router-button>
           <a-button :isPrimary="true" type="submit">
             <template v-slot:icon-left>
               <a-check-icon />
@@ -38,6 +38,7 @@ import { AButton, ALoading } from 'aura-design-system';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
+import RouterButton from '@/components/RouterButton';
 import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -48,6 +49,7 @@ export default {
     ACheckIcon,
     ACloseIcon,
     ALoading,
+    RouterButton,
     TextInput,
     ViewHeader,
   },

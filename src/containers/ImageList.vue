@@ -5,7 +5,7 @@
       v-if="!isLoading && images.length === 0"
       text="You haven't got any images."
     >
-      <a-button
+      <router-button
         :isPrimary="true"
         :to="
           project
@@ -17,26 +17,27 @@
           <a-add-icon />
         </template>
         <span>Add One!</span>
-      </a-button>
+      </router-button>
     </a-message-panel>
     <a-image-grid v-if="!isLoading && images.length > 0" :images="images" />
   </div>
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
+import { ALoading } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
+import RouterButton from '@/components/RouterButton';
 
 export default {
   name: 'image-list',
   components: {
     AAddIcon,
-    AButton,
     ALoading,
     AImageGrid,
     AMessagePanel,
+    RouterButton,
   },
   computed: {
     images() {

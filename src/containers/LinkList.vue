@@ -5,7 +5,7 @@
       v-if="!isLoading && links.length === 0"
       text="You haven't got any links."
     >
-      <a-button
+      <router-button
         :isPrimary="true"
         :to="
           project
@@ -17,7 +17,7 @@
           <a-add-icon />
         </template>
         <span>Add One!</span>
-      </a-button>
+      </router-button>
     </a-message-panel>
     <links-table
       v-if="!isLoading && links.length > 0"
@@ -28,19 +28,20 @@
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
+import { ALoading } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AMessagePanel from '@/components/AMessagePanel';
 import LinksTable from '@/containers/LinksTable';
+import RouterButton from '@/components/RouterButton';
 
 export default {
   name: 'link-list',
   components: {
     AAddIcon,
-    AButton,
     ALoading,
     AMessagePanel,
     LinksTable,
+    RouterButton,
   },
   computed: {
     links() {

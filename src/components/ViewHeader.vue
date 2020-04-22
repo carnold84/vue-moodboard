@@ -11,7 +11,7 @@
         </template>
         <span>Back</span>
       </a-button>
-      <a-button
+      <router-button
         v-if="onBack && !isBackFunction"
         :to="onBack"
         class="title-back-btn"
@@ -20,7 +20,7 @@
           <a-arrow-back-icon />
         </template>
         <span>Back</span>
-      </a-button>
+      </router-button>
       <div class="title">
         <h2 v-if="title" class="title-text">{{ title }}</h2>
       </div>
@@ -37,12 +37,14 @@
 <script>
 import { AButton } from 'aura-design-system';
 import AArrowBackIcon from '@/components/icons/AArrowBackIcon';
+import RouterButton from '@/components/RouterButton';
 
 export default {
   name: 'view-header',
   components: {
     AArrowBackIcon,
     AButton,
+    RouterButton,
   },
   computed: {
     isBackFunction() {
