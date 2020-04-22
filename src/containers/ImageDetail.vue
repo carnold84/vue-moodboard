@@ -39,8 +39,10 @@
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
-import ACreateIcon from '@/components/icons/ACreateIcon';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+
 import APicture, { TYPES } from '@/components/APicture';
 import ASelect from '@/components/ASelect';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';

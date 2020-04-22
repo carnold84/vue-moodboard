@@ -28,8 +28,9 @@
 </template>
 
 <script>
-import { ALoading } from 'aura-design-system';
-import AAddIcon from '@/components/icons/AAddIcon';
+import ALoading from 'aura-design-system/src/ALoading';
+import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
+
 import AMessagePanel from '@/components/AMessagePanel';
 import LinksTable from '@/containers/LinksTable';
 import RouterButton from '@/components/RouterButton';

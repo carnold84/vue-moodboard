@@ -34,9 +34,11 @@
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
-import ACheckIcon from '@/components/icons/ACheckIcon';
-import ACloseIcon from '@/components/icons/ACloseIcon';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import RouterButton from '@/components/RouterButton';
 import TextInput from '@/components/TextInput';

@@ -26,9 +26,10 @@
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
-import AAddIcon from '@/components/icons/AAddIcon';
-import ARemoveIcon from '@/components/icons/ARemoveIcon';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
+import ARemoveIcon from 'aura-design-system/src/icons/ARemoveIcon';
 
 export default {
   name: 'projects-list',

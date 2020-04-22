@@ -71,11 +71,13 @@
 
 <script>
 import Vue from 'vue';
-import { AButton, ALoading } from 'aura-design-system';
-import ABlockIcon from '@/components/icons/ABlockIcon';
-import ACreateIcon from '@/components/icons/ACreateIcon';
-import AListIcon from '@/components/icons/AListIcon';
-import ARemoveIcon from '@/components/icons/ARemoveIcon';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ABlockIcon from 'aura-design-system/src/icons/ABlockIcon';
+import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import AListIcon from 'aura-design-system/src/icons/AListIcon';
+import ARemoveIcon from 'aura-design-system/src/icons/ARemoveIcon';
+
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import { MODAL_TYPES } from '@/containers/ModalManager';
 import Resizable from '@/components/Resizable';
