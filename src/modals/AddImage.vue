@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
+import { AButton } from 'aura-design-system';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';

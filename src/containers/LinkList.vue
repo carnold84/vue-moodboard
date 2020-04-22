@@ -28,8 +28,8 @@
 </template>
 
 <script>
+import { AButton } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
 import AppLoading from '@/components/AppLoading';
 import AMessagePanel from '@/components/AMessagePanel';
 import LinksTable from '@/containers/LinksTable';

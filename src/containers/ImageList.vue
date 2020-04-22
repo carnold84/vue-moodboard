@@ -24,8 +24,8 @@
 </template>
 
 <script>
+import { AButton } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
 import AImageGrid from '@/components/AImageGrid';
 import AppLoading from '@/components/AppLoading';
 import AMessagePanel from '@/components/AMessagePanel';

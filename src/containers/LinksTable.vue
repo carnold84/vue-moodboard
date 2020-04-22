@@ -71,8 +71,8 @@
 
 <script>
 import Vue from 'vue';
+import { AButton } from 'aura-design-system';
 import ABlockIcon from '@/components/icons/ABlockIcon';
-import AButton from '@/components/AButton';
 import ACreateIcon from '@/components/icons/ACreateIcon';
 import AListIcon from '@/components/icons/AListIcon';
 import AppLoading from '@/components/AppLoading';

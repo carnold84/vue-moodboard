@@ -21,8 +21,8 @@
 
 <script>
 import Vue from 'vue';
+import { AButton } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
 import AppLoading from '@/components/AppLoading';

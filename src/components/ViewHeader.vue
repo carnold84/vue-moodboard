@@ -35,8 +35,8 @@
 </template>
 
 <script>
+import { AButton } from 'aura-design-system';
 import AArrowBackIcon from '@/components/icons/AArrowBackIcon';
-import AButton from '@/components/AButton';
 
 export default {
   name: 'view-header',

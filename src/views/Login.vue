@@ -35,8 +35,8 @@
 </template>
 
 <script>
+import { AButton } from 'aura-design-system';
 import appConfig from '@/app.config';
-import AButton from '@/components/AButton';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';

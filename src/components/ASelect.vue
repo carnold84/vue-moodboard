@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
+import { AButton } from 'aura-design-system';
 import AMoreIcon from '@/components/icons/AMoreIcon';
 import vClickOutside from 'v-click-outside';
 

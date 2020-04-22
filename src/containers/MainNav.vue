@@ -62,8 +62,8 @@
 </template>
 
 <script>
+import { AButton } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
 import ALogoutIcon from '@/components/icons/ALogoutIcon';
 import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';

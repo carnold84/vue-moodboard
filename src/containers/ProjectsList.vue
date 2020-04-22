@@ -26,8 +26,8 @@
 </template>
 
 <script>
+import { AButton } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
 import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
 

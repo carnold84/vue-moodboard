@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
+import { AButton } from 'aura-design-system';
 import ACreateIcon from '@/components/icons/ACreateIcon';
 import APicture, { TYPES } from '@/components/APicture';
 import AppLoading from '@/components/AppLoading';

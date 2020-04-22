@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
+import { AButton } from 'aura-design-system';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 
 export default {

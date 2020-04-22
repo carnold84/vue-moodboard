@@ -58,9 +58,9 @@
 </template>
 
 <script>
+import { AButton } from 'aura-design-system';
 import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
 import ACreateIcon from '@/components/icons/ACreateIcon';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
