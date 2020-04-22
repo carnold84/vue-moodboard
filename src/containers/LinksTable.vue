@@ -1,6 +1,6 @@
 <template>
   <div class="links-table">
-    <app-loading v-if="isLoading" />
+    <a-loading v-if="isLoading" />
     <div v-if="!isLoading" class="list" :class="breakpoints">
       <resizable @resize="onResize" />
       <div v-for="item of links" :key="item.id" class="row">
@@ -71,11 +71,10 @@
 
 <script>
 import Vue from 'vue';
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import ABlockIcon from '@/components/icons/ABlockIcon';
 import ACreateIcon from '@/components/icons/ACreateIcon';
 import AListIcon from '@/components/icons/AListIcon';
-import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import { MODAL_TYPES } from '@/containers/ModalManager';
@@ -88,7 +87,7 @@ export default {
     AButton,
     ACreateIcon,
     AListIcon,
-    AppLoading,
+    ALoading,
     ARemoveIcon,
     Resizable,
   },

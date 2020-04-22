@@ -2,7 +2,7 @@
   <ul class="projects-list">
     <li v-for="project of projects" :key="project.id" class="project-item">
       <div class="control">
-        <app-loading v-if="areLinking[project.id]" diameter="20" />
+        <a-loading v-if="areLinking[project.id]" diameter="20" />
         <a-button
           v-if="!areLinking[project.id] && !isLinked(project)"
           @click="onLink(project)"
@@ -26,9 +26,8 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AppLoading from '@/components/AppLoading';
 import ARemoveIcon from '@/components/icons/ARemoveIcon';
 
 export default {
@@ -36,7 +35,7 @@ export default {
   components: {
     AAddIcon,
     AButton,
-    AppLoading,
+    ALoading,
     ARemoveIcon,
   },
   computed: {

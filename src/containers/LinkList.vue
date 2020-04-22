@@ -1,6 +1,6 @@
 <template>
   <div class="link-list">
-    <app-loading v-if="isLoading" />
+    <a-loading v-if="isLoading" />
     <a-message-panel
       v-if="!isLoading && links.length === 0"
       text="You haven't got any links."
@@ -28,9 +28,8 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
-import AppLoading from '@/components/AppLoading';
 import AMessagePanel from '@/components/AMessagePanel';
 import LinksTable from '@/containers/LinksTable';
 
@@ -39,7 +38,7 @@ export default {
   components: {
     AAddIcon,
     AButton,
-    AppLoading,
+    ALoading,
     AMessagePanel,
     LinksTable,
   },

@@ -8,8 +8,6 @@
 import { ThemeProvider } from 'vue-styled-components';
 import { themes } from 'aura-design-system';
 
-console.log(themes);
-
 export default {
   components: {
     ThemeProvider,

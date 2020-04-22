@@ -1,6 +1,6 @@
 <template>
   <div class="image-list">
-    <app-loading v-if="isLoading" />
+    <a-loading v-if="isLoading" />
     <a-message-panel
       v-if="!isLoading && images.length === 0"
       text="You haven't got any images."
@@ -24,10 +24,9 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
 import AImageGrid from '@/components/AImageGrid';
-import AppLoading from '@/components/AppLoading';
 import AMessagePanel from '@/components/AMessagePanel';
 
 export default {
@@ -35,7 +34,7 @@ export default {
   components: {
     AAddIcon,
     AButton,
-    AppLoading,
+    ALoading,
     AImageGrid,
     AMessagePanel,
   },

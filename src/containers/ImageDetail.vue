@@ -1,6 +1,6 @@
 <template>
   <div class="image-detail">
-    <app-loading v-if="isLoading || isRemoving" />
+    <a-loading v-if="isLoading || isRemoving" />
     <div v-if="image && !isLoading && !isRemoving" class="content">
       <view-header
         :description="image.description"
@@ -39,10 +39,9 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import ACreateIcon from '@/components/icons/ACreateIcon';
 import APicture, { TYPES } from '@/components/APicture';
-import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import { MODAL_TYPES } from '@/containers/ModalManager';
@@ -53,7 +52,7 @@ export default {
   components: {
     AButton,
     ACreateIcon,
-    AppLoading,
+    ALoading,
     APicture,
     ASelect,
     ViewHeader,

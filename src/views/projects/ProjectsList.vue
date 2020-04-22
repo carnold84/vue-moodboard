@@ -5,7 +5,7 @@
         <a-select v-if="options" alignMenu="right" :items="options" />
       </template>
     </view-header>
-    <app-loading v-if="projects === undefined"></app-loading>
+    <a-loading v-if="projects === undefined" />
     <div v-if="projects && projects.length === 0">No Projects</div>
     <div v-if="projects && projects.length > 0">
       <div v-for="project in projects" :key="project.id">
@@ -19,8 +19,8 @@
 </template>
 
 <script>
+import { ALoading } from 'aura-design-system';
 import AImageLink from '@/components/AImageLink';
-import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
@@ -29,7 +29,7 @@ export default {
   name: 'projects',
   components: {
     AImageLink,
-    AppLoading,
+    ALoading,
     ASelect,
     ViewContainer,
     ViewHeader,

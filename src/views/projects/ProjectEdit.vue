@@ -1,6 +1,6 @@
 <template>
   <view-container>
-    <app-loading v-if="isSaving === true"></app-loading>
+    <a-loading v-if="isSaving === true" />
     <form v-if="isSaving === false" class="form" @submit.prevent="create">
       <view-header
         description="Create a project to save images, links and notes."
@@ -36,10 +36,9 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
-import AppLoading from '@/components/AppLoading';
 import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
@@ -50,7 +49,7 @@ export default {
     ACheckIcon,
     ACloseIcon,
     AButton,
-    AppLoading,
+    ALoading,
     TextInput,
     ViewContainer,
     ViewHeader,

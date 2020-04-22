@@ -1,6 +1,6 @@
 <template>
   <view-container>
-    <app-loading v-if="!project"></app-loading>
+    <a-loading v-if="!project" />
     <add-image-form
       v-if="project"
       :back-url="backUrl"
@@ -12,15 +12,15 @@
 </template>
 
 <script>
+import { ALoading } from 'aura-design-system';
 import AddImageForm from '@/containers/AddImageForm';
-import AppLoading from '@/components/AppLoading';
 import ViewContainer from '@/components/ViewContainer';
 
 export default {
   name: 'project-add-image',
   components: {
     AddImageForm,
-    AppLoading,
+    ALoading,
     ViewContainer,
   },
   computed: {

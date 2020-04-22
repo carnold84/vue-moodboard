@@ -18,7 +18,7 @@
         </template>
       </view-header>
       <div class="content">
-        <app-loading v-if="isSaving" />
+        <a-loading v-if="isSaving" />
         <div v-if="!isSaving" class="content">
           <text-input v-model="name" label="Name" name="name" />
           <text-input
@@ -34,10 +34,9 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
-import AppLoading from '@/components/AppLoading';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
@@ -48,7 +47,7 @@ export default {
     AButton,
     ACheckIcon,
     ACloseIcon,
-    AppLoading,
+    ALoading,
     TextInput,
     ViewHeader,
   },

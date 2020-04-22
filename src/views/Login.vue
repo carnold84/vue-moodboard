@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrapper">
-    <app-loading v-if="isLoggingIn" diameter="50px"></app-loading>
+    <a-loading v-if="isLoggingIn" diameter="50px" />
     <div v-if="!isLoggingIn" class="container">
       <div class="app-logo">
         <app-logo height="40px"></app-logo>
@@ -35,10 +35,9 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import appConfig from '@/app.config';
 import ACheckIcon from '@/components/icons/ACheckIcon';
-import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
 import TextInput from '@/components/TextInput';
 
@@ -47,7 +46,7 @@ export default {
   components: {
     AButton,
     ACheckIcon,
-    AppLoading,
+    ALoading,
     AppLogo,
     TextInput,
   },

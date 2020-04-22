@@ -22,11 +22,8 @@
 <script>
 import Vue from 'vue';
 import { AButton } from 'aura-design-system';
-import AAddIcon from '@/components/icons/AAddIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
-import AppLoading from '@/components/AppLoading';
-import ARemoveIcon from '@/components/icons/ARemoveIcon';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ProjectsList from '@/containers/ProjectsList';
 

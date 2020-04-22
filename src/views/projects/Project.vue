@@ -1,6 +1,6 @@
 <template>
   <view-container>
-    <app-loading v-if="project === undefined || isDeleting"></app-loading>
+    <a-loading v-if="project === undefined || isDeleting" />
     <div v-if="project && !isDeleting">
       <view-header
         :description="project.description"
@@ -58,14 +58,13 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import ACreateIcon from '@/components/icons/ACreateIcon';
 import AImageGrid from '@/components/AImageGrid';
 import AMessagePanel from '@/components/AMessagePanel';
 import APicture from '@/components/APicture';
-import AppLoading from '@/components/AppLoading';
 import ASelect from '@/components/ASelect';
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';
@@ -81,7 +80,7 @@ export default {
     AAddIcon,
     AButton,
     ACreateIcon,
-    AppLoading,
+    ALoading,
     ASelect,
     ImageList,
     LinkList,

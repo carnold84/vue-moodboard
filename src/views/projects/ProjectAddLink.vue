@@ -1,6 +1,6 @@
 <template>
   <view-container>
-    <app-loading v-if="!project" />
+    <a-loading v-if="!project" />
     <add-link-form
       v-if="project"
       :back-url="backUrl"
@@ -12,15 +12,15 @@
 </template>
 
 <script>
+import { ALoading } from 'aura-design-system';
 import AddLinkForm from '@/containers/AddLinkForm';
-import AppLoading from '@/components/AppLoading';
 import ViewContainer from '@/components/ViewContainer';
 
 export default {
   name: 'project-add-link',
   components: {
     AddLinkForm,
-    AppLoading,
+    ALoading,
     ViewContainer,
   },
   computed: {

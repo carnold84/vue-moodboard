@@ -1,7 +1,7 @@
 <template>
   <a-modal :id="id" max-width="540px" :title="title" @dismiss="onDismiss">
     <template v-slot:content>
-      <app-loading v-if="isSaving" style="height: 250px; position: relative;" />
+      <a-loading v-if="isSaving" style="height: 250px; position: relative;" />
       <form v-if="!isSaving" class="form" ref="form" @submit.prevent="onSubmit">
         <text-input
           v-model="name"
@@ -42,11 +42,10 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
+import { AButton, ALoading } from 'aura-design-system';
 import ACheckIcon from '@/components/icons/ACheckIcon';
 import ACloseIcon from '@/components/icons/ACloseIcon';
 import AModal from '@/components/AModal';
-import AppLoading from '@/components/AppLoading';
 import TextInput from '@/components/TextInput';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 
@@ -56,8 +55,8 @@ export default {
     AButton,
     ACheckIcon,
     ACloseIcon,
+    ALoading,
     AModal,
-    AppLoading,
     TextInput,
   },
   data() {
