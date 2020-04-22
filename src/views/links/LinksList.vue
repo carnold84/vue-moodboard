@@ -18,7 +18,6 @@
 
 <script>
 import { AButton } from 'aura-design-system';
-import AActionBar from '@/components/AActionBar';
 import AAddIcon from '@/components/icons/AAddIcon';
 import LinkList from '@/containers/LinkList';
 import { MODAL_TYPES } from '@/containers/ModalManager';

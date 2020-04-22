@@ -20,8 +20,18 @@
     </div>
     <div v-if="project && !isDeleting">
       <div class="tabs">
-        <a-action-bar :currentTabId="currentTabId" :tabs="tabs">
-          <template v-slot:controls>
+        <a-action-bar>
+          <template v-slot:controls-left>
+            <router-link
+              v-for="tab of tabs"
+              :key="tab.id"
+              :to="tab.to"
+              style="text-decoration: none;"
+            >
+              <a-tab :is-active="currentTabId === tab.id" :label="tab.label" />
+            </router-link>
+          </template>
+          <template v-slot:controls-right>
             <a-button
               v-if="currentTabId === 'images'"
               :isPrimary="true"
@@ -58,8 +68,7 @@
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
-import AActionBar from '@/components/AActionBar';
+import { AActionBar, AButton, ALoading, ATab } from 'aura-design-system';
 import AAddIcon from '@/components/icons/AAddIcon';
 import ACreateIcon from '@/components/icons/ACreateIcon';
 import AImageGrid from '@/components/AImageGrid';
@@ -82,6 +91,7 @@ export default {
     ACreateIcon,
     ALoading,
     ASelect,
+    ATab,
     ImageList,
     LinkList,
     ViewContainer,
