@@ -35,9 +35,11 @@
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+
 import appConfig from '@/app.config';
-import ACheckIcon from '@/components/icons/ACheckIcon';
 import AppLogo from '@/components/AppLogo';
 import TextInput from '@/components/TextInput';
 

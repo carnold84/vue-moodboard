@@ -38,9 +38,10 @@
 </template>
 
 <script>
-import { ALoading } from 'aura-design-system';
+import ALoading from 'aura-design-system/src/ALoading';
+import AMenuIcon from 'aura-design-system/src/icons/AMenuIcon';
+
 import appConfig from '@/app.config';
-import AMenuIcon from '@/components/icons/AMenuIcon';
 import AppLogo from '@/components/AppLogo';
 import MainNav from '@/containers/MainNav';
 import ModalManager from '@/containers/ModalManager';

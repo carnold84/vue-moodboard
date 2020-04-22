@@ -17,8 +17,9 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
-import AAddIcon from '@/components/icons/AAddIcon';
+import AButton from 'aura-design-system/src/AButton';
+import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
+
 import LinkList from '@/containers/LinkList';
 import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewContainer from '@/components/ViewContainer';

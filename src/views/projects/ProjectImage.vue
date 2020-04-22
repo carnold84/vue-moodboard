@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import { ALoading } from 'aura-design-system';
+import ALoading from 'aura-design-system/src/ALoading';
+
 import ImageDetail from '@/containers/ImageDetail';
 import ViewContainer from '@/components/ViewContainer';
 

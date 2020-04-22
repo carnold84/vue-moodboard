@@ -36,9 +36,11 @@
 </template>
 
 <script>
-import { AButton, ALoading } from 'aura-design-system';
-import ACheckIcon from '@/components/icons/ACheckIcon';
-import ACloseIcon from '@/components/icons/ACloseIcon';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+
 import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';

@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { ALoading } from 'aura-design-system';
+import ALoading from 'aura-design-system/src/ALoading';
+
 import AddImageForm from '@/containers/AddImageForm';
 import ViewContainer from '@/components/ViewContainer';
 
