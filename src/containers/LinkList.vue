@@ -29,9 +29,9 @@
 
 <script>
 import ALoading from 'aura-design-system/src/ALoading';
+import AMessagePanel from 'aura-design-system/src/AMessagePanel';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 
-import AMessagePanel from '@/components/AMessagePanel';
 import LinksTable from '@/containers/LinksTable';
 import RouterButton from '@/components/RouterButton';
 

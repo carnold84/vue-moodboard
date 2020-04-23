@@ -25,10 +25,10 @@
 
 <script>
 import ALoading from 'aura-design-system/src/ALoading';
+import AMessagePanel from 'aura-design-system/src/AMessagePanel';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 
 import AImageGrid from '@/components/AImageGrid';
-import AMessagePanel from '@/components/AMessagePanel';
 import RouterButton from '@/components/RouterButton';
 
 export default {

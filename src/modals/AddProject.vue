@@ -44,10 +44,10 @@
 <script>
 import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
+import AModal from 'aura-design-system/src/AModal';
 import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
 import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
 
-import AModal from '@/components/AModal';
 import TextInput from '@/components/TextInput';
 import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 
