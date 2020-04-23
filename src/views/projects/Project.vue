@@ -72,12 +72,12 @@ import AActionBar from 'aura-design-system/src/AActionBar';
 import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import AMessagePanel from 'aura-design-system/src/AMessagePanel';
+import APicture, { TYPES } from 'aura-design-system/src/APicture';
 import ATab from 'aura-design-system/src/ATab';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
 
 import AImageGrid from '@/components/AImageGrid';
-import APicture from '@/components/APicture';
 import ASelect from '@/components/ASelect';
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';

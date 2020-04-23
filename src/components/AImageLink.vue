@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import APicture from '@/components/APicture';
+import APicture from 'aura-design-system/src/APicture';
 
 export default {
   name: 'a-image-link',
