@@ -19,7 +19,7 @@
         <span>Add One!</span>
       </router-button>
     </a-message-panel>
-    <a-image-grid v-if="!isLoading && images.length > 0" :images="images" />
+    <image-grid v-if="!isLoading && images.length > 0" :images="images" />
   </div>
 </template>
 
@@ -28,7 +28,7 @@ import ALoading from 'aura-design-system/src/ALoading';
 import AMessagePanel from 'aura-design-system/src/AMessagePanel';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 
-import AImageGrid from '@/components/AImageGrid';
+import ImageGrid from '@/components/ImageGrid';
 import RouterButton from '@/components/RouterButton';
 
 export default {
@@ -36,8 +36,8 @@ export default {
   components: {
     AAddIcon,
     ALoading,
-    AImageGrid,
     AMessagePanel,
+    ImageGrid,
     RouterButton,
   },
   computed: {
