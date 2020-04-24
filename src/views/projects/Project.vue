@@ -14,7 +14,12 @@
             </template>
             <span>Edit</span>
           </a-button>
-          <a-select v-if="options" alignMenu="right" :items="options" />
+          <a-select
+            v-if="options"
+            alignMenu="right"
+            :items="options"
+            @select="onSelect"
+          />
         </template>
       </view-header>
     </div>
@@ -76,10 +81,10 @@ import APicture, { TYPES } from 'aura-design-system/src/APicture';
 import ATab from 'aura-design-system/src/ATab';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import ASelect from 'aura-design-system/src/ASelect';
 import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
 import AImageGrid from '@/components/AImageGrid';
-import ASelect from '@/components/ASelect';
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';
 import { MODAL_TYPES } from '@/containers/ModalManager';
@@ -112,7 +117,6 @@ export default {
       if (this.project) {
         return [
           {
-            callback: this.onDelete,
             id: 'delete',
             label: `Delete ${this.project.name}`,
           },
@@ -212,6 +216,13 @@ export default {
         title: `Edit ${this.project.name}`,
         type: MODAL_TYPES.ADD_PROJECT,
       });
+    },
+    onSelect(id) {
+      switch (id) {
+        case 'delete':
+          this.onDelete();
+          break;
+      }
     },
   },
 };

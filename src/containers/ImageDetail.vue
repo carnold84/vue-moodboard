@@ -15,7 +15,12 @@
             </template>
             <span>Edit</span>
           </a-button>
-          <a-select v-if="options" alignMenu="right" :items="options" />
+          <a-select
+            v-if="options"
+            alignMenu="right"
+            :items="options"
+            @select="onSelect"
+          />
         </template>
       </view-header>
       <div class="image-content">
@@ -43,9 +48,9 @@ import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import APicture, { TYPES } from 'aura-design-system/src/APicture';
 import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import ASelect from 'aura-design-system/src/ASelect';
 import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
-import ASelect from '@/components/ASelect';
 import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -74,7 +79,6 @@ export default {
     options() {
       let options = [
         {
-          callback: this.onDelete,
           id: 'delete',
           label: `Delete ${this.image.name}`,
         },
@@ -83,7 +87,6 @@ export default {
         return [
           ...options,
           {
-            callback: this.onUnlink,
             id: 'remove',
             label: `Remove from ${this.project.name}`,
           },
@@ -92,7 +95,6 @@ export default {
         return [
           ...options,
           {
-            callback: this.onLinkToProject,
             id: 'manage-links',
             label: `Add ${this.image.name} to Projects`,
           },
@@ -166,6 +168,21 @@ export default {
         title: `Add ${this.image.name} To A Project`,
         type: MODAL_TYPES.LINK_IMAGES,
       });
+    },
+    onSelect(id) {
+      switch (id) {
+        case 'delete':
+          this.onDelete();
+          break;
+
+        case 'remove':
+          this.onUnlink();
+          break;
+
+        case 'manage-links':
+          this.onLinkToProject();
+          break;
+      }
     },
     async onUnlink() {
       this.isRemoving = true;
