@@ -5,25 +5,19 @@
       v-if="!isLoading && images.length === 0"
       text="You haven't got any images."
     >
-      <router-button
-        :isPrimary="true"
-        :to="
-          project
-            ? { name: 'project-add-image', params: { id: project.id } }
-            : { name: 'images-add-image' }
-        "
-      >
+      <a-button :isPrimary="true" @click="onAdd">
         <template v-slot:icon-left>
           <a-add-icon />
         </template>
         <span>Add One!</span>
-      </router-button>
+      </a-button>
     </a-message-panel>
     <image-grid v-if="!isLoading && images.length > 0" :images="images" />
   </div>
 </template>
 
 <script>
+import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import AMessagePanel from 'aura-design-system/src/AMessagePanel';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
@@ -31,14 +25,16 @@ import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 import ImageGrid from '@/components/ImageGrid';
 import RouterButton from '@/components/RouterButton';
 
+import { MODAL_TYPES } from '@/containers/ModalManager';
+
 export default {
   name: 'image-list',
   components: {
+    AButton,
     AAddIcon,
     ALoading,
     AMessagePanel,
     ImageGrid,
-    RouterButton,
   },
   computed: {
     images() {
@@ -87,6 +83,12 @@ export default {
       this.isLoading = true;
       const images = await this.$store.dispatch('images/load', this.imageIds);
       this.isLoading = false;
+    },
+    onAdd() {
+      this.$store.dispatch('modals/add', {
+        title: 'Create A New Image',
+        type: MODAL_TYPES.ADD_IMAGE,
+      });
     },
     thumbUrl(image) {
       if (image.format) {

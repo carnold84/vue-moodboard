@@ -122,11 +122,13 @@ export default {
         this.image.projectId = this.project.id;
       }
 
-      const response = await this.$store.dispatch('images/delete', this.image);
+      // store image so we can use it after it's deleted
+      const image = this.image;
+      const response = await this.$store.dispatch('images/delete', image);
 
       if (response.success) {
         this.$store.dispatch('toasts/add', {
-          text: `"${this.image.name}" was deleted.`,
+          text: `"${image.name}" was deleted.`,
           timeout: 4000,
           title: 'Image Deleted',
           type: TOAST_TYPES.SUCCESS,
@@ -135,7 +137,7 @@ export default {
       } else {
         this.isRemoving = false;
         this.$store.dispatch('toasts/add', {
-          text: `"${this.image.name}" couldn't be deleted.`,
+          text: `"${image.name}" couldn't be deleted.`,
           title: 'Error',
           type: TOAST_TYPES.ERROR,
         });
