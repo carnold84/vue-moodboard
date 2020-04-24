@@ -25,8 +25,8 @@ import AButton from 'aura-design-system/src/AButton';
 import AModal from 'aura-design-system/src/AModal';
 import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
 import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ProjectsList from '@/containers/ProjectsList';
 
 export default {

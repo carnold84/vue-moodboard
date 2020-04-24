@@ -76,13 +76,13 @@ import APicture, { TYPES } from 'aura-design-system/src/APicture';
 import ATab from 'aura-design-system/src/ATab';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
 import AImageGrid from '@/components/AImageGrid';
 import ASelect from '@/components/ASelect';
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';
 import { MODAL_TYPES } from '@/containers/ModalManager';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 

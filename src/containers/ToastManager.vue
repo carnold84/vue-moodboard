@@ -1,7 +1,7 @@
 <template>
   <div class="toast-manager">
     <transition-group name="slide">
-      <a-toast-notification
+      <a-toast
         v-for="(toast, index) of toasts"
         :id="toast.id"
         :key="toast.id"
@@ -17,12 +17,12 @@
 </template>
 
 <script>
-import AToastNotification from '@/components/AToastNotification';
+import AToast from 'aura-design-system/src/AToast';
 
 export default {
   name: 'toast-manager',
   components: {
-    AToastNotification,
+    AToast,
   },
   computed: {
     toasts() {

@@ -77,8 +77,8 @@ import ABlockIcon from 'aura-design-system/src/icons/ABlockIcon';
 import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
 import AListIcon from 'aura-design-system/src/icons/AListIcon';
 import ARemoveIcon from 'aura-design-system/src/icons/ARemoveIcon';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import { MODAL_TYPES } from '@/containers/ModalManager';
 import Resizable from '@/components/Resizable';
 

@@ -38,8 +38,8 @@ import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
 import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import RouterButton from '@/components/RouterButton';
 import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';

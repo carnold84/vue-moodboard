@@ -43,9 +43,9 @@ import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import APicture, { TYPES } from 'aura-design-system/src/APicture';
 import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
 import ASelect from '@/components/ASelect';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewHeader from '@/components/ViewHeader';
 
