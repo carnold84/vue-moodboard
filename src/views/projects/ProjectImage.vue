@@ -1,6 +1,6 @@
 <template>
   <view-container>
-    <app-loading v-if="project === undefined" />
+    <a-loading v-if="project === undefined" />
     <image-detail
       v-else-if="project"
       :backUrl="backUrl"
@@ -11,14 +11,15 @@
 </template>
 
 <script>
-import AppLoading from '@/components/AppLoading';
+import ALoading from 'aura-design-system/src/ALoading';
+
 import ImageDetail from '@/containers/ImageDetail';
 import ViewContainer from '@/components/ViewContainer';
 
 export default {
   name: 'project-image',
   components: {
-    AppLoading,
+    ALoading,
     ImageDetail,
     ViewContainer,
   },

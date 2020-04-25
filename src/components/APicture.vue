@@ -1,6 +1,6 @@
 <template>
   <div class="picture-wrapper" :style="{ height, width }">
-    <app-loading v-if="src && imageUrl === ''" />
+    <a-loading v-if="src && imageUrl === ''" />
     <img
       v-else-if="imageUrl"
       class="picture-image"
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import AppLoading from '@/components/AppLoading';
+import { ALoading } from 'aura-design-system';
 
 export const TYPES = {
   FILL: 'fill',
@@ -22,7 +22,7 @@ export const TYPES = {
 export default {
   name: 'app-picture',
   components: {
-    AppLoading,
+    ALoading,
   },
   data() {
     return {

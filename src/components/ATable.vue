@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import Resizable from '@/components/Resizable';
+import Resizable from 'aura-design-system/src/utils/Resizable';
 
 export default {
   name: 'a-table',

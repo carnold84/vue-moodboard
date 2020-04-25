@@ -3,12 +3,12 @@
     <form class="content" @submit.prevent="create">
       <view-header :description="subTitle" :on-back="backUrl" :title="title">
         <template v-slot:controls>
-          <a-button :to="backUrl">
+          <router-button :to="backUrl">
             <template v-slot:icon-left>
               <a-close-icon />
             </template>
             Cancel
-          </a-button>
+          </router-button>
           <a-button :isPrimary="true" type="submit">
             <template v-slot:icon-left>
               <a-check-icon />
@@ -18,15 +18,15 @@
         </template>
       </view-header>
       <div class="content">
-        <app-loading v-if="isSaving" />
+        <a-loading v-if="isSaving" />
         <div v-if="!isSaving" class="content">
-          <text-input v-model="name" label="Name" name="name" />
-          <text-input
+          <a-text-field v-model="name" label="Name" name="name" />
+          <a-text-field
             v-model="description"
             label="Description"
             name="description"
           />
-          <text-input v-model="url" label="Url" name="url" />
+          <a-text-field v-model="url" label="Url" name="url" />
         </div>
       </div>
     </form>
@@ -34,12 +34,14 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
-import ACheckIcon from '@/components/icons/ACheckIcon';
-import ACloseIcon from '@/components/icons/ACloseIcon';
-import AppLoading from '@/components/AppLoading';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
-import TextInput from '@/components/TextInput';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import ATextField from 'aura-design-system/src/ATextField';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
+
+import RouterButton from '@/components/RouterButton';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -48,8 +50,9 @@ export default {
     AButton,
     ACheckIcon,
     ACloseIcon,
-    AppLoading,
-    TextInput,
+    ALoading,
+    RouterButton,
+    ATextField,
     ViewHeader,
   },
   data() {

@@ -1,6 +1,6 @@
 <template>
   <div v-if="!user" class="app-wrapper">
-    <app-loading></app-loading>
+    <a-loading />
   </div>
   <div v-else class="app-wrapper">
     <div v-if="canHideMenu" class="app-header">
@@ -38,9 +38,10 @@
 </template>
 
 <script>
+import ALoading from 'aura-design-system/src/ALoading';
+import AMenuIcon from 'aura-design-system/src/icons/AMenuIcon';
+
 import appConfig from '@/app.config';
-import AMenuIcon from '@/components/icons/AMenuIcon';
-import AppLoading from '@/components/AppLoading';
 import AppLogo from '@/components/AppLogo';
 import MainNav from '@/containers/MainNav';
 import ModalManager from '@/containers/ModalManager';
@@ -52,8 +53,8 @@ export default {
     this.media.removeListener(this.onMatchMedia);
   },
   components: {
+    ALoading,
     AMenuIcon,
-    AppLoading,
     AppLogo,
     MainNav,
     ModalManager,

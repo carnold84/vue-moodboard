@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
-import ACheckIcon from '@/components/icons/ACheckIcon';
-import ACloseIcon from '@/components/icons/ACloseIcon';
-import AModal from '@/components/AModal';
+import AButton from 'aura-design-system/src/AButton';
+import AModal from 'aura-design-system/src/AModal';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
 
 export default {
   name: 'confirm-dialog',

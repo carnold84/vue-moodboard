@@ -20,7 +20,7 @@
           </a-button>
         </div>
         <div v-if="!projects && showProjects" class="sub-nav-loading">
-          <app-loading diameter="30px"></app-loading>
+          <a-loading diameter="30px" />
         </div>
         <div
           v-if="projects && showProjects && projects.length === 0"
@@ -62,10 +62,11 @@
 </template>
 
 <script>
-import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
-import ALogoutIcon from '@/components/icons/ALogoutIcon';
-import AppLoading from '@/components/AppLoading';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
+import ALogoutIcon from 'aura-design-system/src/icons/ALogoutIcon';
+
 import AppLogo from '@/components/AppLogo';
 import { MODAL_TYPES } from '@/containers/ModalManager';
 
@@ -74,8 +75,8 @@ export default {
   components: {
     AAddIcon,
     AButton,
+    ALoading,
     ALogoutIcon,
-    AppLoading,
     AppLogo,
   },
   data() {

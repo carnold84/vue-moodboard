@@ -1,18 +1,11 @@
 <template>
   <div class="link-list">
-    <app-loading v-if="isLoading" />
+    <a-loading v-if="isLoading" />
     <a-message-panel
       v-if="!isLoading && links.length === 0"
       text="You haven't got any links."
     >
-      <a-button
-        :isPrimary="true"
-        :to="
-          project
-            ? { name: 'project-add-link', params: { id: project.id } }
-            : { name: 'links-add-link' }
-        "
-      >
+      <a-button :isPrimary="true" @click="onAdd">
         <template v-slot:icon-left>
           <a-add-icon />
         </template>
@@ -28,18 +21,21 @@
 </template>
 
 <script>
-import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
-import AppLoading from '@/components/AppLoading';
-import AMessagePanel from '@/components/AMessagePanel';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import AMessagePanel from 'aura-design-system/src/AMessagePanel';
+import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
+
 import LinksTable from '@/containers/LinksTable';
+import { MODAL_TYPES } from '@/containers/ModalManager';
+import RouterButton from '@/components/RouterButton';
 
 export default {
   name: 'link-list',
   components: {
-    AAddIcon,
     AButton,
-    AppLoading,
+    AAddIcon,
+    ALoading,
     AMessagePanel,
     LinksTable,
   },
@@ -64,6 +60,12 @@ export default {
       this.isLoading = true;
       const links = await this.$store.dispatch('links/load', this.linkIds);
       this.isLoading = false;
+    },
+    onAdd() {
+      this.$store.dispatch('modals/add', {
+        title: 'Create A New Link',
+        type: MODAL_TYPES.ADD_LINK,
+      });
     },
   },
   mounted() {

@@ -1,43 +1,40 @@
 <template>
   <div class="image-list">
-    <app-loading v-if="isLoading" />
+    <a-loading v-if="isLoading" />
     <a-message-panel
       v-if="!isLoading && images.length === 0"
       text="You haven't got any images."
     >
-      <a-button
-        :isPrimary="true"
-        :to="
-          project
-            ? { name: 'project-add-image', params: { id: project.id } }
-            : { name: 'images-add-image' }
-        "
-      >
+      <a-button :isPrimary="true" @click="onAdd">
         <template v-slot:icon-left>
           <a-add-icon />
         </template>
         <span>Add One!</span>
       </a-button>
     </a-message-panel>
-    <a-image-grid v-if="!isLoading && images.length > 0" :images="images" />
+    <image-grid v-if="!isLoading && images.length > 0" :images="images" />
   </div>
 </template>
 
 <script>
-import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
-import AImageGrid from '@/components/AImageGrid';
-import AppLoading from '@/components/AppLoading';
-import AMessagePanel from '@/components/AMessagePanel';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import AMessagePanel from 'aura-design-system/src/AMessagePanel';
+import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
+
+import ImageGrid from '@/components/ImageGrid';
+import RouterButton from '@/components/RouterButton';
+
+import { MODAL_TYPES } from '@/containers/ModalManager';
 
 export default {
   name: 'image-list',
   components: {
-    AAddIcon,
     AButton,
-    AppLoading,
-    AImageGrid,
+    AAddIcon,
+    ALoading,
     AMessagePanel,
+    ImageGrid,
   },
   computed: {
     images() {
@@ -86,6 +83,12 @@ export default {
       this.isLoading = true;
       const images = await this.$store.dispatch('images/load', this.imageIds);
       this.isLoading = false;
+    },
+    onAdd() {
+      this.$store.dispatch('modals/add', {
+        title: 'Create A New Image',
+        type: MODAL_TYPES.ADD_IMAGE,
+      });
     },
     thumbUrl(image) {
       if (image.format) {

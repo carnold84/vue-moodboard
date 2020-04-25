@@ -1,15 +1,27 @@
 <template>
   <a-modal :id="id" max-width="540px" :title="title" @dismiss="onDismiss">
     <template v-slot:content>
-      <app-loading v-if="isSaving" style="height: 250px; position: relative;" />
+      <a-loading v-if="isSaving" style="height: 250px; position: relative;" />
       <form v-if="!isSaving" class="form" ref="form" @submit.prevent="onSubmit">
-        <text-input v-model="name" label="Name" name="name" />
-        <text-input
+        <a-text-field
+          v-model="name"
+          :errors="errors.name"
+          label="Name*"
+          name="name"
+          style="margin: 0 0 15px"
+        />
+        <a-text-field
           v-model="description"
           label="Description"
           name="description"
+          style="margin: 0 0 15px"
         />
-        <text-input v-model="url" label="Url" name="url" />
+        <a-text-field
+          v-model="url"
+          :errors="errors.url"
+          label="Url*"
+          name="url"
+        />
       </form>
     </template>
     <template v-slot:footer>
@@ -34,13 +46,13 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
-import ACheckIcon from '@/components/icons/ACheckIcon';
-import ACloseIcon from '@/components/icons/ACloseIcon';
-import AModal from '@/components/AModal';
-import AppLoading from '@/components/AppLoading';
-import TextInput from '@/components/TextInput';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import AModal from 'aura-design-system/src/AModal';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import ATextField from 'aura-design-system/src/ATextField';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
 export default {
   name: 'add-image-modal',
@@ -48,9 +60,9 @@ export default {
     AButton,
     ACheckIcon,
     ACloseIcon,
+    ALoading,
     AModal,
-    AppLoading,
-    TextInput,
+    ATextField,
   },
   data() {
     return {
@@ -77,6 +89,9 @@ export default {
       this.$emit('dismiss', this.id);
     },
     async onSubmit() {
+      this.errors.name = undefined;
+      this.errors.url = undefined;
+
       if (this.name === '' || this.url === '') {
         if (this.name === '') {
           this.errors.name = 'Name is required.';
@@ -159,7 +174,7 @@ export default {
 
 <style scoped lang="scss">
 .form {
-  padding: 25px 40px;
+  padding: 25px;
   width: 100%;
 }
 </style>

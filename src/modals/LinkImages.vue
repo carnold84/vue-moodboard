@@ -21,13 +21,12 @@
 
 <script>
 import Vue from 'vue';
-import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
-import ACloseIcon from '@/components/icons/ACloseIcon';
-import AModal from '@/components/AModal';
-import AppLoading from '@/components/AppLoading';
-import ARemoveIcon from '@/components/icons/ARemoveIcon';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
+import AButton from 'aura-design-system/src/AButton';
+import AModal from 'aura-design-system/src/AModal';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
+
 import ProjectsList from '@/containers/ProjectsList';
 
 export default {

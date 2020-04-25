@@ -1,6 +1,6 @@
 <template>
   <view-container>
-    <app-loading v-if="isSaving === true"></app-loading>
+    <a-loading v-if="isSaving === true" />
     <form v-if="isSaving === false" class="form" @submit.prevent="create">
       <view-header
         description="Create a project to save images, links and notes."
@@ -24,23 +24,24 @@
         </template>
       </view-header>
       <div class="form">
-        <text-input v-model="name" label="Name" name="name"></text-input>
-        <text-input
+        <a-text-field v-model="name" label="Name" name="name" />
+        <a-text-field
           v-model="description"
           label="Description"
           name="description"
-        ></text-input>
+        />
       </div>
     </form>
   </view-container>
 </template>
 
 <script>
-import AButton from '@/components/AButton';
-import ACheckIcon from '@/components/icons/ACheckIcon';
-import ACloseIcon from '@/components/icons/ACloseIcon';
-import AppLoading from '@/components/AppLoading';
-import TextInput from '@/components/TextInput';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import ATextField from 'aura-design-system/src/ATextField';
+
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -50,14 +51,17 @@ export default {
     ACheckIcon,
     ACloseIcon,
     AButton,
-    AppLoading,
-    TextInput,
+    ALoading,
+    ATextField,
     ViewContainer,
     ViewHeader,
   },
   data() {
     return {
       description: '',
+      errors: {
+        name: undefined,
+      },
       isSaving: false,
       name: '',
     };
@@ -65,6 +69,13 @@ export default {
   methods: {
     async create() {
       this.isSaving = true;
+
+      this.errors.name = undefined;
+
+      if (this.name === '') {
+        this.errors.name = 'Name is required.';
+        return;
+      }
 
       const data = {
         description: this.description,

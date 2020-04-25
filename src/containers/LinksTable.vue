@@ -1,6 +1,6 @@
 <template>
   <div class="links-table">
-    <app-loading v-if="isLoading" />
+    <a-loading v-if="isLoading" />
     <div v-if="!isLoading" class="list" :class="breakpoints">
       <resizable @resize="onResize" />
       <div v-for="item of links" :key="item.id" class="row">
@@ -71,15 +71,16 @@
 
 <script>
 import Vue from 'vue';
-import ABlockIcon from '@/components/icons/ABlockIcon';
-import AButton from '@/components/AButton';
-import ACreateIcon from '@/components/icons/ACreateIcon';
-import AListIcon from '@/components/icons/AListIcon';
-import AppLoading from '@/components/AppLoading';
-import ARemoveIcon from '@/components/icons/ARemoveIcon';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import ABlockIcon from 'aura-design-system/src/icons/ABlockIcon';
+import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import AListIcon from 'aura-design-system/src/icons/AListIcon';
+import ARemoveIcon from 'aura-design-system/src/icons/ARemoveIcon';
+import Resizable from 'aura-design-system/src/utils/Resizable';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
+
 import { MODAL_TYPES } from '@/containers/ModalManager';
-import Resizable from '@/components/Resizable';
 
 export default {
   name: 'links-table',
@@ -88,7 +89,7 @@ export default {
     AButton,
     ACreateIcon,
     AListIcon,
-    AppLoading,
+    ALoading,
     ARemoveIcon,
     Resizable,
   },

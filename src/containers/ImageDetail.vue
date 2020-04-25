@@ -1,6 +1,6 @@
 <template>
   <div class="image-detail">
-    <app-loading v-if="isLoading || isRemoving" />
+    <a-loading v-if="isLoading || isRemoving" />
     <div v-if="image && !isLoading && !isRemoving" class="content">
       <view-header
         :description="image.description"
@@ -15,7 +15,12 @@
             </template>
             <span>Edit</span>
           </a-button>
-          <a-select v-if="options" alignMenu="right" :items="options" />
+          <a-select
+            v-if="options"
+            alignMenu="right"
+            :items="options"
+            @select="onSelect"
+          />
         </template>
       </view-header>
       <div class="image-content">
@@ -39,12 +44,13 @@
 </template>
 
 <script>
-import AButton from '@/components/AButton';
-import ACreateIcon from '@/components/icons/ACreateIcon';
-import APicture, { TYPES } from '@/components/APicture';
-import AppLoading from '@/components/AppLoading';
-import ASelect from '@/components/ASelect';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import APicture, { TYPES } from 'aura-design-system/src/APicture';
+import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import ASelect from 'aura-design-system/src/ASelect';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
+
 import { MODAL_TYPES } from '@/containers/ModalManager';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -53,7 +59,7 @@ export default {
   components: {
     AButton,
     ACreateIcon,
-    AppLoading,
+    ALoading,
     APicture,
     ASelect,
     ViewHeader,
@@ -73,7 +79,6 @@ export default {
     options() {
       let options = [
         {
-          callback: this.onDelete,
           id: 'delete',
           label: `Delete ${this.image.name}`,
         },
@@ -82,7 +87,6 @@ export default {
         return [
           ...options,
           {
-            callback: this.onUnlink,
             id: 'remove',
             label: `Remove from ${this.project.name}`,
           },
@@ -91,7 +95,6 @@ export default {
         return [
           ...options,
           {
-            callback: this.onLinkToProject,
             id: 'manage-links',
             label: `Add ${this.image.name} to Projects`,
           },
@@ -121,11 +124,13 @@ export default {
         this.image.projectId = this.project.id;
       }
 
-      const response = await this.$store.dispatch('images/delete', this.image);
+      // store image so we can use it after it's deleted
+      const image = this.image;
+      const response = await this.$store.dispatch('images/delete', image);
 
       if (response.success) {
         this.$store.dispatch('toasts/add', {
-          text: `"${this.image.name}" was deleted.`,
+          text: `"${image.name}" was deleted.`,
           timeout: 4000,
           title: 'Image Deleted',
           type: TOAST_TYPES.SUCCESS,
@@ -134,7 +139,7 @@ export default {
       } else {
         this.isRemoving = false;
         this.$store.dispatch('toasts/add', {
-          text: `"${this.image.name}" couldn't be deleted.`,
+          text: `"${image.name}" couldn't be deleted.`,
           title: 'Error',
           type: TOAST_TYPES.ERROR,
         });
@@ -163,6 +168,21 @@ export default {
         title: `Add ${this.image.name} To A Project`,
         type: MODAL_TYPES.LINK_IMAGES,
       });
+    },
+    onSelect(id) {
+      switch (id) {
+        case 'delete':
+          this.onDelete();
+          break;
+
+        case 'remove':
+          this.onUnlink();
+          break;
+
+        case 'manage-links':
+          this.onLinkToProject();
+          break;
+      }
     },
     async onUnlink() {
       this.isRemoving = true;

@@ -1,6 +1,6 @@
 <template>
   <view-container>
-    <app-loading v-if="project === undefined || isDeleting"></app-loading>
+    <a-loading v-if="project === undefined || isDeleting" />
     <div v-if="project && !isDeleting">
       <view-header
         :description="project.description"
@@ -14,14 +14,29 @@
             </template>
             <span>Edit</span>
           </a-button>
-          <a-select v-if="options" alignMenu="right" :items="options" />
+          <a-select
+            v-if="options"
+            alignMenu="right"
+            :items="options"
+            @select="onSelect"
+          />
         </template>
       </view-header>
     </div>
     <div v-if="project && !isDeleting">
       <div class="tabs">
-        <a-action-bar :currentTabId="currentTabId" :tabs="tabs">
-          <template v-slot:controls>
+        <a-action-bar>
+          <template v-slot:controls-left>
+            <router-link
+              v-for="tab of tabs"
+              :key="tab.id"
+              :to="tab.to"
+              style="text-decoration: none;"
+            >
+              <a-tab :is-active="currentTabId === tab.id" :label="tab.label" />
+            </router-link>
+          </template>
+          <template v-slot:controls-right>
             <a-button
               v-if="currentTabId === 'images'"
               :isPrimary="true"
@@ -58,19 +73,20 @@
 </template>
 
 <script>
-import AActionBar from '@/components/AActionBar';
-import AAddIcon from '@/components/icons/AAddIcon';
-import AButton from '@/components/AButton';
-import ACreateIcon from '@/components/icons/ACreateIcon';
-import AImageGrid from '@/components/AImageGrid';
-import AMessagePanel from '@/components/AMessagePanel';
-import APicture from '@/components/APicture';
-import AppLoading from '@/components/AppLoading';
-import ASelect from '@/components/ASelect';
+import AActionBar from 'aura-design-system/src/AActionBar';
+import AButton from 'aura-design-system/src/AButton';
+import ALoading from 'aura-design-system/src/ALoading';
+import AMessagePanel from 'aura-design-system/src/AMessagePanel';
+import APicture, { TYPES } from 'aura-design-system/src/APicture';
+import ATab from 'aura-design-system/src/ATab';
+import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
+import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
+import ASelect from 'aura-design-system/src/ASelect';
+import { TOAST_TYPES } from 'aura-design-system/src/AToast';
+
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';
 import { MODAL_TYPES } from '@/containers/ModalManager';
-import { TOAST_TYPES } from '@/components/AToastNotification.vue';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -81,8 +97,9 @@ export default {
     AAddIcon,
     AButton,
     ACreateIcon,
-    AppLoading,
+    ALoading,
     ASelect,
+    ATab,
     ImageList,
     LinkList,
     ViewContainer,
@@ -99,7 +116,6 @@ export default {
       if (this.project) {
         return [
           {
-            callback: this.onDelete,
             id: 'delete',
             label: `Delete ${this.project.name}`,
           },
@@ -199,6 +215,13 @@ export default {
         title: `Edit ${this.project.name}`,
         type: MODAL_TYPES.ADD_PROJECT,
       });
+    },
+    onSelect(id) {
+      switch (id) {
+        case 'delete':
+          this.onDelete();
+          break;
+      }
     },
   },
 };
