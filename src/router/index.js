@@ -6,21 +6,15 @@ import Home from '@/views/Home.vue';
 import store from '@/store';
 
 const Image = () => import('@/views/images/Image.vue');
-const Images = () => import('@/views/images/Images.vue');
-const ImagesAddImage = () => import('@/views/images/ImagesAddImage.vue');
+const Images = () => import('@/views/images');
 const ImagesList = () => import('@/views/images/ImagesList.vue');
-const Links = () => import('@/views/links/Links.vue');
-const LinksAddLink = () => import('@/views/links/LinksAddLink.vue');
+const Links = () => import('@/views/links');
 const LinksList = () => import('@/views/links/LinksList.vue');
 const Login = () => import('@/views/Login.vue');
 const NotFound = () => import('@/views/NotFound.vue');
 const Project = () => import('@/views/projects/Project.vue');
-const ProjectAddImage = () => import('@/views/projects/ProjectAddImage.vue');
-const ProjectEdit = () => import('@/views/projects/ProjectEdit.vue');
-const ProjectAddLink = () => import('@/views/projects/ProjectAddLink.vue');
 const ProjectImage = () => import('@/views/projects/ProjectImage.vue');
-const Projects = () => import('@/views/projects/Projects.vue');
-const ProjectsList = () => import('@/views/projects/ProjectsList.vue');
+const Projects = () => import('@/views/projects');
 
 Vue.use(VueRouter);
 
@@ -48,11 +42,6 @@ const routes = [
             path: '/',
           },
           {
-            component: ImagesAddImage,
-            name: 'images-add-image',
-            path: 'add-image',
-          },
-          {
             component: Image,
             name: 'image',
             path: ':id',
@@ -68,11 +57,6 @@ const routes = [
             name: 'links-list',
             path: '/',
           },
-          {
-            component: LinksAddLink,
-            name: 'links-add-link',
-            path: 'add-link',
-          },
         ],
         component: Links,
         path: 'links',
@@ -80,29 +64,13 @@ const routes = [
       {
         children: [
           {
-            component: ProjectsList,
-            name: 'projects-list',
+            component: NotFound,
             path: '/',
-          },
-          {
-            component: ProjectEdit,
-            name: 'project-create',
-            path: 'create',
           },
           {
             component: ProjectImage,
             name: 'project-image',
             path: ':id/image/:imageId',
-          },
-          {
-            component: ProjectAddImage,
-            name: 'project-add-image',
-            path: ':id/add-image',
-          },
-          {
-            component: ProjectAddLink,
-            name: 'project-add-link',
-            path: ':id/add-link',
           },
           {
             component: Project,

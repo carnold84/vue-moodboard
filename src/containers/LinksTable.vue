@@ -39,7 +39,7 @@
             <a-list-icon />
           </a-button>
           <div v-if="project" class="control-loading">
-            <app-loading v-if="areLinking[item.id]" diameter="20" />
+            <a-loading v-if="areLinking[item.id]" diameter="20" />
             <a-button
               v-if="!areLinking[item.id]"
               class="control"
