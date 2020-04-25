@@ -20,13 +20,13 @@
       <div class="content">
         <a-loading v-if="isSaving" />
         <div v-if="!isSaving" class="content">
-          <text-input v-model="name" label="Name" name="name" />
-          <text-input
+          <a-text-field v-model="name" label="Name" name="name" />
+          <a-text-field
             v-model="description"
             label="Description"
             name="description"
           />
-          <text-input v-model="url" label="Url" name="url" />
+          <a-text-field v-model="url" label="Url" name="url" />
         </div>
       </div>
     </form>
@@ -38,10 +38,10 @@ import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
 import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import ATextField from 'aura-design-system/src/ATextField';
 import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
 import RouterButton from '@/components/RouterButton';
-import TextInput from '@/components/TextInput';
 import ViewHeader from '@/components/ViewHeader';
 
 export default {
@@ -52,7 +52,7 @@ export default {
     ACloseIcon,
     ALoading,
     RouterButton,
-    TextInput,
+    ATextField,
     ViewHeader,
   },
   data() {

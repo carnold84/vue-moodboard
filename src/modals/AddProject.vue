@@ -3,16 +3,15 @@
     <template v-slot:content>
       <a-loading v-if="isSaving" style="height: 250px; position: relative;" />
       <form v-if="!isSaving" class="form" ref="form" @submit.prevent="onSubmit">
-        <text-input
+        <a-text-field
           v-model="name"
           :errors="errors.name"
           label="Name"
           name="name"
-          style="margin: 0 0 25px"
+          style="margin: 0 0 15px"
         />
-        <text-input
+        <a-text-field
           v-model="description"
-          class="text-input"
           label="Description"
           name="description"
           style="margin: 0 0 15px"
@@ -47,9 +46,8 @@ import ALoading from 'aura-design-system/src/ALoading';
 import AModal from 'aura-design-system/src/AModal';
 import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
 import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import ATextField from 'aura-design-system/src/ATextField';
 import { TOAST_TYPES } from 'aura-design-system/src/AToast';
-
-import TextInput from '@/components/TextInput';
 
 export default {
   name: 'add-project-modal',
@@ -59,7 +57,7 @@ export default {
     ACloseIcon,
     ALoading,
     AModal,
-    TextInput,
+    ATextField,
   },
   data() {
     return {
@@ -84,6 +82,8 @@ export default {
       this.$emit('dismiss', this.id);
     },
     async onSubmit() {
+      this.errors.name = undefined;
+
       if (this.name === '') {
         this.errors.name = 'Name is required.';
         return;

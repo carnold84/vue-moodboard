@@ -24,12 +24,12 @@
         </template>
       </view-header>
       <div class="form">
-        <text-input v-model="name" label="Name" name="name"></text-input>
-        <text-input
+        <a-text-field v-model="name" label="Name" name="name" />
+        <a-text-field
           v-model="description"
           label="Description"
           name="description"
-        ></text-input>
+        />
       </div>
     </form>
   </view-container>
@@ -40,8 +40,8 @@ import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
 import ACloseIcon from 'aura-design-system/src/icons/ACloseIcon';
+import ATextField from 'aura-design-system/src/ATextField';
 
-import TextInput from '@/components/TextInput';
 import ViewContainer from '@/components/ViewContainer';
 import ViewHeader from '@/components/ViewHeader';
 
@@ -52,13 +52,16 @@ export default {
     ACloseIcon,
     AButton,
     ALoading,
-    TextInput,
+    ATextField,
     ViewContainer,
     ViewHeader,
   },
   data() {
     return {
       description: '',
+      errors: {
+        name: undefined,
+      },
       isSaving: false,
       name: '',
     };
@@ -66,6 +69,13 @@ export default {
   methods: {
     async create() {
       this.isSaving = true;
+
+      this.errors.name = undefined;
+
+      if (this.name === '') {
+        this.errors.name = 'Name is required.';
+        return;
+      }
 
       const data = {
         description: this.description,

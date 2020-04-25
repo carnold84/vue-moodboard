@@ -84,7 +84,6 @@ import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
 import ASelect from 'aura-design-system/src/ASelect';
 import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
-import AImageGrid from '@/components/AImageGrid';
 import ImageList from '@/containers/ImageList';
 import LinkList from '@/containers/LinkList';
 import { MODAL_TYPES } from '@/containers/ModalManager';

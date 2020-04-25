@@ -7,18 +7,22 @@
       </div>
       <form class="form" @submit.prevent="login">
         <p v-if="message" class="error">{{ message }}</p>
-        <text-input
+        <a-text-field
           v-model="email"
+          :errors="errors.email"
           label="Email"
           name="email"
+          style="margin: 0 0 15px"
           type="email"
-        ></text-input>
-        <text-input
+        />
+        <a-text-field
           v-model="password"
+          :errors="errors.password"
           label="Password"
           name="password"
+          style="margin: 0 0 15px"
           type="password"
-        ></text-input>
+        />
         <a-button
           :isPrimary="true"
           style="max-width: 200px; width: 100%;"
@@ -38,10 +42,10 @@
 import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import ACheckIcon from 'aura-design-system/src/icons/ACheckIcon';
+import ATextField from 'aura-design-system/src/ATextField';
 
 import appConfig from '@/app.config';
 import AppLogo from '@/components/AppLogo';
-import TextInput from '@/components/TextInput';
 
 export default {
   name: 'login',
@@ -50,7 +54,7 @@ export default {
     ACheckIcon,
     ALoading,
     AppLogo,
-    TextInput,
+    ATextField,
   },
   computed: {
     appName() {
@@ -60,6 +64,10 @@ export default {
   data() {
     return {
       email: process.env.VUE_APP_DEMO_EMAIL || '',
+      errors: {
+        email: undefined,
+        password: undefined,
+      },
       isLoggingIn: false,
       message: undefined,
       password: process.env.VUE_APP_DEMO_PASSWORD || '',
@@ -67,6 +75,20 @@ export default {
   },
   methods: {
     async login() {
+      this.errors.email = undefined;
+      this.errors.password = undefined;
+
+      if (this.email === '' || this.password === '') {
+        if (this.email === '') {
+          this.errors.email = 'Name is required.';
+        }
+
+        if (this.password === '') {
+          this.errors.password = 'Url is required.';
+        }
+        return;
+      }
+
       const data = {
         email: this.email,
         password: this.password,

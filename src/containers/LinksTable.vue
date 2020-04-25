@@ -77,10 +77,10 @@ import ABlockIcon from 'aura-design-system/src/icons/ABlockIcon';
 import ACreateIcon from 'aura-design-system/src/icons/ACreateIcon';
 import AListIcon from 'aura-design-system/src/icons/AListIcon';
 import ARemoveIcon from 'aura-design-system/src/icons/ARemoveIcon';
+import Resizable from 'aura-design-system/src/utils/Resizable';
 import { TOAST_TYPES } from 'aura-design-system/src/AToast';
 
 import { MODAL_TYPES } from '@/containers/ModalManager';
-import Resizable from '@/components/Resizable';
 
 export default {
   name: 'links-table',

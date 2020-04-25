@@ -5,19 +5,12 @@
       v-if="!isLoading && links.length === 0"
       text="You haven't got any links."
     >
-      <router-button
-        :isPrimary="true"
-        :to="
-          project
-            ? { name: 'project-add-link', params: { id: project.id } }
-            : { name: 'links-add-link' }
-        "
-      >
+      <a-button :isPrimary="true" @click="onAdd">
         <template v-slot:icon-left>
           <a-add-icon />
         </template>
         <span>Add One!</span>
-      </router-button>
+      </a-button>
     </a-message-panel>
     <links-table
       v-if="!isLoading && links.length > 0"
@@ -28,21 +21,23 @@
 </template>
 
 <script>
+import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import AMessagePanel from 'aura-design-system/src/AMessagePanel';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 
 import LinksTable from '@/containers/LinksTable';
+import { MODAL_TYPES } from '@/containers/ModalManager';
 import RouterButton from '@/components/RouterButton';
 
 export default {
   name: 'link-list',
   components: {
+    AButton,
     AAddIcon,
     ALoading,
     AMessagePanel,
     LinksTable,
-    RouterButton,
   },
   computed: {
     links() {
@@ -65,6 +60,12 @@ export default {
       this.isLoading = true;
       const links = await this.$store.dispatch('links/load', this.linkIds);
       this.isLoading = false;
+    },
+    onAdd() {
+      this.$store.dispatch('modals/add', {
+        title: 'Create A New Link',
+        type: MODAL_TYPES.ADD_LINK,
+      });
     },
   },
   mounted() {
