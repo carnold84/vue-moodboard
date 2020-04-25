@@ -174,7 +174,7 @@ export default {
 
 <style scoped lang="scss">
 .form {
-  padding: 25px 40px;
+  padding: 25px;
   width: 100%;
 }
 </style>
