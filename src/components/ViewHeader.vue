@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { AButton } from 'aura-design-system';
-import AArrowBackIcon from '@/components/icons/AArrowBackIcon';
+import AButton from 'aura-design-system/src/AButton';
+import AArrowBackIcon from 'aura-design-system/src/icons/AArrowBackIcon';
 import RouterButton from '@/components/RouterButton';
 
 export default {
