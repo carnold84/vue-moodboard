@@ -1,12 +1,12 @@
 <template>
-  <theme-provider :theme="themes.default">
+  <theme-provider :theme="theme">
     <router-view />
   </theme-provider>
 </template>
 
 <script>
 import { ThemeProvider } from 'vue-styled-components';
-import { themes } from 'aura-design-system';
+import defaultTheme from 'aura-design-system/src/themes/default';
 
 export default {
   components: {
@@ -14,7 +14,7 @@ export default {
   },
   data() {
     return {
-      themes,
+      theme: defaultTheme,
     };
   },
 };

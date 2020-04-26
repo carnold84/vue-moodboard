@@ -21,12 +21,8 @@
         </template>
         <span>Back</span>
       </router-button>
-      <div class="title">
-        <h2 v-if="title" class="title-text">{{ title }}</h2>
-      </div>
-      <div class="description">
-        <p v-if="description" class="description-text">{{ description }}</p>
-      </div>
+      <a-text v-if="title" variant="h1">{{ title }}</a-text>
+      <a-text v-if="description" variant="p">{{ description }}</a-text>
     </div>
     <div class="secondary-content">
       <slot name="controls" />
@@ -37,6 +33,7 @@
 <script>
 import AButton from 'aura-design-system/src/AButton';
 import AArrowBackIcon from 'aura-design-system/src/icons/AArrowBackIcon';
+import AText from 'aura-design-system/src/AText';
 import RouterButton from '@/components/RouterButton';
 
 export default {
@@ -44,6 +41,7 @@ export default {
   components: {
     AArrowBackIcon,
     AButton,
+    AText,
     RouterButton,
   },
   computed: {
