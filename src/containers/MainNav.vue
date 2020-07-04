@@ -8,44 +8,49 @@
         ></app-logo>
       </router-link>
     </div>
-    <ul>
+    <a-menu>
       <li>
-        <router-link class="nav-item btn" to="/">Home</router-link>
+        <router-link to="/">
+          <a-menu-item>Home</a-menu-item>
+        </router-link>
       </li>
-      <li class="nav-item sub-nav">
-        <div class="sub-nav-header">
-          <h2 class="sub-nav-title nav-item">Projects</h2>
-          <a-button class="add-btn" @click="onCreateProject">
-            <a-add-icon></a-add-icon>
-          </a-button>
-        </div>
-        <div v-if="!projects && showProjects" class="sub-nav-loading">
+      <li>
+        <a-menu-item component="div" :is-sub-menu-title="true">
+          Projects
+          <template v-slot:content-right>
+            <a-button class="add-btn" @click="onCreateProject">
+              <a-add-icon></a-add-icon>
+            </a-button>
+          </template>
+        </a-menu-item>
+        <div v-if="!projects">
           <a-loading diameter="30px" />
         </div>
-        <div
-          v-if="projects && showProjects && projects.length === 0"
-          class="sub-nav-message"
-        >
-          No Projects
-        </div>
-        <ul v-if="projects && showProjects" class="sub-nav-content">
+        <a-message-panel
+          v-if="projects && projects.length === 0"
+          text="No Projects"
+        />
+        <a-menu v-if="projects">
           <li v-for="project in projects" :key="project.id">
-            <router-link
-              class="sub-nav-item nav-item btn"
-              :to="{ name: 'project', params: { id: project.id } }"
-            >
-              {{ project.name }}
+            <router-link :to="{ name: 'project', params: { id: project.id } }">
+              <a-menu-item component="div" :is-sub-menu="true">
+                {{ project.name }}
+              </a-menu-item>
             </router-link>
           </li>
-        </ul>
+        </a-menu>
       </li>
       <li>
-        <router-link class="nav-item btn" to="/images">All Images</router-link>
+        <router-link to="/images">
+          <a-menu-item>All Images</a-menu-item>
+        </router-link>
       </li>
       <li>
-        <router-link class="nav-item btn" to="/links">All Links</router-link>
+        <router-link to="/links">
+          <a-menu-item>All Links</a-menu-item>
+        </router-link>
       </li>
-    </ul>
+    </a-menu>
     <div class="user">
       <div class="user-info">
         <h4 class="user-name">{{ user.name }}</h4>
@@ -66,6 +71,8 @@ import AButton from 'aura-design-system/src/AButton';
 import ALoading from 'aura-design-system/src/ALoading';
 import AAddIcon from 'aura-design-system/src/icons/AAddIcon';
 import ALogoutIcon from 'aura-design-system/src/icons/ALogoutIcon';
+import AMenu from 'aura-design-system/src/AMenu';
+import AMenuItem from 'aura-design-system/src/AMenuItem';
 
 import AppLogo from '@/components/AppLogo';
 import { MODAL_TYPES } from '@/containers/ModalManager';
@@ -77,12 +84,9 @@ export default {
     AButton,
     ALoading,
     ALogoutIcon,
+    AMenu,
+    AMenuItem,
     AppLogo,
-  },
-  data() {
-    return {
-      showProjects: true,
-    };
   },
   methods: {
     logout() {
@@ -93,9 +97,6 @@ export default {
         title: 'Add Project',
         type: MODAL_TYPES.ADD_PROJECT,
       });
-    },
-    toggleProjects() {
-      this.showProjects = !this.showProjects;
     },
   },
   props: {
